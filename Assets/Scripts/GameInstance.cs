@@ -1,18 +1,15 @@
+using SR.Library;
+using SR.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameInstance : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	[SerializeField] private MenusListSO menusLibrary;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	private void Awake()
+	{
+		MenuBase.menusLibrary = menusLibrary;
+	}
 }
