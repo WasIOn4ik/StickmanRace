@@ -1,12 +1,16 @@
+using SR.Core;
 using UnityEngine;
 using Zenject;
 
-public class GameInstanceInstaller : MonoInstaller
+namespace SR.Extras
 {
-	[SerializeField] private GameInstance gameInstancePrefab;
-
-	public override void InstallBindings()
+	public class GameInstanceInstaller : MonoInstaller
 	{
-		Container.Bind<GameInstance>().FromComponentInNewPrefab(gameInstancePrefab).AsSingle().NonLazy();
+		[SerializeField] private GameInstance gameInstancePrefab;
+
+		public override void InstallBindings()
+		{
+			Container.Bind<GameInstance>().FromComponentInNewPrefab(gameInstancePrefab).AsSingle().NonLazy();
+		}
 	}
 }

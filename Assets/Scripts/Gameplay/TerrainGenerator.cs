@@ -3,62 +3,67 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 
-[ExecuteInEditMode]
-public class TerrainGenerator : MonoBehaviour
+namespace SR.Core
 {
-	#region Variables
-
-	[Header("Components")]
-	[SerializeField] private SpriteShapeController spriteShapeController;
-
-	[Header("Properties")]
-	[SerializeField] private float platformOnStartLength = 5f;
-	[SerializeField] private float platformExitSmoothness = 2f;
-	[SerializeField] private int controlPointsCount = 50;
-	[SerializeField] private float lengthMultiplier = 2f;
-	[SerializeField] private float heightMultiplier = 2f;
-	[SerializeField] private float smoothness = 0.5f;
-	[SerializeField] private float noiseStep = 0.5f;
-	[SerializeField] private float bottom = 10f;
-
-	private Vector3 lastPosition;
-
-	#endregion
-
-	#region UnityMessages
-
-	private void OnValidate()
+	[ExecuteInEditMode]
+	public class TerrainGenerator : MonoBehaviour
 	{
-		spriteShapeController.spline.Clear();
+		#region Variables
 
-		Vector3 startOfGeneratedLevel = transform.position + Vector3.right * platformOnStartLength;
+		[Header("Components")]
+		[SerializeField] private SpriteShapeController spriteShapeController;
 
-		spriteShapeController.spline.InsertPointAt(0, transform.position);
-		spriteShapeController.spline.InsertPointAt(1, startOfGeneratedLevel);
+		[Header("Properties")]
+		[SerializeField] private float platformOnStartLength = 5f;
+		[SerializeField] private float platformExitSmoothness = 2f;
+		[SerializeField] private float leftSideOffset = 10f;
+		[SerializeField] private int controlPointsCount = 50;
+		[SerializeField] private float lengthMultiplier = 2f;
+		[SerializeField] private float heightMultiplier = 2f;
+		[SerializeField] private float smoothness = 0.5f;
+		[SerializeField] private float noiseStep = 0.5f;
+		[SerializeField] private float bottom = 10f;
 
-		startOfGeneratedLevel += Vector3.right * platformExitSmoothness;
+		private Vector3 lastPosition;
 
-		for (int i = 0; i < controlPointsCount; i++)
+		#endregion
+
+		#region UnityMessages
+
+		private void OnValidate()
 		{
-			lastPosition = startOfGeneratedLevel + new Vector3(i * lengthMultiplier, Mathf.PerlinNoise(0, i * noiseStep) * heightMultiplier);
-			spriteShapeController.spline.InsertPointAt(i + 2, lastPosition);
+			spriteShapeController.spline.Clear();
 
-			if (i != 0 && i != controlPointsCount - 1)
+			Vector3 startOfGeneratedLevel = transform.position + Vector3.right * platformOnStartLength;
+
+			spriteShapeController.spline.InsertPointAt(0, transform.position + Vector3.left * leftSideOffset);
+			spriteShapeController.spline.InsertPointAt(1, startOfGeneratedLevel);
+
+			startOfGeneratedLevel = startOfGeneratedLevel + (Vector3.right * platformExitSmoothness);
+
+			for (int i = 0; i < controlPointsCount; i++)
 			{
-				spriteShapeController.spline.SetTangentMode(i, ShapeTangentMode.Continuous);
-				spriteShapeController.spline.SetLeftTangent(i, Vector3.left * lengthMultiplier * smoothness);
-				spriteShapeController.spline.SetRightTangent(i, Vector3.right * lengthMultiplier * smoothness);
+				lastPosition = startOfGeneratedLevel + new Vector3(i * lengthMultiplier, Mathf.PerlinNoise(0, i * noiseStep) * heightMultiplier);
+				spriteShapeController.spline.InsertPointAt(i + 2, lastPosition);
+
+				if (i != 0 && i != controlPointsCount - 1)
+				{
+					spriteShapeController.spline.SetTangentMode(i, ShapeTangentMode.Continuous);
+					spriteShapeController.spline.SetLeftTangent(i, Vector3.left * lengthMultiplier * smoothness);
+					spriteShapeController.spline.SetRightTangent(i, Vector3.right * lengthMultiplier * smoothness);
+				}
 			}
+
+			spriteShapeController.spline.InsertPointAt(controlPointsCount + 2, new Vector3(lastPosition.x, transform.position.y - bottom));
+			spriteShapeController.spline.InsertPointAt(controlPointsCount + 3, new Vector3(transform.position.x - leftSideOffset, transform.position.y - bottom));
 		}
 
-		spriteShapeController.spline.InsertPointAt(controlPointsCount + 2, new Vector3(lastPosition.x, transform.position.y - bottom));
-		spriteShapeController.spline.InsertPointAt(controlPointsCount + 3, new Vector3(transform.position.x, transform.position.y - bottom));
+		#endregion
+
+		#region Functions
+
+
+
+		#endregion
 	}
-
-	#endregion
-
-	#region Functions
-
-
-	#endregion
 }

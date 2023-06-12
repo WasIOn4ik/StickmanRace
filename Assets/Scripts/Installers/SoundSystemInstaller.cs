@@ -2,11 +2,14 @@ using SR.Core;
 using UnityEngine;
 using Zenject;
 
-public class SoundSystemInstaller : MonoInstaller
+namespace SR.Core
 {
-	[SerializeField] private SoundSystem soundSystemPrefab;
-	public override void InstallBindings()
+	public class SoundSystemInstaller : MonoInstaller
 	{
-		Container.Bind<SoundSystem>().FromComponentInNewPrefab(soundSystemPrefab).AsSingle().NonLazy();
+		[SerializeField] private SoundSystem soundSystemPrefab;
+		public override void InstallBindings()
+		{
+			Container.Bind<SoundSystem>().FromComponentInNewPrefab(soundSystemPrefab).AsSingle().NonLazy();
+		}
 	}
 }

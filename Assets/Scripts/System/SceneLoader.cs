@@ -14,6 +14,8 @@ namespace SR.SceneManagement
 
 	public class SceneLoader : MonoBehaviour
 	{
+		#region StaticFunctions
+
 		public static void LoadScene(SRScene scene, LoadSceneMode mode = LoadSceneMode.Single, Action onSceneLoad = null)
 		{
 			var loadOperation = SceneManager.LoadSceneAsync(scene.ToString(), mode);
@@ -26,5 +28,7 @@ namespace SR.SceneManagement
 				};
 			}
 		}
+
+		#endregion
 	}
 }

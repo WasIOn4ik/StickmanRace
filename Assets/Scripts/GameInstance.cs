@@ -4,12 +4,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameInstance : MonoBehaviour
+namespace SR.Core
 {
-	[SerializeField] private MenusListSO menusLibrary;
-
-	private void Awake()
+	public class GameInstance : MonoBehaviour
 	{
-		MenuBase.menusLibrary = menusLibrary;
+		#region Variables
+
+		[SerializeField] private MenusListSO menusLibrary;
+
+		#endregion
+
+		#region UnityMessages
+
+		private void Awake()
+		{
+			MenuBase.menusLibrary = menusLibrary;
+		}
+
+		#endregion
 	}
 }

@@ -8,24 +8,22 @@ namespace SR.Core
 	{
 		#region Variables
 
-		private static bool isSoundEnabled;
+		private bool isSoundEnabled;
 
 		#endregion
 
-		#region StaticVariables
+		#region Functions
 
-		public static SoundSystem instance;
-
-		#endregion
-
-		public static void EnableSound()
+		public void EnableSound()
 		{
 			isSoundEnabled = true;
 		}
 
-		public static void DisableSound()
+		public void DisableSound()
 		{
 			isSoundEnabled = false;
 		}
+
+		#endregion
 	}
 }

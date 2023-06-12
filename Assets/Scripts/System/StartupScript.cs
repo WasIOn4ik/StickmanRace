@@ -4,10 +4,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
-public class StartupScript : MonoBehaviour
+namespace SR.Extras
 {
-	private void Start()
+	public class StartupScript : MonoBehaviour
 	{
-		MenuBase.OpenMenu(MenuType.MainMenu);
+		#region UnityMessages
+
+		private void Start()
+		{
+			//TODO: Loading screen
+			var localeOperation = LocalizationSettings.SelectedLocaleAsync;
+
+			if (localeOperation.IsDone)
+			{
+				ShowMainMenu();
+			}
+			else
+			{
+				localeOperation.Completed += x =>
+				{
+					ShowMainMenu();
+				};
+			}
+		}
+
+		#endregion
+
+		#region Functions
+
+		private void ShowMainMenu()
+		{
+			MenuBase.OpenMenu(MenuType.MainMenu);
+		}
+
+		#endregion
 	}
 }

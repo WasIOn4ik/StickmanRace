@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Localization.Editor;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
@@ -20,6 +18,8 @@ namespace SR.UI
 		private List<LocaleIdentifier> langCodes = new List<LocaleIdentifier>();
 
 		#endregion
+
+		#region UnityMessages
 
 		private void Awake()
 		{
@@ -41,6 +41,10 @@ namespace SR.UI
 
 			});
 		}
+
+		#endregion
+
+		#region Functions
 
 		private void InitLocales()
 		{
@@ -90,6 +94,8 @@ namespace SR.UI
 
 			languageDD.RefreshShownValue();
 		}
+
+		#endregion
 	}
 }
 
