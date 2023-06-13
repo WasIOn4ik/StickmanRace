@@ -66,7 +66,8 @@ namespace SR.Core
 		public void UpdateCameraFollow(Vector3 upperLimit)
 		{
 			var tempPos = cameraFollow.position;
-			tempPos.y = Mathf.MoveTowards(tempPos.y, upperLimit.y = cameraUpperOffset, cameraBlendDelta);
+			tempPos.y = Mathf.MoveTowards(tempPos.y, upperLimit.y + cameraUpperOffset, cameraBlendDelta);
+			tempPos.x = transform.position.x;
 			cameraFollow.position = tempPos;
 		}
 

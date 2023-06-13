@@ -1021,7 +1021,7 @@ WheelJoint2D:
   m_ConnectedAnchor: {x: 0, y: 0}
   m_Suspension:
     m_DampingRatio: 0.4
-    m_Frequency: 4
+    m_Frequency: 4.5
     m_Angle: 90
   m_UseMotor: 0
   m_Motor:
@@ -1045,7 +1045,7 @@ WheelJoint2D:
   m_ConnectedAnchor: {x: 0, y: 0}
   m_Suspension:
     m_DampingRatio: 0.4
-    m_Frequency: 4
+    m_Frequency: 4.5
     m_Angle: 90
   m_UseMotor: 0
   m_Motor:
@@ -1069,3 +1069,5 @@ MonoBehaviour:
   cameraFollow: {fileID: 8516209027165312687}
   velocity: 200
   rotationSpeed: 150
+  cameraUpperOffset: 7
+  cameraBlendDelta: 0.1

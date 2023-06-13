@@ -62,6 +62,7 @@ public class MapGenerator : MonoBehaviour
 			tempTerrain2.Regenerate();
 
 			Debug.Log($"Switch endless: {playerVehicle.transform.position.x} > {activeTerrain.GetWorldRightBorderX()}");
+			Debug.Log($"Camera: {activeTerrain.GetCenter()}");
 		}
 
 		playerVehicle.UpdateCameraFollow(activeTerrain.GetCenter());
