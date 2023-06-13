@@ -13,8 +13,12 @@ namespace SR.UI
 	{
 		#region Variables
 
+		[Header("Components")]
 		[SerializeField] private TMP_Text distanceText;
 		[SerializeField] private TMP_Text timeText;
+		[SerializeField] private TMP_Text healthText;
+
+		[Header("Properties")]
 		[SerializeField] private HoldableButton ForwardButton;
 		[SerializeField] private HoldableButton BackwardButton;
 		[SerializeField] private Transform startPosition;
@@ -34,8 +38,10 @@ namespace SR.UI
 
 		private void Start()
 		{
-			bGameStarted = false;
+			playerVehicle.onHealthChanged += PlayerVehicle_onHealthChanged;
+			playerVehicle.onDeath += PlayerVehicle_onDeath;
 			gameplayBase.onGameStarted += GameplayBase_onGameStarted;
+			bGameStarted = false;
 
 			distanceText.text = "";
 			timeText.text = "";
@@ -57,6 +63,11 @@ namespace SR.UI
 
 		#region Functions
 
+		private void UpdateHealthDisplay(int health)
+		{
+			healthText.text = $"X {health}";
+		}
+
 		private void UpdateInputs()
 		{
 			if (ForwardButton.isPressed)
@@ -75,16 +86,26 @@ namespace SR.UI
 
 		private void UpdateDisplay()
 		{
-			Vector3 difference = playerVehicle.transform.position - startPosition.position;
+			float distance = GetDistance();
 
-			if (difference.x < 0)
+			if (distance < 0)
 				return;
 
-			if (difference.x > maxDistance)
-				maxDistance = difference.x;
+			if (distance > maxDistance)
+				maxDistance = distance;
 
 			distanceText.text = $"{maxDistance:N1} m";
-			timeText.text = $"{Time.time - startTime:N1} s";
+			timeText.text = $"{GetTime():N1} s";
+		}
+
+		private float GetDistance()
+		{
+			return (playerVehicle.transform.position - startPosition.position).x;
+		}
+
+		private float GetTime()
+		{
+			return Time.time - startTime;
 		}
 
 		#endregion
@@ -96,6 +117,21 @@ namespace SR.UI
 			bGameStarted = true;
 			gameObject.SetActive(true);
 			startTime = Time.time;
+
+			UpdateHealthDisplay(playerVehicle.GetHP());
+		}
+
+		private void PlayerVehicle_onHealthChanged(object sender, PlayerVehicle.HealthEventArgs e)
+		{
+			UpdateHealthDisplay(e.hp);
+		}
+
+		private void PlayerVehicle_onDeath(object sender, System.EventArgs e)
+		{
+			gameObject.SetActive(false);
+			var menu = MenuBase.OpenMenu(MenuType.LoseMenu) as LoseMenuUI;
+			ProjectContext.Instance.Container.InjectGameObject(menu.gameObject);
+			menu.UpdateDisplay(GetDistance(), GetTime());
 		}
 
 		#endregion

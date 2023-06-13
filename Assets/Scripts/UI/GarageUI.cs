@@ -15,9 +15,9 @@ public class GarageUI : MonoBehaviour
 	[SerializeField] private Button shopButton;
 	[SerializeField] private TMP_Text distanceText;
 	[SerializeField] private TMP_Text timeText;
-	[SerializeField] private HUD_UI hud;
 
 	[Inject] GameplayBase gameplayBase;
+	[Inject] GameInstance gameInstance;
 
 	#endregion
 
@@ -30,6 +30,19 @@ public class GarageUI : MonoBehaviour
 			gameplayBase.StartGame();
 			Destroy(gameObject);
 		});
+
+		UpdateDisplay();
+	}
+
+	#endregion
+
+	#region Functions
+
+	private void UpdateDisplay()
+	{
+		var records = gameInstance.GetRecords();
+		distanceText.text = records.maxDistance.ToString("#.#") + " m";
+		timeText.text = records.maxTime.ToString("#.#") + " s";
 	}
 
 	#endregion

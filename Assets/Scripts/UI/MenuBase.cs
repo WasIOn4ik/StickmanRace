@@ -9,7 +9,8 @@ namespace SR.UI
 		StartupMenu,
 		MainMenu,
 		SettingsMenu,
-		InGameMenu
+		InGameMenu,
+		LoseMenu
 	}
 
 	public interface MenusLibrary

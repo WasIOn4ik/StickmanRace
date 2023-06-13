@@ -39,6 +39,14 @@ MonoBehaviour:
     m_Key: Game_Garage_Shop_Button
     m_Metadata:
       m_Items: []
+  - m_Id: 409504556470272
+    m_Key: LoseMenu_Distance_Label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409906597285888
+    m_Key: LoseMenu_Time_Label
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

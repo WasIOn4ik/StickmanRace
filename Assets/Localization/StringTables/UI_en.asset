@@ -42,6 +42,14 @@ MonoBehaviour:
     m_Localized: Shop
     m_Metadata:
       m_Items: []
+  - m_Id: 409504556470272
+    m_Localized: 'Your distance:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409906597285888
+    m_Localized: 'You lived:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

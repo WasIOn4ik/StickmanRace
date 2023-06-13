@@ -15,3 +15,4 @@ MonoBehaviour:
   menus:
   - {fileID: 7986825116389287386, guid: e46785d08a69f8a4cb6e63d4a3bed5e0, type: 3}
   - {fileID: 1892440307742123238, guid: e8b5780303e0ddc4d80daf2dcd853e29, type: 3}
+  - {fileID: 7163116714747277530, guid: 6cc61efaa6f89834b90752024b1d0d49, type: 3}

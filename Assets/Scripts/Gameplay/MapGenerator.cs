@@ -26,8 +26,10 @@ public class MapGenerator : MonoBehaviour
 	private void Awake()
 	{
 		var tempTerrain = Instantiate(terrainGeneratorPrefab, startTerrain.GetEndpoint(), Quaternion.identity, transform);
+		tempTerrain.Regenerate();
 		terrainsCache.Enqueue(tempTerrain);
 		activeTerrain = startTerrain;
+		startTerrain.Regenerate();
 	}
 
 	private void Update()
@@ -36,10 +38,12 @@ public class MapGenerator : MonoBehaviour
 		{
 			if (playerVehicle.transform.position.x > startTerrain.GetWorldRightBorderX() && activeTerrain == startTerrain)
 			{
-				var tempTerrain = Instantiate(terrainGeneratorPrefab, startTerrain.GetEndpoint(), Quaternion.identity, transform);
+				var tempTerrain = Instantiate(terrainGeneratorPrefab, terrainsCache.Peek().GetEndpoint(), Quaternion.identity, transform);
+				tempTerrain.Regenerate();
 				terrainsCache.Enqueue(tempTerrain);
 
 				var tempTerrain2 = Instantiate(terrainGeneratorPrefab, tempTerrain.GetEndpoint(), Quaternion.identity, transform);
+				tempTerrain.Regenerate();
 				terrainsCache.Enqueue(tempTerrain2);
 
 				activeTerrain = terrainsCache.Dequeue();
@@ -55,7 +59,6 @@ public class MapGenerator : MonoBehaviour
 			var tempTerrain = terrainsCache.Dequeue();
 			tempTerrain.transform.position = activeTerrain.GetEndpoint();
 			activeTerrain = tempTerrain;
-			activeTerrain.Regenerate();
 
 			var tempTerrain2 = terrainsCache.Peek();
 			tempTerrain2.transform.position = activeTerrain.GetEndpoint();
