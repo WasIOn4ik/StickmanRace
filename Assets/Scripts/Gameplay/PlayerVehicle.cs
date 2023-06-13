@@ -15,10 +15,13 @@ namespace SR.Core
 		[SerializeField] private Rigidbody2D frontTireRB;
 		[SerializeField] private Rigidbody2D backTireRB;
 		[SerializeField] private Rigidbody2D carRB;
+		[SerializeField] private Transform cameraFollow;
 
 		[Header("Properties")]
 		[SerializeField] private float velocity;
 		[SerializeField] private float rotationSpeed;
+		[SerializeField] private float cameraUpperOffset = 3f;
+		[SerializeField] private float cameraBlendDelta = 0.25f;
 
 		[Inject] GameplayBase gameplayBase;
 		[Inject] GameInputs gameInputs;
@@ -58,6 +61,13 @@ namespace SR.Core
 		public void UnFreeze()
 		{
 			bFrozen = false;
+		}
+
+		public void UpdateCameraFollow(Vector3 upperLimit)
+		{
+			var tempPos = cameraFollow.position;
+			tempPos.y = Mathf.MoveTowards(tempPos.y, upperLimit.y = cameraUpperOffset, cameraBlendDelta);
+			cameraFollow.position = tempPos;
 		}
 
 		#endregion
