@@ -61,11 +61,11 @@ namespace SR.Core
 			return transform.TransformPoint(lastPosition);
 		}
 
-		public void Regenerate()
+		public void Regenerate(float difficulty, bool bRandom)
 		{
 			Debug.Log("Generating " + gameObject.name);
 			GenerateTerrain();
-			SpawnAllOutposts();
+			SpawnAllOutposts(difficulty);
 		}
 
 		public Vector3 GetCenter()
@@ -141,18 +141,20 @@ namespace SR.Core
 			spriteShapeController.spline.InsertPointAt(terainControlPointsCount + offset + 1, new Vector3(-platformLeftSideOffset, -terrainBottomHeight));
 		}
 
-		private void SpawnAllOutposts()
+		private void SpawnAllOutposts(float difficulty)
 		{
 			foreach (var point in outpostPoints)
 			{
-				spawnedOutposts.Add(SpawnOutpost(transform.TransformPoint(point)));
+				spawnedOutposts.Add(SpawnOutpost(transform.TransformPoint(point), difficulty));
 			}
 		}
 
-		private Outpost SpawnOutpost(Vector3 position)
+		private Outpost SpawnOutpost(Vector3 position, float difficulty)
 		{
 			int outpostIndex = Random.Range(0, outpostPrefabs.Count);
-			return Instantiate(outpostPrefabs[outpostIndex], position, Quaternion.identity, transform);
+			var outpost = Instantiate(outpostPrefabs[outpostIndex], position, Quaternion.identity, transform);
+			outpost.SetDifficulty(difficulty);
+			return outpost;
 		}
 
 		#endregion

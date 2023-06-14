@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5453133620831285178}
   - component: {fileID: 6174524651834720567}
   - component: {fileID: 6951579280448374081}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,11 +86,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b11751a8e6c86e14b94d362f9bc10932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyVelocity: 4
+  destroyVelocity: 1.75
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  attackDelay: 3
+  attackDelay: 1.25
   bulletPrefab: {fileID: 8914481815421465963, guid: 7492530c0b3ded141b79b0f7350addd1, type: 3}
   bulletSpwnpoint: {fileID: 2579832245826616141}
 --- !u!58 &6951579280448374081
@@ -118,7 +118,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2579832245826616141}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 392786309088838750}
   - component: {fileID: 6285097589090653993}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

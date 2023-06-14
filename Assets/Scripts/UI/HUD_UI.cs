@@ -17,6 +17,7 @@ namespace SR.UI
 		[SerializeField] private TMP_Text distanceText;
 		[SerializeField] private TMP_Text timeText;
 		[SerializeField] private TMP_Text healthText;
+		[SerializeField] private TMP_Text killsText;
 
 		[Header("Properties")]
 		[SerializeField] private HoldableButton ForwardButton;
@@ -31,6 +32,7 @@ namespace SR.UI
 
 		private float startTime;
 		private float maxDistance;
+		private int kills;
 
 		#endregion
 
@@ -41,11 +43,14 @@ namespace SR.UI
 			playerVehicle.onHealthChanged += PlayerVehicle_onHealthChanged;
 			playerVehicle.onDeath += PlayerVehicle_onDeath;
 			gameplayBase.onGameStarted += GameplayBase_onGameStarted;
+			Enemy.onEnemyDeath += Enemy_onEnemyDeath;
 			bGameStarted = false;
 
 			distanceText.text = "";
 			timeText.text = "";
 			maxDistance = 0;
+			kills = 0;
+			killsText.text = "0 X";
 
 			gameObject.SetActive(false);
 		}
@@ -132,6 +137,13 @@ namespace SR.UI
 			var menu = MenuBase.OpenMenu(MenuType.LoseMenu) as LoseMenuUI;
 			ProjectContext.Instance.Container.InjectGameObject(menu.gameObject);
 			menu.UpdateDisplay(GetDistance(), GetTime());
+		}
+
+		private void Enemy_onEnemyDeath(object sender, System.EventArgs e)
+		{
+			kills++;
+
+			killsText.text = kills.ToString() + " X";
 		}
 
 		#endregion

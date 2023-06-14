@@ -23,8 +23,8 @@ namespace SR.UI
 		public void UpdateDisplay(float distance, float time)
 		{
 			gameInstance.TryUpdateRecords(distance, time);
-			distanceText.text = distance.ToString("#.#");
-			timeText.text = time.ToString("#.#");
+			distanceText.text = Mathf.Max(0f, distance).ToString("0.0");
+			timeText.text = time.ToString("0.0");
 		}
 
 		#endregion

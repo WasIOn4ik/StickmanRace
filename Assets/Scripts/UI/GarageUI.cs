@@ -41,8 +41,8 @@ public class GarageUI : MonoBehaviour
 	private void UpdateDisplay()
 	{
 		var records = gameInstance.GetRecords();
-		distanceText.text = records.maxDistance.ToString("#.#") + " m";
-		timeText.text = records.maxTime.ToString("#.#") + " s";
+		distanceText.text = records.maxDistance.ToString("0.0") + " m";
+		timeText.text = records.maxTime.ToString("0.0") + " s";
 	}
 
 	#endregion

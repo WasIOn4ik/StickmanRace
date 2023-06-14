@@ -15,6 +15,14 @@ namespace SR.UI
 
 		#region Functions
 
+		public void SetDifficulty(float difficulty)
+		{
+			foreach(var obstacle in obstacles)
+			{
+				obstacle.SetDifficulty(difficulty);
+			}
+		}
+
 		public void DestroyOutpost()
 		{
 			foreach (var obstacle in obstacles)

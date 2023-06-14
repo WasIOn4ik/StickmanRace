@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6e3fe42e05d7d40a27c3952030c96b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyVelocity: 2.5
+  destroyVelocity: 1.25
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 64

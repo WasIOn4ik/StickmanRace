@@ -12,13 +12,22 @@ namespace SR.Core
 		[SerializeField] private float velocity = 3f;
 		[SerializeField] private LayerMask targetLayerMask;
 
+		private int scaledDamage;
+		private float scaledVelocity;
+
 		#endregion
 
 		#region Functions
 
+		public void InitBullet(float difficulty)
+		{
+			scaledDamage = (int)(damage * difficulty);
+			scaledVelocity = velocity * difficulty;
+		}
+
 		private void Update()
 		{
-			transform.position += transform.right * velocity * Time.deltaTime;
+			transform.position += transform.right * scaledVelocity * Time.deltaTime;
 		}
 
 		private void OnCollisionEnter2D(Collision2D collision)
@@ -26,7 +35,7 @@ namespace SR.Core
 			if (SRUtils.IsInLayerMask(collision.gameObject.layer, targetLayerMask))
 			{
 				var target = collision.gameObject.GetComponent<IDamageable>();
-				target.ApplyDamage(damage);
+				target.ApplyDamage(scaledDamage);
 				Destroy(gameObject);
 			}
 		}
