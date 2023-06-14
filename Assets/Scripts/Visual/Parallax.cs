@@ -11,6 +11,7 @@ namespace SR.Core
 		[SerializeField] private Transform cameraComp;
 		[SerializeField] private SpriteRenderer spriteRenderer;
 		[SerializeField] private float parallaxEffect;
+		[SerializeField] private List<SpriteRenderer> sprites;
 
 		private float length;
 		private float startPos;
@@ -39,6 +40,18 @@ namespace SR.Core
 			else if (temp < startPos - length)
 			{
 				startPos -= length;
+			}
+		}
+
+		#endregion
+
+		#region Functions
+
+		public void SetBackground(Sprite sprite)
+		{
+			foreach(var el in sprites)
+			{
+				el.sprite = sprite;
 			}
 		}
 

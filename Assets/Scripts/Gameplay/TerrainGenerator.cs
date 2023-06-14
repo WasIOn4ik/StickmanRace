@@ -1,3 +1,4 @@
+using SR.Extras;
 using SR.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,7 +25,6 @@ namespace SR.Core
 		[SerializeField] private int outpostDelayPoints = 3;
 		[SerializeField] private int outpostLength = 1;
 		[SerializeField] private int outpostStartPoint = 10;
-		[SerializeField] private List<Outpost> outpostPrefabs = new List<Outpost>();
 		[Header("Terain")]
 		[SerializeField] private int terainControlPointsCount = 50;
 		[SerializeField] private float terrainLengthMultiplier = 2f;
@@ -37,6 +37,8 @@ namespace SR.Core
 
 		private List<Vector3> outpostPoints = new List<Vector3>();
 		private List<Outpost> spawnedOutposts = new List<Outpost>();
+
+		private LocationDescriptor location;
 
 		#endregion
 
@@ -51,6 +53,11 @@ namespace SR.Core
 
 		#region Functions
 
+		public LocationDescriptor GetLocation()
+		{
+			return location;
+		}
+
 		public float GetWorldRightBorderX()
 		{
 			return transform.TransformPoint(lastPosition).x;
@@ -61,11 +68,14 @@ namespace SR.Core
 			return transform.TransformPoint(lastPosition);
 		}
 
-		public void Regenerate(float difficulty, bool bRandom)
+		public void Regenerate(float difficulty, bool bRandom, LocationDescriptor location)
 		{
 			Debug.Log("Generating " + gameObject.name);
+			Clear();
+			this.location = location;
+			UpdateVisual(location);
 			GenerateTerrain();
-			SpawnAllOutposts(difficulty);
+			SpawnAllOutposts(difficulty, location);
 		}
 
 		public Vector3 GetCenter()
@@ -82,6 +92,13 @@ namespace SR.Core
 				outpost.DestroyOutpost();
 			}
 			spawnedOutposts.Clear();
+		}
+
+		private void UpdateVisual(LocationDescriptor location)
+		{
+			spriteShapeController.spriteShape.fillTexture = location.fillTexture;
+			spriteShapeController.spriteShape.angleRanges[0].sprites[0] = location.cornerSprite;
+			spriteShapeController.UpdateSpriteShapeParameters();
 		}
 
 		private void GenerateTerrain()
@@ -141,18 +158,18 @@ namespace SR.Core
 			spriteShapeController.spline.InsertPointAt(terainControlPointsCount + offset + 1, new Vector3(-platformLeftSideOffset, -terrainBottomHeight));
 		}
 
-		private void SpawnAllOutposts(float difficulty)
+		private void SpawnAllOutposts(float difficulty, LocationDescriptor location)
 		{
 			foreach (var point in outpostPoints)
 			{
-				spawnedOutposts.Add(SpawnOutpost(transform.TransformPoint(point), difficulty));
+				spawnedOutposts.Add(SpawnOutpost(transform.TransformPoint(point), difficulty, location));
 			}
 		}
 
-		private Outpost SpawnOutpost(Vector3 position, float difficulty)
+		private Outpost SpawnOutpost(Vector3 position, float difficulty, LocationDescriptor location)
 		{
-			int outpostIndex = Random.Range(0, outpostPrefabs.Count);
-			var outpost = Instantiate(outpostPrefabs[outpostIndex], position, Quaternion.identity, transform);
+			int outpostIndex = Random.Range(0, location.availableOutposts.Count);
+			var outpost = Instantiate(location.availableOutposts[outpostIndex], position, Quaternion.identity, transform);
 			outpost.SetDifficulty(difficulty);
 			return outpost;
 		}

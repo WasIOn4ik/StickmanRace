@@ -1,3 +1,4 @@
+using SR.Customization;
 using SR.SceneManagement;
 using SR.UI;
 using System;
@@ -40,6 +41,7 @@ namespace SR.Core
 		[SerializeField] private Rigidbody2D carRB;
 		[SerializeField] private Transform cameraFollow;
 		[SerializeField] private StickmanHead head;
+		[SerializeField] private InGameCarCustomizer carCustomizer;
 
 		[Header("Properties")]
 		[SerializeField] private CarDescriptor carDescriptor;
@@ -51,6 +53,7 @@ namespace SR.Core
 
 		[Inject] GameplayBase gameplayBase;
 		[Inject] GameInputs gameInputs;
+		[Inject] GameInstance gameInstance;
 
 		private bool bFrozen;
 		private bool bAlive;
@@ -153,6 +156,12 @@ namespace SR.Core
 
 		private void GameplayBase_onGameStarted(object sender, System.EventArgs e)
 		{
+			var car = gameInstance.GetCarConfig();
+			carCustomizer.SetDetail(gameInstance.GetShopLibrary().GetBumper(car.bumper));
+			carCustomizer.SetDetail(gameInstance.GetShopLibrary().GetBackdoor(car.backdoor));
+			carCustomizer.SetDetail(gameInstance.GetShopLibrary().GetWheels(car.wheels));
+			carCustomizer.SetDetail(gameInstance.GetShopLibrary().GetWeapon(car.weapon));
+			carCustomizer.SetDetail(gameInstance.GetShopLibrary().GetStickman(car.stickman));
 			bAlive = true;
 			UnFreeze();
 		}

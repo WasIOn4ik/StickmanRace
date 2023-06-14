@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   identifier: MachinegunWeapon
   sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  color: {r: 0, g: 0.0683181, b: 0.5188679, a: 1}
+  color: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 1}
   stats:
     health: 0
   type: 3
