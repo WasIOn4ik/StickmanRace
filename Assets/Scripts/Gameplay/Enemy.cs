@@ -11,6 +11,7 @@ namespace SR.Core
 
 		[Header("Peoperties")]
 		[SerializeField] private float attackDelay = 3f;
+		[SerializeField] private float firstAttackDelay = 0.3f;
 		[SerializeField] private Bullet bulletPrefab;
 		[SerializeField] private Transform bulletSpwnpoint;
 
@@ -71,7 +72,7 @@ namespace SR.Core
 
 		private IEnumerator HandleAttack()
 		{
-			yield return new WaitForSeconds(0.2f);
+			yield return new WaitForSeconds(firstAttackDelay);
 
 			while (target != null && target.IsAlive())
 			{

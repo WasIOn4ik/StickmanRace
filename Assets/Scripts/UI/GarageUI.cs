@@ -11,6 +11,7 @@ public class GarageUI : MonoBehaviour
 {
 	#region Variables
 
+	[SerializeField] private GameObject objectToDestroy;
 	[SerializeField] private Button playButton;
 	[SerializeField] private Button shopButton;
 	[SerializeField] private TMP_Text distanceText;
@@ -28,7 +29,6 @@ public class GarageUI : MonoBehaviour
 		playButton.onClick.AddListener(() =>
 		{
 			gameplayBase.StartGame();
-			Destroy(gameObject);
 		});
 
 		UpdateDisplay();
@@ -37,6 +37,11 @@ public class GarageUI : MonoBehaviour
 	#endregion
 
 	#region Functions
+
+	public void DestroyGarage()
+	{
+		Destroy(objectToDestroy);
+	}
 
 	private void UpdateDisplay()
 	{

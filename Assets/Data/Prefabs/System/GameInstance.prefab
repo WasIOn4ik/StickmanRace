@@ -45,3 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menusLibrary: {fileID: 11400000, guid: 6fb0b8c444c18204f8c5b0e245d08532, type: 2}
+  shopLibrary: {fileID: 11400000, guid: 1cdd2a9363f7b2447b42d06168e8c09e, type: 2}
+  recordSaveSlot: SR-RecordsT
+  carConfigSaveSlot: SR-CarConfigT

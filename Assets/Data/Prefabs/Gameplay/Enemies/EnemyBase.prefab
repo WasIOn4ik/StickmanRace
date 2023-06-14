@@ -90,7 +90,8 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  attackDelay: 1.25
+  attackDelay: 3
+  firstAttackDelay: 2
   bulletPrefab: {fileID: 8914481815421465963, guid: 7492530c0b3ded141b79b0f7350addd1, type: 3}
   bulletSpwnpoint: {fileID: 2579832245826616141}
 --- !u!58 &6951579280448374081
