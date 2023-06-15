@@ -1,8 +1,10 @@
+using SR.Customization;
 using SR.SceneManagement;
 using SR.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using UnityEngine;
 using Zenject;
@@ -14,7 +16,23 @@ namespace SR.Core
 	{
 		public int health;
 		public float velocity;
-		public float rotationSpeed;
+		public float meleeDamage;
+		public float acceleration;
+
+		public static CarDescriptor operator +(CarDescriptor a, CarDetailStats stats)
+		{
+			a.health += stats.health;
+			a.velocity += stats.velocity;
+			a.meleeDamage += stats.meleeDamage;
+			a.acceleration += stats.acceleration;
+
+			return a;
+		}
+
+		public override string ToString()
+		{
+			return $"hp: {health}, vel: {velocity}, mel: {meleeDamage}, acc: {acceleration}";
+		}
 	}
 
 	public interface IDamageable
@@ -40,22 +58,26 @@ namespace SR.Core
 		[SerializeField] private Rigidbody2D carRB;
 		[SerializeField] private Transform cameraFollow;
 		[SerializeField] private StickmanHead head;
+		[SerializeField] private InGameCarCustomizer carCustomizer;
+		[SerializeField] private PlayerWeapon weaponController;
 
 		[Header("Properties")]
-		[SerializeField] private CarDescriptor carDescriptor;
+		[SerializeField] private CarDescriptor baseCarDescriptor;
 		[SerializeField] private float cameraUpperOffset = 3f;
+		[SerializeField] private float cameraRightOffset = 3f;
 		[SerializeField] private float cameraBlendDelta = 0.25f;
+
+		private CarDescriptor fullCarDescriptor;
 
 		public event EventHandler<HealthEventArgs> onHealthChanged;
 		public event EventHandler onDeath;
 
 		[Inject] GameplayBase gameplayBase;
 		[Inject] GameInputs gameInputs;
+		[Inject] GameInstance gameInstance;
 
 		private bool bFrozen;
 		private bool bAlive;
-
-		private int currentHP;
 
 		#endregion
 
@@ -65,8 +87,6 @@ namespace SR.Core
 		{
 			Freeze();
 			gameplayBase.onGameStarted += GameplayBase_onGameStarted;
-			//DEBUG
-			ApplyCar(carDescriptor);
 		}
 
 		private void FixedUpdate()
@@ -75,14 +95,26 @@ namespace SR.Core
 				return;
 
 			float input = gameInputs.GetMovement();
-			frontTireRB.AddTorque(-input * carDescriptor.velocity * Time.fixedDeltaTime);
-			backTireRB.AddTorque(-input * carDescriptor.velocity * Time.fixedDeltaTime);
-			carRB.AddTorque(input * carDescriptor.rotationSpeed * Time.fixedDeltaTime);
+			frontTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
+			backTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
+			carRB.AddTorque(input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
+			carRB.velocity = Vector2.ClampMagnitude(carRB.velocity, fullCarDescriptor.velocity);
 		}
 
 		#endregion
 
 		#region Functions
+
+		public float GetVelocity()
+		{
+			Debug.Log(carRB.velocity.magnitude);
+			return carRB.velocity.magnitude;
+		}
+
+		public float GetDamage()
+		{
+			return carRB.velocity.magnitude + fullCarDescriptor.meleeDamage;
+		}
 
 		public Vector3 GetHeadPosition()
 		{
@@ -96,14 +128,14 @@ namespace SR.Core
 
 		public void ApplyDamage(int damage)
 		{
-			currentHP -= damage;
-			if (currentHP <= 0)
+			fullCarDescriptor.health -= damage;
+			if (fullCarDescriptor.health <= 0)
 			{
 				Death();
 			}
 			else
 			{
-				onHealthChanged?.Invoke(this, new HealthEventArgs() { hp = currentHP });
+				onHealthChanged?.Invoke(this, new HealthEventArgs() { hp = fullCarDescriptor.health });
 			}
 		}
 
@@ -120,7 +152,7 @@ namespace SR.Core
 
 		public int GetHP()
 		{
-			return currentHP;
+			return fullCarDescriptor.health;
 		}
 
 		public void Freeze()
@@ -137,14 +169,8 @@ namespace SR.Core
 		{
 			var tempPos = cameraFollow.position;
 			tempPos.y = Mathf.MoveTowards(tempPos.y, upperLimit.y + cameraUpperOffset, cameraBlendDelta);
-			tempPos.x = transform.position.x;
+			tempPos.x = transform.position.x + cameraRightOffset;
 			cameraFollow.position = tempPos;
-		}
-
-		private void ApplyCar(CarDescriptor newCarDescriptor)
-		{
-			carDescriptor = newCarDescriptor;
-			currentHP = carDescriptor.health;
 		}
 
 		#endregion
@@ -153,8 +179,39 @@ namespace SR.Core
 
 		private void GameplayBase_onGameStarted(object sender, System.EventArgs e)
 		{
+			var car = gameInstance.GetCarConfig();
+
+			fullCarDescriptor = baseCarDescriptor;
+
+			var bumper = gameInstance.GetShopLibrary().GetBumper(car.bumper);
+			fullCarDescriptor += bumper.stats;
+			carCustomizer.SetDetail(bumper);
+
+			var backdoor = gameInstance.GetShopLibrary().GetBackdoor(car.backdoor);
+			fullCarDescriptor += backdoor.stats;
+			carCustomizer.SetDetail(backdoor);
+
+			var wheels = gameInstance.GetShopLibrary().GetWheels(car.wheels);
+			fullCarDescriptor += wheels.stats;
+			carCustomizer.SetDetail(wheels);
+
+			var weapon = gameInstance.GetShopLibrary().GetWeapon(car.weapon);
+			fullCarDescriptor += weapon.stats;
+			carCustomizer.SetDetail(weapon);
+			weaponController.SetWeapon(weapon);
+
+			var stickman = gameInstance.GetShopLibrary().GetStickman(car.stickman);
+			fullCarDescriptor += stickman.stats;
+			carCustomizer.SetDetail(stickman);
+
+			onHealthChanged?.Invoke(this, new HealthEventArgs() { hp = fullCarDescriptor.health });
 			bAlive = true;
 			UnFreeze();
+
+			weaponController.StartShooting();
+
+			Debug.Log(baseCarDescriptor);
+			Debug.LogWarning(fullCarDescriptor);
 		}
 
 		#endregion

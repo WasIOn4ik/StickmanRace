@@ -45,3 +45,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menusLibrary: {fileID: 11400000, guid: 6fb0b8c444c18204f8c5b0e245d08532, type: 2}
+  shopLibrary: {fileID: 11400000, guid: 1cdd2a9363f7b2447b42d06168e8c09e, type: 2}
+  recordSaveSlot: SR-RecordsT
+  carConfigSaveSlot: SR-CarConfigT
+  unlockedDetailsSaveSlot: SR-Unlocked
+  gameSettingsSaveSlot: SR-GameSettings
+  distanceMarkers:
+  - m
+  - K m
+  - M m
+  - Bn m
+  - Bd m
+  - Tn m
+  - Td m
+  - Qn m
+  - Qd m
+  - QD m
+  - Sn m
+  - Sd m
+  - SN m
+  - SD m
+  - On m
+  - Od m
+  - Nn m
+  - Nd m
+  - Dn m
+  - Dd m
+  distanceToGemsPow: 1.3
+  distanceDemultiplier: 20

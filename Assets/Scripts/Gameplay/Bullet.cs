@@ -19,10 +19,25 @@ namespace SR.Core
 
 		#region Functions
 
-		public void InitBullet(float difficulty)
+		private void Awake()
 		{
-			scaledDamage = (int)(damage * difficulty);
+			scaledDamage = damage;
+		}
+
+		public void InitBullet(float difficulty)
+		{/*
+			scaledDamage = (int)(damage * difficulty);*/
 			scaledVelocity = velocity * difficulty;
+		}
+
+		public void SetVelocity(float vel)
+		{
+			scaledVelocity = vel;
+		}
+
+		public void SetDamage(int dmg)
+		{
+			scaledDamage = dmg;
 		}
 
 		private void Update()

@@ -1,9 +1,11 @@
+using SR.Core;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
+using Zenject;
 
 namespace SR.UI
 {
@@ -12,8 +14,15 @@ namespace SR.UI
 		#region Variables
 
 		[SerializeField] private TMP_Dropdown languageDD;
-		[SerializeField] private Toggle soundToggle;
+		[SerializeField] private Button soundToggle;
+		[SerializeField] private Image soundImage;
 		[SerializeField] private Button backButton;
+
+		[SerializeField] private Sprite soundsOn;
+		[SerializeField] private Sprite soundsOff;
+
+		[Inject] GameInstance gameInstance;
+		[Inject] SoundSystem soundSystem;
 
 		private List<LocaleIdentifier> langCodes = new List<LocaleIdentifier>();
 
@@ -24,6 +33,8 @@ namespace SR.UI
 		private void Awake()
 		{
 			InitLocales();
+
+			soundImage.sprite = soundSystem.IsSoundEnabled() ? soundsOn : soundsOff;
 
 			languageDD.onValueChanged.AddListener(x =>
 			{
@@ -36,9 +47,19 @@ namespace SR.UI
 				Close();
 			});
 
-			soundToggle.onValueChanged.AddListener(x =>
+			soundToggle.onClick.AddListener(() =>
 			{
-
+				if (soundSystem.IsSoundEnabled())
+				{
+					soundSystem.DisableSound();
+					soundImage.sprite = soundsOff;
+				}
+				else
+				{
+					soundSystem.EnableSound();
+					soundImage.sprite = soundsOn;
+				}
+				gameInstance.SaveGameSettings();
 			});
 		}
 

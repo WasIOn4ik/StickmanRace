@@ -11,6 +11,7 @@ namespace SR.Core
 
 		[Header("Peoperties")]
 		[SerializeField] private float attackDelay = 3f;
+		[SerializeField] private float firstAttackDelay = 0.3f;
 		[SerializeField] private Bullet bulletPrefab;
 		[SerializeField] private Transform bulletSpwnpoint;
 
@@ -50,11 +51,7 @@ namespace SR.Core
 
 		private void Attack()
 		{
-			Vector3 diff = target.GetHeadPosition() - bulletSpwnpoint.position;
-			diff.Normalize();
-
-			float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-
+			float rot_z = SRUtils.GetRotationTo(bulletSpwnpoint.position, target.GetHeadPosition());
 			var bullet = Instantiate(bulletPrefab);
 			bullet.InitBullet(difficultyCoef);
 			bullet.transform.position = bulletSpwnpoint.position;
@@ -63,6 +60,7 @@ namespace SR.Core
 			var bulletRot = bullet.transform.eulerAngles;
 			bulletRot.x = 0;
 			bullet.transform.eulerAngles = bulletRot;
+			Destroy(bullet, 3f);
 		}
 
 		#endregion
@@ -71,7 +69,7 @@ namespace SR.Core
 
 		private IEnumerator HandleAttack()
 		{
-			yield return new WaitForSeconds(0.2f);
+			yield return new WaitForSeconds(firstAttackDelay);
 
 			while (target != null && target.IsAlive())
 			{

@@ -10,5 +10,13 @@ namespace SR.Core
 		{
 			return layerMask == (layerMask | (1 << layer));
 		}
+
+		public static float GetRotationTo(Vector3 from, Vector3 to)
+		{
+			Vector3 diff = to - from;
+			diff.Normalize();
+
+			return Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+		}
 	}
 }

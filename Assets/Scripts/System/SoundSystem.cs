@@ -14,6 +14,11 @@ namespace SR.Core
 
 		#region Functions
 
+		public bool IsSoundEnabled()
+		{
+			return isSoundEnabled;
+		}
+
 		public void EnableSound()
 		{
 			isSoundEnabled = true;
