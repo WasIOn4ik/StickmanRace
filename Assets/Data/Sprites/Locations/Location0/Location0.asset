@@ -15,10 +15,11 @@ MonoBehaviour:
   bPixel: 1
   bUseDefault: 1
   availableOutposts: []
-  background0: {fileID: 21300000, guid: 8561de75836fa478e9cb13037cb8d396, type: 3}
-  background1: {fileID: 21300000, guid: bd2ed19c600664c93be55455c8a85686, type: 3}
-  background2: {fileID: 21300000, guid: 4b7c10231d5894a75a97394241166338, type: 3}
-  background3: {fileID: 21300000, guid: fc3e44d61eb0a4d23a4a8ba0f7e28b5a, type: 3}
-  background4: {fileID: 21300000, guid: 243da51c68b05408bacd465761bf3ccd, type: 3}
+  backgrounds:
+  - {fileID: 21300000, guid: 8561de75836fa478e9cb13037cb8d396, type: 3}
+  - {fileID: 21300000, guid: bd2ed19c600664c93be55455c8a85686, type: 3}
+  - {fileID: 21300000, guid: 4b7c10231d5894a75a97394241166338, type: 3}
+  - {fileID: 21300000, guid: fc3e44d61eb0a4d23a4a8ba0f7e28b5a, type: 3}
+  - {fileID: 21300000, guid: 243da51c68b05408bacd465761bf3ccd, type: 3}
   fillTexture: {fileID: 2800000, guid: 987628a106b254d74bdd14018a463290, type: 3}
   cornerSprite: {fileID: 21300000, guid: ff6ad7f0b84f646e5a733fe95155c65f, type: 3}

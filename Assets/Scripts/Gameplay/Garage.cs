@@ -29,6 +29,11 @@ namespace SR.Core
 			Init();
 		}
 
+		private void OnDestroy()
+		{
+			gameInstance.onDetailChanged -= GameInstance_onDetailChanged;
+		}
+
 		#endregion
 
 		#region Functions

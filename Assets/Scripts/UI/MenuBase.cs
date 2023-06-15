@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace SR.UI
 {
@@ -39,13 +41,24 @@ namespace SR.UI
 
 		#region StaticFunctions
 
-		public static MenuBase OpenMenu(MenuType type, MenuBase caller = null)
+		public static MenuBase OpenMenu(MenuType type, bool inject, MenuBase caller = null)
 		{
 			foreach (var m in menusLibrary.GetMenus())
 			{
 				if (m.menuType == type)
 				{
-					MenuBase newMenu = Instantiate(m);
+					MenuBase newMenu = null;
+					if (inject)
+					{
+						newMenu = ProjectContext.Instance.Container.InstantiatePrefabForComponent<MenuBase>(m);
+						newMenu.transform.parent = null;
+						SceneManager.MoveGameObjectToScene(newMenu.gameObject, SceneManager.GetActiveScene());
+					}
+					else
+					{
+						newMenu = Instantiate(m);
+					}
+
 					newMenu.Show(caller);
 					return newMenu;
 				}

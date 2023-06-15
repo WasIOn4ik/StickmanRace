@@ -4,15 +4,28 @@ using SR.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
+using Zenject;
 
 namespace SR.Core
 {
 	[Serializable]
 	public struct GameRecords
 	{
-		public float maxDistance;
+		public float totalDistance;
 		public float maxTime;
+		public int gems;
+	}
+
+	[Serializable]
+	public class UnlockedDetails
+	{
+		public List<string> unlockedWheels = new();
+		public List<string> unlockedBumpers = new();
+		public List<string> unlockedBackdoors = new();
+		public List<string> unlockedWeapons = new();
+		public List<string> unlockedStickmans = new();
 	}
 
 	[Serializable]
@@ -23,6 +36,12 @@ namespace SR.Core
 		public string backdoor;
 		public string weapon;
 		public string stickman;
+	}
+
+	[Serializable]
+	public struct GameSettings
+	{
+		public bool bSoundsOn;
 	}
 
 	public class GameInstance : MonoBehaviour
@@ -45,11 +64,23 @@ namespace SR.Core
 		[Header("Properties")]
 		[SerializeField] private string recordSaveSlot;
 		[SerializeField] private string carConfigSaveSlot;
+		[SerializeField] private string unlockedDetailsSaveSlot;
+		[SerializeField] private string gameSettingsSaveSlot;
+		[SerializeField] private List<string> distanceMarkers;
+
+		[Header("Gems")]
+		[SerializeField] private float distanceToGemsPow = 1.5f;
+		[SerializeField] private float distanceDemultiplier = 50f;
 
 		public event EventHandler<DetailEventArgs> onDetailChanged;
+		public event EventHandler onGemsCountChanged;
 
-		private GameRecords records = new GameRecords() { maxDistance = 0f, maxTime = 0f };
+		private GameRecords records = new GameRecords() { totalDistance = 0f, maxTime = 0f };
 		private CarConfig carConfig = new CarConfig();
+		private UnlockedDetails unlockedDetails;
+		private GameSettings GameSettings = new GameSettings() { bSoundsOn = true };
+
+		[Inject] SoundSystem soundSystem;
 
 		#endregion
 
@@ -60,11 +91,81 @@ namespace SR.Core
 			MenuBase.menusLibrary = menusLibrary;
 			LoadRecords();
 			LoadCarConfig();
+			LoadUnlockedDetails();
+			InitializeShop();
 		}
 
 		#endregion
 
 		#region Functions
+
+		public bool IsEquipped(CarDetailSO detail)
+		{
+			switch (detail.type)
+			{
+				case CarDetailType.Wheels:
+					return detail.identifier == carConfig.wheels;
+				case CarDetailType.Bumper:
+					return detail.identifier == carConfig.bumper;
+				case CarDetailType.BackDoor:
+					return detail.identifier == carConfig.backdoor;
+				case CarDetailType.Weapon:
+					return detail.identifier == carConfig.weapon;
+				case CarDetailType.Stickman:
+					return detail.identifier == carConfig.stickman;
+			}
+
+			return false;
+		}
+
+		public bool TryBuyDetail(CarDetailSO detail)
+		{
+			if (detail.price <= records.gems)
+			{
+				records.gems -= detail.price;
+				detail.bUnlocked = true;
+				switch (detail.type)
+				{
+					case CarDetailType.Wheels:
+						unlockedDetails.unlockedWheels.Add(detail.identifier);
+						break;
+					case CarDetailType.Bumper:
+						unlockedDetails.unlockedBumpers.Add(detail.identifier);
+						break;
+					case CarDetailType.BackDoor:
+						unlockedDetails.unlockedBackdoors.Add(detail.identifier);
+						break;
+					case CarDetailType.Weapon:
+						unlockedDetails.unlockedWeapons.Add(detail.identifier);
+						break;
+					case CarDetailType.Stickman:
+						unlockedDetails.unlockedStickmans.Add(detail.identifier);
+						break;
+				}
+				SaveUnlockedDetails();
+				TryUpdateCarConfig(detail);
+				onGemsCountChanged?.Invoke(this, EventArgs.Empty);
+				return true;
+			}
+			return false;
+		}
+
+		public string GetDistanceString()
+		{
+			float tempDistance = records.totalDistance;
+
+			int val = 0;
+
+			while (tempDistance >= 1000f)
+			{
+				tempDistance /= 1000f;
+				val++;
+			}
+			StringBuilder sb = new StringBuilder();
+			sb.Append(tempDistance.ToString("0.0")).Append(distanceMarkers[val]);
+
+			return sb.ToString();
+		}
 
 		public ShopLibrarySO GetShopLibrary()
 		{
@@ -83,22 +184,15 @@ namespace SR.Core
 
 		public void TryUpdateRecords(float distance, float time)
 		{
-			bool changed = false;
-
-			if (distance > records.maxDistance)
-			{
-				records.maxDistance = distance;
-				changed = true;
-			}
+			records.totalDistance += distance;
+			records.gems += DistanceToGems(distance);
 
 			if (time > records.maxTime)
 			{
 				records.maxTime = time;
-				changed = true;
 			}
 
-			if (changed)
-				SaveRecords();
+			SaveRecords();
 		}
 
 		public void TryUpdateCarConfig(CarDetailSO newDetail)
@@ -138,6 +232,36 @@ namespace SR.Core
 			PlayerPrefs.SetString(carConfigSaveSlot, str);
 		}
 
+		public void SaveGameSettings()
+		{
+			string str = JsonUtility.ToJson(GameSettings);
+			PlayerPrefs.SetString(gameSettingsSaveSlot, str);
+		}
+
+		public void LoadGameSettings()
+		{
+			if (PlayerPrefs.HasKey(gameSettingsSaveSlot))
+			{
+				var str = PlayerPrefs.GetString(gameSettingsSaveSlot);
+				GameSettings = JsonUtility.FromJson<GameSettings>(str);
+			}
+			else
+			{
+				SaveGameSettings();
+			}
+
+			if (GameSettings.bSoundsOn)
+				soundSystem.EnableSound();
+			else
+				soundSystem.DisableSound();
+		}
+
+		public void SaveUnlockedDetails()
+		{
+			string str = JsonUtility.ToJson(unlockedDetails);
+			PlayerPrefs.SetString(unlockedDetailsSaveSlot, str);
+		}
+
 		private void LoadRecords()
 		{
 			if (PlayerPrefs.HasKey(recordSaveSlot))
@@ -163,6 +287,61 @@ namespace SR.Core
 				carConfig = shopLibrary.GetStandartCar();
 				SaveCarConfig();
 			}
+		}
+
+		private void LoadUnlockedDetails()
+		{
+			if (PlayerPrefs.HasKey(unlockedDetailsSaveSlot))
+			{
+				string str = PlayerPrefs.GetString(unlockedDetailsSaveSlot);
+				unlockedDetails = JsonUtility.FromJson<UnlockedDetails>(str);
+			}
+			else
+			{
+				var defaultCar = shopLibrary.GetStandartCar();
+				unlockedDetails = new UnlockedDetails();
+				unlockedDetails.unlockedWeapons.Add(defaultCar.weapon);
+				unlockedDetails.unlockedWheels.Add(defaultCar.wheels);
+				unlockedDetails.unlockedBumpers.Add(defaultCar.bumper);
+				unlockedDetails.unlockedStickmans.Add(defaultCar.stickman);
+				unlockedDetails.unlockedBackdoors.Add(defaultCar.backdoor);
+				SaveUnlockedDetails();
+			}
+
+			foreach (var w in unlockedDetails.unlockedWeapons)
+			{
+				shopLibrary.GetWeapon(w).bUnlocked = true;
+			}
+
+			foreach (var w in unlockedDetails.unlockedWheels)
+			{
+				shopLibrary.GetWheels(w).bUnlocked = true;
+			}
+
+			foreach (var b in unlockedDetails.unlockedBumpers)
+			{
+				shopLibrary.GetBumper(b).bUnlocked = true;
+			}
+
+			foreach (var b in unlockedDetails.unlockedBackdoors)
+			{
+				shopLibrary.GetBackdoor(b).bUnlocked = true;
+			}
+
+			foreach (var s in unlockedDetails.unlockedStickmans)
+			{
+				shopLibrary.GetStickman(s).bUnlocked = true;
+			}
+		}
+
+		private int DistanceToGems(float distance)
+		{
+			return (int)Mathf.Pow(distance / distanceDemultiplier, distanceToGemsPow);
+		}
+
+		private void InitializeShop()
+		{
+			shopLibrary.Initialize();
 		}
 
 

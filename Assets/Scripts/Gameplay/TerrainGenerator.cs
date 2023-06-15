@@ -1,14 +1,11 @@
 using SR.Extras;
 using SR.UI;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.U2D;
 
 namespace SR.Core
 {
-	[ExecuteInEditMode]
 	public class TerrainGenerator : MonoBehaviour
 	{
 		#region Variables
@@ -43,6 +40,13 @@ namespace SR.Core
 		#endregion
 
 		#region UnityMessages
+
+		private void Awake()
+		{
+			var proto = spriteShapeController.spriteShape;
+			spriteShapeController.spriteShape = ScriptableObject.CreateInstance<SpriteShape>();
+			spriteShapeController.spriteShape.angleRanges = proto.angleRanges;
+		}
 
 		private void OnValidate()
 		{
@@ -96,9 +100,11 @@ namespace SR.Core
 
 		private void UpdateVisual(LocationDescriptor location)
 		{
+			//EditorUtility.SetDirty(spriteShapeController.spriteShape);
 			spriteShapeController.spriteShape.fillTexture = location.fillTexture;
 			spriteShapeController.spriteShape.angleRanges[0].sprites[0] = location.cornerSprite;
 			spriteShapeController.UpdateSpriteShapeParameters();
+			//EditorUtility.SetDirty(spriteShapeController.spriteShape);
 		}
 
 		private void GenerateTerrain()

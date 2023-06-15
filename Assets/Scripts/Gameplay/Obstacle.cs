@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SR.Core
 {
-	public class Obstacle : MonoBehaviour
+	public class Obstacle : MonoBehaviour, IDamageable
 	{
 		#region Variables
 
@@ -25,9 +25,13 @@ namespace SR.Core
 
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
-			if (SRUtils.IsInLayerMask(collision.gameObject.layer, playerLayerMask) && collision.rigidbody.velocity.magnitude > scaledDestroyVelocity)
+			if (SRUtils.IsInLayerMask(collision.gameObject.layer, playerLayerMask))
 			{
-				OnPlayerCollisionConfirmed();
+				var player = collision.gameObject.GetComponent<PlayerVehicle>();
+				if (player.GetDamage() > scaledDestroyVelocity)
+				{
+					OnPlayerCollisionConfirmed();
+				}
 			}
 		}
 
@@ -38,6 +42,20 @@ namespace SR.Core
 		public virtual void SetDifficulty(float difficulty)
 		{
 			scaledDestroyVelocity = destroyVelocity * difficulty;
+		}
+
+		#endregion
+
+		#region IDamageable
+
+		public void ApplyDamage(int value)
+		{
+			scaledDestroyVelocity -= value;
+
+			if (scaledDestroyVelocity <= 0)
+			{
+				OnPlayerCollisionConfirmed();
+			}
 		}
 
 		#endregion

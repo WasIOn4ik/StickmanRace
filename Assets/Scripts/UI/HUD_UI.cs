@@ -134,7 +134,7 @@ namespace SR.UI
 		private void PlayerVehicle_onDeath(object sender, System.EventArgs e)
 		{
 			gameObject.SetActive(false);
-			var menu = MenuBase.OpenMenu(MenuType.LoseMenu) as LoseMenuUI;
+			var menu = MenuBase.OpenMenu(MenuType.LoseMenu, true) as LoseMenuUI;
 			ProjectContext.Instance.Container.InjectGameObject(menu.gameObject);
 			menu.UpdateDisplay(GetDistance(), GetTime());
 		}

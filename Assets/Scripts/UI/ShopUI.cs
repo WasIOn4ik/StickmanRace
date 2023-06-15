@@ -118,7 +118,7 @@ namespace SR.UI
 
 			for (int i = 0; i < list.Count; i++)
 			{
-				spawnedSlots[i].InitSlot(gameInstance, list[i]);
+				spawnedSlots[i].InitSlot(this, gameInstance, list[i]);
 			}
 		}
 

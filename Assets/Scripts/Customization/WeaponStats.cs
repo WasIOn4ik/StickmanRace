@@ -4,6 +4,8 @@ using System;
 [Serializable]
 public struct WeaponStats
 {
-	public float damage;
+	public int damage;
 	public float fireRate;
+	public float shootDistance;
+	public float velocity;
 }

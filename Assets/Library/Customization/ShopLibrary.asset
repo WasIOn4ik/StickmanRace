@@ -12,24 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb79f2f937f537458b3823418a93c76, type: 3}
   m_Name: ShopLibrary
   m_EditorClassIdentifier: 
+  startPrice: 5
   bumpers:
-  - {fileID: 11400000, guid: c5edb9f531c0d004d84b74c72aef2bc1, type: 2}
   - {fileID: 11400000, guid: 759fea2d8dba1564aa61306a8a4fd1c7, type: 2}
   - {fileID: 11400000, guid: c608e8fa0627cb84191a9697dc9d5432, type: 2}
+  - {fileID: 11400000, guid: c5edb9f531c0d004d84b74c72aef2bc1, type: 2}
+  - {fileID: 11400000, guid: 1a29cb7fea76a9f4a827dc9364947240, type: 2}
+  - {fileID: 11400000, guid: b77842060c3a3e54c83e1c13a0344ae6, type: 2}
   wheels:
-  - {fileID: 11400000, guid: 41e940ab408349c40a8c0691540fab71, type: 2}
   - {fileID: 11400000, guid: 6f2b3d74a164a5745b14b5db7e0993e5, type: 2}
+  - {fileID: 11400000, guid: 41e940ab408349c40a8c0691540fab71, type: 2}
+  - {fileID: 11400000, guid: 4e2d9644d121ef74eae989bc2b68cd94, type: 2}
+  - {fileID: 11400000, guid: c70e11641571007438d2f6ac473dc272, type: 2}
+  - {fileID: 11400000, guid: a8c16e0c382283a42836f08daa5eaa21, type: 2}
   backdoors:
   - {fileID: 11400000, guid: fc28fd12f4d620d498b14ed19257d21e, type: 2}
   - {fileID: 11400000, guid: b6eb493a70fe6a7499e97b8331b2b99b, type: 2}
   - {fileID: 11400000, guid: bc405b57f867e7d4e9fd1c97921b1264, type: 2}
+  - {fileID: 11400000, guid: ee11518feed78bd4597ec2da770f9168, type: 2}
+  - {fileID: 11400000, guid: fdae805511d6e744083d977706e8f42e, type: 2}
+  - {fileID: 11400000, guid: 2a5f40d0539d74c46bb00c94c114f73e, type: 2}
   weapons:
-  - {fileID: 11400000, guid: e27d266bbc4d1cd46a6c9cb86c8c5b7f, type: 2}
   - {fileID: 11400000, guid: 7155c542b79f5c24a8ac858f5eccfc99, type: 2}
+  - {fileID: 11400000, guid: e27d266bbc4d1cd46a6c9cb86c8c5b7f, type: 2}
+  - {fileID: 11400000, guid: 167228ce6db9ab1468b0cfb5588e4d17, type: 2}
+  - {fileID: 11400000, guid: 8c817a0703cf4da45a329ae85d635eac, type: 2}
   stickmans:
   - {fileID: 11400000, guid: c291277b355706e4098331c5ee9bf035, type: 2}
+  - {fileID: 11400000, guid: be23627092a5f8f4081b993766ae377b, type: 2}
   startBumper: {fileID: 11400000, guid: 759fea2d8dba1564aa61306a8a4fd1c7, type: 2}
   startWheels: {fileID: 11400000, guid: 6f2b3d74a164a5745b14b5db7e0993e5, type: 2}
-  startBackDoor: {fileID: 11400000, guid: b6eb493a70fe6a7499e97b8331b2b99b, type: 2}
+  startBackDoor: {fileID: 11400000, guid: fc28fd12f4d620d498b14ed19257d21e, type: 2}
   startWeapon: {fileID: 11400000, guid: 7155c542b79f5c24a8ac858f5eccfc99, type: 2}
   startStickman: {fileID: 11400000, guid: c291277b355706e4098331c5ee9bf035, type: 2}

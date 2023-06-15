@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bPixel: 0
   bUseDefault: 1
-  availableOutposts: []
-  background0: {fileID: 21300000, guid: 711fa56e01bfde243a7708a951b39087, type: 3}
-  background1: {fileID: 0}
-  background2: {fileID: 0}
-  background3: {fileID: 0}
-  background4: {fileID: 0}
-  fillTexture: {fileID: 2800000, guid: 987628a106b254d74bdd14018a463290, type: 3}
-  cornerSprite: {fileID: 21300000, guid: ff6ad7f0b84f646e5a733fe95155c65f, type: 3}
+  availableOutposts:
+  - {fileID: 143290431394723042, guid: 7dc0e7121c428154c908841858842c51, type: 3}
+  - {fileID: 143290431394723042, guid: ca1853a8617d83348bc3d6ee7d3fcdec, type: 3}
+  - {fileID: 143290431394723042, guid: 922a9f09bbd59f1418c92547acdca900, type: 3}
+  - {fileID: 143290431394723042, guid: 2d5674a8ca318bf4dbf4fa53afecac48, type: 3}
+  backgrounds:
+  - {fileID: 21300000, guid: 711fa56e01bfde243a7708a951b39087, type: 3}
+  fillTexture: {fileID: 2800000, guid: 890f9e3a8e646b14c8ca244243742f18, type: 3}
+  cornerSprite: {fileID: 21300000, guid: a5dceb39223cd0d4ca0fbd9bbd7fed90, type: 3}

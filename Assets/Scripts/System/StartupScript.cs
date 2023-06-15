@@ -34,7 +34,7 @@ namespace SR.Extras
 
 		private void ShowMainMenu()
 		{
-			MenuBase.OpenMenu(MenuType.MainMenu);
+			MenuBase.OpenMenu(MenuType.MainMenu, false);
 		}
 
 		#endregion

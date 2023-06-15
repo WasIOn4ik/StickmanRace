@@ -7,6 +7,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SR/ShopLibrary")]
 public class ShopLibrarySO : ScriptableObject
 {
+	public int startPrice = 5;
+	public int priceMultiplier = 4;
+
 	public List<BumperSO> bumpers;
 	public List<WheelsSO> wheels;
 	public List<BackDoorSO> backdoors;
@@ -62,7 +65,7 @@ public class ShopLibrarySO : ScriptableObject
 		switch (category)
 		{
 			case CarDetailType.Wheels:
-				foreach(var el in wheels)
+				foreach (var el in wheels)
 				{
 					list.Add(el);
 				}
@@ -94,5 +97,48 @@ public class ShopLibrarySO : ScriptableObject
 		}
 
 		return list;
+	}
+
+	public void Initialize()
+	{
+		int price = startPrice;
+
+		for (int i = 1; i < bumpers.Count; i++)
+		{
+			bumpers[i].price = price;
+			price *= priceMultiplier;
+		}
+
+		price = startPrice;
+
+		for (int i = 1; i < wheels.Count; i++)
+		{
+			wheels[i].price = price;
+			price *= priceMultiplier;
+		}
+
+		price = startPrice;
+
+		for (int i = 1; i < backdoors.Count; i++)
+		{
+			backdoors[i].price = price;
+			price *= priceMultiplier;
+		}
+
+		price = startPrice;
+
+		for (int i = 1; i < weapons.Count; i++)
+		{
+			weapons[i].price = price;
+			price *= priceMultiplier;
+		}
+
+		price = startPrice;
+
+		for (int i = 1; i < stickmans.Count; i++)
+		{
+			stickmans[i].price = price;
+			price *= priceMultiplier;
+		}
 	}
 }

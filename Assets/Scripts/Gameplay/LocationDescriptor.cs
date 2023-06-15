@@ -15,11 +15,7 @@ namespace SR.Extras
 
 		public List<Outpost> availableOutposts = new List<Outpost>();
 
-		public Sprite background0;
-		public Sprite background1;
-		public Sprite background2;
-		public Sprite background3;
-		public Sprite background4;
+		public List<Sprite> backgrounds;
 
 		public Texture2D fillTexture;
 		public Sprite cornerSprite;

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c50b2b9779f134792bf8aecdf5c73f, type: 3}
+  m_Name: StickmanTier1
+  m_EditorClassIdentifier: 
+  identifier: StickmanTier1
+  sprite: {fileID: 21300000, guid: a02c3159985a02545adf1ac9f7d28ad2, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  stats:
+    health: 0
+    velocity: 0
+    acceleration: 0
+    meleeDamage: 0
+  type: 4
+  headSprite: {fileID: 21300000, guid: a02c3159985a02545adf1ac9f7d28ad2, type: 3}
+  bodySprite: {fileID: 21300000, guid: c7e792b32ab1efb4fa199285f049169a, type: 3}
+  armSprite: {fileID: 21300000, guid: 94640956191732d4c9a3f48dc66c744c, type: 3}
+  wristSprite: {fileID: 21300000, guid: 9c7bdc6792fd07b47a1cb0789c8be94a, type: 3}
+  handSprite: {fileID: 21300000, guid: 060486076f2507045b62575436d4fcdd, type: 3}

@@ -12,6 +12,8 @@ namespace SR.Customization
 		public Color color;
 		public CarDetailStats stats;
 		public CarDetailType type;
+		[NonSerialized] public bool bUnlocked;
+		[NonSerialized] public int price;
 
 		public CarDetailSO()
 		{

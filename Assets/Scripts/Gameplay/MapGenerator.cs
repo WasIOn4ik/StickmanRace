@@ -38,6 +38,7 @@ public class MapGenerator : MonoBehaviour
 	private Queue<TerrainGenerator> terrainsCache = new Queue<TerrainGenerator>();
 
 	private TerrainGenerator activeTerrain;
+	private int currentLocationId = -1;
 
 	public TerrainGenerator ActiveTerrain
 	{
@@ -53,7 +54,7 @@ public class MapGenerator : MonoBehaviour
 
 	#region UnityMessages
 
-	private void Awake()
+	private void Start()
 	{
 		startTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
 		var tempTerrain = Instantiate(terrainGeneratorPrefab, startTerrain.GetEndpoint(), Quaternion.identity, transform);
@@ -107,7 +108,17 @@ public class MapGenerator : MonoBehaviour
 
 	private LocationDescriptor GetRandomLocation()
 	{
+
 		int index = UnityEngine.Random.Range(0, locations.Count);
+		//Background repeat peotection
+		while (index == currentLocationId)
+		{
+			index = UnityEngine.Random.Range(0, locations.Count);
+		}
+
+		currentLocationId = index;
+		Debug.Log("Generated:" + currentLocationId);
+
 		var location = locations[index];
 		if (location.bUseDefault)
 		{
