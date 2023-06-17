@@ -18,11 +18,6 @@ namespace SR.Core
 
 		#region UnityMessages
 
-		protected virtual void OnPlayerCollisionConfirmed()
-		{
-			Destroy(gameObject);
-		}
-
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
 			if (SRUtils.IsInLayerMask(collision.gameObject.layer, playerLayerMask))
@@ -38,6 +33,16 @@ namespace SR.Core
 		#endregion
 
 		#region Functions
+
+		protected virtual void OnPlayerCollisionConfirmed()
+		{
+			HandleDestroy();
+		}
+
+		public virtual void HandleDestroy()
+		{
+			Destroy(gameObject);
+		}
 
 		public virtual void SetDifficulty(float difficulty)
 		{

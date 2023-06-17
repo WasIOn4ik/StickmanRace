@@ -58,6 +58,7 @@ public class MapGenerator : MonoBehaviour
 	{
 		startTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
 		var tempTerrain = Instantiate(terrainGeneratorPrefab, startTerrain.GetEndpoint(), Quaternion.identity, transform);
+		tempTerrain.name = "FirstSpawned";
 		tempTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
 		terrainsCache.Enqueue(tempTerrain);
 		ActiveTerrain = startTerrain;
@@ -70,11 +71,13 @@ public class MapGenerator : MonoBehaviour
 			if (playerVehicle.transform.position.x > startTerrain.GetWorldRightBorderX() && ActiveTerrain == startTerrain)
 			{
 				var tempTerrain = Instantiate(terrainGeneratorPrefab, terrainsCache.Peek().GetEndpoint(), Quaternion.identity, transform);
+				tempTerrain.name = "SecondSpawned";
 				tempTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
 				terrainsCache.Enqueue(tempTerrain);
 
 				var tempTerrain2 = Instantiate(terrainGeneratorPrefab, tempTerrain.GetEndpoint(), Quaternion.identity, transform);
-				tempTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
+				tempTerrain.name = "ThirdSpawned";
+				tempTerrain2.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
 				terrainsCache.Enqueue(tempTerrain2);
 
 				ActiveTerrain = terrainsCache.Dequeue();
@@ -95,6 +98,7 @@ public class MapGenerator : MonoBehaviour
 			tempTerrain2.transform.position = ActiveTerrain.GetEndpoint();
 			tempTerrain2.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
 
+			Debug.Log(activeTerrain.name + " / " + terrainsCache.Count);
 			Debug.Log($"Switch endless: {playerVehicle.transform.position.x} > {ActiveTerrain.GetWorldRightBorderX()}");
 			Debug.Log($"Camera: {ActiveTerrain.GetCenter()}");
 		}
@@ -117,7 +121,6 @@ public class MapGenerator : MonoBehaviour
 		}
 
 		currentLocationId = index;
-		Debug.Log("Generated:" + currentLocationId);
 
 		var location = locations[index];
 		if (location.bUseDefault)

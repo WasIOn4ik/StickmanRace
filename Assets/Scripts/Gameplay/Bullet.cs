@@ -22,6 +22,7 @@ namespace SR.Core
 		private void Awake()
 		{
 			scaledDamage = damage;
+			scaledVelocity = velocity;
 		}
 
 		public void InitBullet(float difficulty)

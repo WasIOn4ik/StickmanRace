@@ -9,14 +9,21 @@ namespace SR.Core
 	{
 		#region Variables
 
+		public event EventHandler onAttackStarted;
+		public event EventHandler onDeathStarted;
+
+		[Header("Components")]
+		[SerializeField] private Rigidbody2D rigidBody2D;
+
 		[Header("Peoperties")]
 		[SerializeField] private float attackDelay = 3f;
 		[SerializeField] private float firstAttackDelay = 0.3f;
-		[SerializeField] private Bullet bulletPrefab;
-		[SerializeField] private Transform bulletSpwnpoint;
+		[SerializeField] protected int damage = 1;
 
-		private PlayerVehicle target;
-		private float difficultyCoef;
+		protected PlayerVehicle target;
+		protected float difficultyCoef = 1f;
+
+		protected bool isAlive = true;
 
 		#endregion
 
@@ -49,18 +56,14 @@ namespace SR.Core
 
 		#region Functions
 
-		private void Attack()
+		public virtual void Attack()
 		{
-			float rot_z = SRUtils.GetRotationTo(bulletSpwnpoint.position, target.GetHeadPosition());
-			var bullet = Instantiate(bulletPrefab);
-			bullet.InitBullet(difficultyCoef);
-			bullet.transform.position = bulletSpwnpoint.position;
-			bullet.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
-			Debug.DrawLine(bulletSpwnpoint.position, target.GetHeadPosition(), Color.red, 10f);
-			var bulletRot = bullet.transform.eulerAngles;
-			bulletRot.x = 0;
-			bullet.transform.eulerAngles = bulletRot;
-			Destroy(bullet, 3f);
+			throw new NotImplementedException();
+		}
+
+		private void StartAttack()
+		{
+			onAttackStarted?.Invoke(this, EventArgs.Empty);
 		}
 
 		#endregion
@@ -71,12 +74,12 @@ namespace SR.Core
 		{
 			yield return new WaitForSeconds(firstAttackDelay);
 
-			while (target != null && target.IsAlive())
+			while (isAlive && target != null && target.IsAlive())
 			{
 
 				if (target != null)
 				{
-					Attack();
+					StartAttack();
 				}
 
 				yield return new WaitForSeconds(attackDelay);
@@ -90,7 +93,9 @@ namespace SR.Core
 		protected override void OnPlayerCollisionConfirmed()
 		{
 			onEnemyDeath?.Invoke(this, EventArgs.Empty);
-			base.OnPlayerCollisionConfirmed();
+			onDeathStarted?.Invoke(this, EventArgs.Empty);
+			rigidBody2D.simulated = false;
+			isAlive = false;
 		}
 
 		public override void SetDifficulty(float difficulty)

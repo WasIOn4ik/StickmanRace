@@ -2785,15 +2785,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 52226e279b456e8499ef51a7575572b1, type: 2}
   - {fileID: 11400000, guid: cdc2aca15d77a5041be843988fba932b, type: 2}
   pixelOutposts:
-  - {fileID: 143290431394723042, guid: cadd79ccd437c3842813b0969b6e0cc0, type: 3}
-  - {fileID: 143290431394723042, guid: 5906d121c5a7e42498e1a9ef7683698a, type: 3}
-  - {fileID: 143290431394723042, guid: a1325b153028fee4e8a4877d4a7c3f66, type: 3}
-  - {fileID: 143290431394723042, guid: 9418a7f04aad1c04b8f81172760c9f27, type: 3}
+  - {fileID: 2943489626183220013, guid: 11810b9ee79c97e4b899304347160ced, type: 3}
+  - {fileID: 2943489626183220013, guid: 1e3cb20390179b04686a5bffa16efc4f, type: 3}
+  - {fileID: 2943489626183220013, guid: 30d7fa4d8576122469ab523b724a4d71, type: 3}
+  - {fileID: 2943489626183220013, guid: 356f58b20df3fa14ea6879a18937e28e, type: 3}
   casualOutposts:
-  - {fileID: 143290431394723042, guid: 7dc0e7121c428154c908841858842c51, type: 3}
-  - {fileID: 143290431394723042, guid: ca1853a8617d83348bc3d6ee7d3fcdec, type: 3}
-  - {fileID: 143290431394723042, guid: 922a9f09bbd59f1418c92547acdca900, type: 3}
-  - {fileID: 143290431394723042, guid: 2d5674a8ca318bf4dbf4fa53afecac48, type: 3}
+  - {fileID: 8543814797765467007, guid: 748e915369bedf54d93e3128c78fbf9d, type: 3}
+  - {fileID: 8543814797765467007, guid: 79ecbb1edcdd94c4f9f398f08e789dd2, type: 3}
+  - {fileID: 8543814797765467007, guid: 1eaf0cd6349e09345b974868a6343e11, type: 3}
+  - {fileID: 8543814797765467007, guid: 9da907159781dad4fb98b9fa0061d278, type: 3}
+  - {fileID: 8543814797765467007, guid: f6aa4aaddf9f8d243829e1a2832449fa, type: 3}
 --- !u!1 &673316911
 GameObject:
   m_ObjectHideFlags: 0

@@ -74,12 +74,12 @@ namespace SR.Core
 
 		public void Regenerate(float difficulty, bool bRandom, LocationDescriptor location)
 		{
-			Debug.Log("Generating " + gameObject.name);
 			Clear();
 			this.location = location;
 			UpdateVisual(location);
 			GenerateTerrain();
 			SpawnAllOutposts(difficulty, location);
+			Debug.LogWarning(gameObject.name);
 		}
 
 		public Vector3 GetCenter()
