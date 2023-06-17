@@ -128,6 +128,7 @@ namespace SR.Core
 
 		public void ApplyDamage(int damage)
 		{
+			Debug.Log($"Received {damage} damage");
 			fullCarDescriptor.health -= damage;
 			if (fullCarDescriptor.health <= 0)
 			{

@@ -144,7 +144,7 @@ MonoBehaviour:
     m_Bits: 64
   rigidBody2D: {fileID: 1577980910204100886}
   attackDelay: 3
-  firstAttackDelay: 0.1
+  firstAttackDelay: 0.2
   damage: 1
   bulletPrefab: {fileID: 8914481815421465963, guid: 7492530c0b3ded141b79b0f7350addd1, type: 3}
   bulletSpawnpoint: {fileID: 6362219901883523860}

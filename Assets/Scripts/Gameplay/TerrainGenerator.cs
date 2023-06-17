@@ -1,6 +1,7 @@
 using SR.Extras;
 using SR.UI;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -44,13 +45,8 @@ namespace SR.Core
 		private void Awake()
 		{
 			var proto = spriteShapeController.spriteShape;
-			spriteShapeController.spriteShape = ScriptableObject.CreateInstance<SpriteShape>();
-			spriteShapeController.spriteShape.angleRanges = proto.angleRanges;
-		}
-
-		private void OnValidate()
-		{
-			GenerateTerrain();
+			spriteShapeController.spriteShape = Instantiate(spriteShapeController.spriteShape);
+			spriteShapeController.spriteShape.name = "Spawnded_" + spriteShapeController.name;
 		}
 
 		#endregion
@@ -103,6 +99,7 @@ namespace SR.Core
 			//EditorUtility.SetDirty(spriteShapeController.spriteShape);
 			spriteShapeController.spriteShape.fillTexture = location.fillTexture;
 			spriteShapeController.spriteShape.angleRanges[0].sprites[0] = location.cornerSprite;
+			Debug.Log(spriteShapeController.spriteShape.name);
 			spriteShapeController.UpdateSpriteShapeParameters();
 			//EditorUtility.SetDirty(spriteShapeController.spriteShape);
 		}

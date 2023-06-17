@@ -20,6 +20,11 @@ namespace SR.Extras
 
 		private void Awake()
 		{
+			foreach (Transform ch in spawnTransform)
+			{
+				Destroy(ch.gameObject);
+			}
+
 			int index = Random.Range(0, morphs.Count);
 			var morph = morphs[index];
 			var instantiated = Instantiate(morph, spawnTransform);
