@@ -31,12 +31,14 @@ namespace SR.Core
 
 		private void Enemy_onDeathStarted(object sender, System.EventArgs e)
 		{
-			animator.Play(DEATH_ANIM);
+            if (isActiveAndEnabled)
+            animator.Play(DEATH_ANIM);
 		}
 
 		private void Enemy_onAttackStarted(object sender, System.EventArgs e)
 		{
-			animator.Play(ATTACK_ANIM);
+			if (isActiveAndEnabled)
+				animator.Play(ATTACK_ANIM);
 		}
 
 		#endregion

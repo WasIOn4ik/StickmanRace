@@ -80,7 +80,7 @@ namespace SR.Core
 		private UnlockedDetails unlockedDetails;
 		private GameSettings GameSettings = new GameSettings() { bSoundsOn = true };
 
-		[Inject] SoundSystem soundSystem;
+		[Inject] private SoundSystem soundSystem;
 
 		#endregion
 
@@ -154,17 +154,35 @@ namespace SR.Core
 		{
 			float tempDistance = records.totalDistance;
 
+			StringBuilder sb = new StringBuilder();
+
+			return GetShortStringDistance(tempDistance);
+		}
+
+		public string GetShortStringDistance(float value)
+		{
 			int val = 0;
 
-			while (tempDistance >= 1000f)
+			while (value >= 1000f)
 			{
-				tempDistance /= 1000f;
+				value /= 1000f;
 				val++;
 			}
-			StringBuilder sb = new StringBuilder();
-			sb.Append(tempDistance.ToString("0.0")).Append(distanceMarkers[val]);
 
-			return sb.ToString();
+			return $"{value: 0.0}{distanceMarkers[val]} m";
+		}
+
+		public string GetShortString(int value)
+		{
+			int val = 0;
+
+			while (value >= 1000)
+			{
+				value /= 1000;
+				val++;
+			}
+
+			return $"{value}{distanceMarkers[val]}";
 		}
 
 		public ShopLibrarySO GetShopLibrary()

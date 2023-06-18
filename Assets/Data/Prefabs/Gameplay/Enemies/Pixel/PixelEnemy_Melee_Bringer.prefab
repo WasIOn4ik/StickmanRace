@@ -51,6 +51,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1356210218035456771, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: d12e6a08d55592842a5f1d0a17726b16, type: 2}
     - target: {fileID: 2077134761086003343, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
       propertyPath: m_Name
       value: PixelEnemy_Melee_Bringer

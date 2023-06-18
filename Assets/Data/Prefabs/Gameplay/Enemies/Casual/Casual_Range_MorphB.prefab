@@ -56,7 +56,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2536870231740593066, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.698
       objectReference: {fileID: 0}
     - target: {fileID: 2536870231740593066, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_LocalPosition.z
@@ -64,7 +64,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3209885263698344918, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3878473141923666146, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_RootOrder
@@ -108,6 +108,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3878473141923666146, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4982119793637387115, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6362219901883523860, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
@@ -165,6 +169,21 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2488943214382790746, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
   m_PrefabInstance: {fileID: 8490076766287841854}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &886341825420868592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6293867876281872996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1d3ea20bc9a0e94893a6d31e8df72a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 6067276974103575470}
+  enemyVisual: {fileID: 1611851137124645154}
+  animatorToPlayDeath: {fileID: 6438179831671845352}
 --- !u!114 &8313041121736854232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,3 +201,8 @@ MonoBehaviour:
   morphs:
   - {fileID: 6058864010492002086, guid: 332b21a684312b34798ace98affe4eed, type: 3}
   spriteOrderOffset: 20
+--- !u!95 &6438179831671845352 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3209885263698344918, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
+  m_PrefabInstance: {fileID: 8490076766287841854}
+  m_PrefabAsset: {fileID: 0}

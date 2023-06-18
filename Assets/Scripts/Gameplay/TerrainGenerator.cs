@@ -75,7 +75,6 @@ namespace SR.Core
 			UpdateVisual(location);
 			GenerateTerrain();
 			SpawnAllOutposts(difficulty, location);
-			Debug.LogWarning(gameObject.name);
 		}
 
 		public Vector3 GetCenter()
@@ -99,7 +98,6 @@ namespace SR.Core
 			//EditorUtility.SetDirty(spriteShapeController.spriteShape);
 			spriteShapeController.spriteShape.fillTexture = location.fillTexture;
 			spriteShapeController.spriteShape.angleRanges[0].sprites[0] = location.cornerSprite;
-			Debug.Log(spriteShapeController.spriteShape.name);
 			spriteShapeController.UpdateSpriteShapeParameters();
 			//EditorUtility.SetDirty(spriteShapeController.spriteShape);
 		}

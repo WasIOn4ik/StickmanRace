@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb79f2f937f537458b3823418a93c76, type: 3}
   m_Name: ShopLibrary
   m_EditorClassIdentifier: 
-  startPrice: 5
-  priceMultiplier: 2
+  startPrice: 1
+  priceMultiplier: 3
   bumpers:
   - {fileID: 11400000, guid: 759fea2d8dba1564aa61306a8a4fd1c7, type: 2}
   - {fileID: 11400000, guid: c608e8fa0627cb84191a9697dc9d5432, type: 2}

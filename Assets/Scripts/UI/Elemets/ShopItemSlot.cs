@@ -56,16 +56,21 @@ namespace SR.UI
 
 		public void InitSlot(ShopUI shop, GameInstance gi, CarDetailSO newCarDetailSO)
 		{
+			gameObject.SetActive(true);
+			lockedGameObject.SetActive(!newCarDetailSO.bUnlocked);
+
+			shopUI = shop;
+
 			iconImage.sprite = newCarDetailSO.sprite;
 			iconImage.color = newCarDetailSO.color;
+
 			carDetailSO = newCarDetailSO;
+
 			gameInstance = gi;
-			gameObject.SetActive(true);
-			priceText.text = newCarDetailSO.price.ToString();
-			lockedGameObject.SetActive(!newCarDetailSO.bUnlocked);
+			priceText.text = gameInstance.GetShortString(newCarDetailSO.price);
 			canBuy = gameInstance.GetRecords().gems >= newCarDetailSO.price;
 			lockImage.sprite = canBuy ? unlockedSprite : lockedSprite;
-			shopUI = shop;
+
 			backgroundImage.color = (gameInstance.IsEquipped(newCarDetailSO)) ? selectedColor : nonSelectedColor;
 		}
 

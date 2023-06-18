@@ -19,6 +19,7 @@ namespace SR.Core
 		[SerializeField] private float attackDelay = 3f;
 		[SerializeField] private float firstAttackDelay = 0.3f;
 		[SerializeField] protected int damage = 1;
+		[SerializeField] private float minimalShootDistance = 1f;
 
 		protected PlayerVehicle target;
 		protected float difficultyCoef = 1f;
@@ -74,7 +75,8 @@ namespace SR.Core
 		{
 			yield return new WaitForSeconds(firstAttackDelay);
 
-			while (isAlive && target != null && target.IsAlive())
+			while (isAlive && target != null && target.IsAlive() && (target.transform.position - transform.position).magnitude
+				> minimalShootDistance && target.transform.position.x < transform.position.x)
 			{
 
 				if (target != null)

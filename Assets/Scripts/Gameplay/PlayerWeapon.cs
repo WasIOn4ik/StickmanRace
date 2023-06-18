@@ -31,12 +31,12 @@ namespace SR.Core
 
 		private void Shoot()
 		{
-			var bullet = Instantiate(bulletPrefab);
+			var bullet = Instantiate(weaponBase.bulletPrefab);
 			bullet.SetDamage(weaponBase.weaponStats.damage);
 			bullet.SetVelocity(playerVehicle.GetVelocity() + weaponBase.weaponStats.velocity);
 			bullet.transform.rotation = transform.rotation;
 			bullet.transform.position = bulletSpawnPoint.position;
-			Destroy(bullet.gameObject, weaponBase.weaponStats.shootDistance);
+			bullet.InitBullet(1f, weaponBase.weaponStats.shootDistance);
 		}
 
 		#endregion

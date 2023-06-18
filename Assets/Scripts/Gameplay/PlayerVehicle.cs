@@ -107,7 +107,6 @@ namespace SR.Core
 
 		public float GetVelocity()
 		{
-			Debug.Log(carRB.velocity.magnitude);
 			return carRB.velocity.magnitude;
 		}
 
