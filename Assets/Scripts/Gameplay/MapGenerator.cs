@@ -29,6 +29,9 @@ public class MapGenerator : MonoBehaviour
 	[Header("Properties")]
 	[SerializeField] private bool bRandom = false;
 	[SerializeField] private List<LocationDescriptor> locations;
+	[SerializeField] private List<Enemy> pixelEnemies;
+	[SerializeField] private List<Enemy> casualEnemies;
+
 	public List<Outpost> pixelOutposts = new List<Outpost>();
 	public List<Outpost> casualOutposts = new List<Outpost>();
 

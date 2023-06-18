@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ShopLibrary
   m_EditorClassIdentifier: 
   startPrice: 5
+  priceMultiplier: 2
   bumpers:
   - {fileID: 11400000, guid: 759fea2d8dba1564aa61306a8a4fd1c7, type: 2}
   - {fileID: 11400000, guid: c608e8fa0627cb84191a9697dc9d5432, type: 2}
@@ -34,9 +35,29 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2a5f40d0539d74c46bb00c94c114f73e, type: 2}
   weapons:
   - {fileID: 11400000, guid: 7155c542b79f5c24a8ac858f5eccfc99, type: 2}
-  - {fileID: 11400000, guid: e27d266bbc4d1cd46a6c9cb86c8c5b7f, type: 2}
-  - {fileID: 11400000, guid: 167228ce6db9ab1468b0cfb5588e4d17, type: 2}
-  - {fileID: 11400000, guid: 8c817a0703cf4da45a329ae85d635eac, type: 2}
+  - {fileID: 11400000, guid: 5ce6172b13c9be44ba987cf8330b2189, type: 2}
+  - {fileID: 11400000, guid: 8e1dd4fc2757af940b057198571264f6, type: 2}
+  - {fileID: 11400000, guid: 4a4a14bd0d9494349acb4686810939db, type: 2}
+  - {fileID: 11400000, guid: 37a94570e34fcef45b26f183236679d3, type: 2}
+  - {fileID: 11400000, guid: bcd7c58172ba05c4d826496affcf7063, type: 2}
+  - {fileID: 11400000, guid: 7a48a6891b16a064596682112cd3c2de, type: 2}
+  - {fileID: 11400000, guid: d7018b0c0aa651348b65aa2327c0b907, type: 2}
+  - {fileID: 11400000, guid: f6567e8214e5ca54d8a68f361122dcf1, type: 2}
+  - {fileID: 11400000, guid: 3e8086d654f91de4a9a0c30d91c350c8, type: 2}
+  - {fileID: 11400000, guid: 2badf2f986b892348b29d1c38d4eece1, type: 2}
+  - {fileID: 11400000, guid: 2aa9f788084248a4789c1e1cf800ab3e, type: 2}
+  - {fileID: 11400000, guid: 218398e32ce65804ebdd19515301ee00, type: 2}
+  - {fileID: 11400000, guid: 59880c91b07a11941839133f082a6ed4, type: 2}
+  - {fileID: 11400000, guid: b4dc512246ad3f24590021cded27972c, type: 2}
+  - {fileID: 11400000, guid: 243100effda7b9d4e812a60614964b5a, type: 2}
+  - {fileID: 11400000, guid: dac136a6000eda64e98cbdf18b2d6022, type: 2}
+  - {fileID: 11400000, guid: 19f52e8450afc5d4ba669fc7b4f07ecd, type: 2}
+  - {fileID: 11400000, guid: e24ab8a45a173ef4cbc546d9273be15a, type: 2}
+  - {fileID: 11400000, guid: b5c973ecf573b734194579a368037165, type: 2}
+  - {fileID: 11400000, guid: 94f66342c95970e42baba70896fcbf42, type: 2}
+  - {fileID: 11400000, guid: 10c732883407d5a468e78b3cd0a9ea23, type: 2}
+  - {fileID: 11400000, guid: 82f6408228727b24b994cac4dc79030f, type: 2}
+  - {fileID: 11400000, guid: f732171414ef5804390cd2df33ab380d, type: 2}
   stickmans:
   - {fileID: 11400000, guid: c291277b355706e4098331c5ee9bf035, type: 2}
   - {fileID: 11400000, guid: be23627092a5f8f4081b993766ae377b, type: 2}

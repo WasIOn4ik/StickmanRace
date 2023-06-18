@@ -1,3 +1,4 @@
+using SR.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace SR.Customization
 	public class WeaponSO : CarDetailSO
 	{
 		public WeaponStats weaponStats;
+		public Bullet bulletPrefab;
 
 		public WeaponSO() : base()
 		{

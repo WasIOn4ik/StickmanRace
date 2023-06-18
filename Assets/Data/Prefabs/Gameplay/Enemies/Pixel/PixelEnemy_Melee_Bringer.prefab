@@ -53,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2077134761086003343, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
       propertyPath: m_Name
-      value: PixelEnemy_Bringer
+      value: PixelEnemy_Melee_Bringer
       objectReference: {fileID: 0}
     - target: {fileID: 2120405618969486207, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
       propertyPath: m_LocalPosition.x
@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2120405618969486207, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.159
+      value: 1.42
       objectReference: {fileID: 0}
     - target: {fileID: 6031208988906408091, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
       propertyPath: m_Size.x
@@ -70,6 +70,10 @@ PrefabInstance:
     - target: {fileID: 6031208988906408091, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
       propertyPath: m_Size.y
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031208988906408091, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}

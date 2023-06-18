@@ -53,14 +53,9 @@ namespace SR.Core
 
 		#region IDamageable
 
-		public void ApplyDamage(int value)
+		public virtual void ApplyDamage(int value)
 		{
-			scaledDestroyVelocity -= value;
-
-			if (scaledDestroyVelocity <= 0)
-			{
-				OnPlayerCollisionConfirmed();
-			}
+			OnPlayerCollisionConfirmed();
 		}
 
 		#endregion

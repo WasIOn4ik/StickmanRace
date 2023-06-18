@@ -135,13 +135,6 @@ namespace SR.Core
 				{
 					lastPosition = startOfGeneratedLevel + new Vector3(i * terrainLengthMultiplier, Mathf.PerlinNoise(0, i * terrainNoiseStep) * terrainHeightMultiplier);
 					spriteShapeController.spline.InsertPointAt(i + offset, lastPosition);
-
-					if (i != 0 && i != terainControlPointsCount - 1)
-					{
-						spriteShapeController.spline.SetTangentMode(i, ShapeTangentMode.Continuous);
-						spriteShapeController.spline.SetLeftTangent(i, Vector3.left * terrainLengthMultiplier * terrainSmoothness);
-						spriteShapeController.spline.SetRightTangent(i, Vector3.right * terrainLengthMultiplier * terrainSmoothness);
-					}
 				}
 				else // Outpost generation
 				{
@@ -153,6 +146,13 @@ namespace SR.Core
 						outpostPoints.Add(lastPosition);
 					}
 					spriteShapeController.spline.InsertPointAt(i + offset, lastPosition);
+				}
+
+				if (i != 0 && i != terainControlPointsCount - 1)
+				{
+					spriteShapeController.spline.SetTangentMode(i, ShapeTangentMode.Continuous);
+					spriteShapeController.spline.SetLeftTangent(i, Vector3.left * terrainLengthMultiplier * terrainSmoothness);
+					spriteShapeController.spline.SetRightTangent(i, Vector3.right * terrainLengthMultiplier * terrainSmoothness);
 				}
 			}
 
