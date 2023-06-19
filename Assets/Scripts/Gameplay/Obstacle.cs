@@ -10,7 +10,7 @@ namespace SR.Core
 		#region Variables
 
 		[SerializeField] protected float destroyVelocity;
-		[SerializeField] protected LayerMask playerLayerMask;
+		[SerializeField] protected LayerMask destroyLayerMask;
 
 		private float scaledDestroyVelocity;
 
@@ -20,10 +20,10 @@ namespace SR.Core
 
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
-			if (SRUtils.IsInLayerMask(collision.gameObject.layer, playerLayerMask))
+			if (SRUtils.IsInLayerMask(collision.collider.gameObject.layer, destroyLayerMask))
 			{
 				var player = collision.gameObject.GetComponent<PlayerVehicle>();
-				if (player.GetDamage() > scaledDestroyVelocity)
+				if (player && player.GetDamage() > scaledDestroyVelocity)
 				{
 					OnPlayerCollisionConfirmed();
 				}

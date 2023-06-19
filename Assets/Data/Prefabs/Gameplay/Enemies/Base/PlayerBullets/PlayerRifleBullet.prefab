@@ -81,7 +81,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &-185369421417650119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,7 +98,10 @@ MonoBehaviour:
   velocity: 3
   targetLayerMask:
     serializedVersion: 2
-    m_Bits: 896
+    m_Bits: 768
+  destroyLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   collisionsCount: 2
 --- !u!1 &5185827388696061621
 GameObject:

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BackDoorTIer2
   m_EditorClassIdentifier: 
   identifier: BackdoorTier2
-  sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  color: {r: 1, g: 0.86353207, b: 0, a: 1}
+  sprite: {fileID: 21300000, guid: 6e64c286d48b4ea4db5574d69fc9cd63, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
   stats:
     health: 0
     velocity: 2

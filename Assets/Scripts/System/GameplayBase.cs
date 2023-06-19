@@ -27,6 +27,8 @@ namespace SR.UI
 		[SerializeField] private float fadeTime = 1f;
 		[SerializeField] private float gameStartUnfadeTime = 0.5f;
 		[SerializeField] private float gameStartCarForce = 100f;
+		[SerializeField] private float slowMotionMultiplier = 0.25f;
+		[SerializeField] private float slowMotionDuration = 0.5f;
 
 		public event EventHandler onGameStarted;
 
@@ -51,6 +53,13 @@ namespace SR.UI
 		#endregion
 
 		#region Functions
+
+		public void StartSlowMotion()
+		{
+			Debug.Log("Slowmotion");
+			Time.timeScale = slowMotionMultiplier;
+			StartCoroutine(HandleSlowMotion());
+		}
 
 		public float GetDifficulty()
 		{
@@ -91,6 +100,19 @@ namespace SR.UI
 		#endregion
 
 		#region Coroutines
+
+		private IEnumerator HandleSlowMotion()
+		{
+			while(Time.timeScale > slowMotionMultiplier)
+			{
+				Time.timeScale = Mathf.MoveTowards(Time.timeScale, slowMotionMultiplier, 0.1f);
+				yield return null;
+			}
+
+			yield return new WaitForSeconds(slowMotionDuration * slowMotionMultiplier);
+
+			Time.timeScale = 1f;
+		}
 
 		private IEnumerator HandleDifficulty()
 		{

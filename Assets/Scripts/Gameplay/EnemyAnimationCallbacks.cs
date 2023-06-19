@@ -32,25 +32,35 @@ namespace SR.Core
 		private void Enemy_onDeathStarted(object sender, System.EventArgs e)
 		{
             if (isActiveAndEnabled)
-            animator.Play(DEATH_ANIM);
+			{
+				if (animator.HasState(0, Animator.StringToHash(ATTACK_ANIM)))
+				{
+					animator.Play(DEATH_ANIM);
+				}
+			}
 		}
 
 		private void Enemy_onAttackStarted(object sender, System.EventArgs e)
 		{
 			if (isActiveAndEnabled)
-				animator.Play(ATTACK_ANIM);
+			{
+				if(animator.HasState(0, Animator.StringToHash(ATTACK_ANIM)))
+				{
+					animator.Play(ATTACK_ANIM);
+				}
+			}
 		}
 
 		#endregion
 
 		#region AnimationEvents
 
-		private void OnAttackPerformed()
+		public void OnAttackPerformed()
 		{
 			enemy.Attack();
 		}
 
-		private void OnDeathPerformed()
+		public void OnDeathPerformed()
 		{
 			enemy.HandleDestroy();
 		}

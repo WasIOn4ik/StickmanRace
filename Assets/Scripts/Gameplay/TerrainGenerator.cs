@@ -1,5 +1,6 @@
 using SR.Extras;
 using SR.UI;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -38,6 +39,10 @@ namespace SR.Core
 
 		private LocationDescriptor location;
 
+		private float difficulty = 1f;
+
+		private List<Enemy> spawnedEnemies = new List<Enemy>();
+
 		#endregion
 
 		#region UnityMessages
@@ -68,13 +73,9 @@ namespace SR.Core
 			return transform.TransformPoint(lastPosition);
 		}
 
-		public void Regenerate(float difficulty, bool bRandom, LocationDescriptor location)
+		public void Regenerate(float difficulty, bool bRandom, LocationDescriptor location, MapGenerator generator)
 		{
-			Clear();
-			this.location = location;
-			UpdateVisual(location);
-			GenerateTerrain();
-			SpawnAllOutposts(difficulty, location);
+			StartCoroutine(HandleGeneration(difficulty, bRandom, location, generator));
 		}
 
 		public Vector3 GetCenter()
@@ -90,6 +91,12 @@ namespace SR.Core
 			{
 				outpost.DestroyOutpost();
 			}
+			foreach (var enemy in spawnedEnemies)
+			{
+				if (enemy)
+					Destroy(enemy.gameObject);
+			}
+			spawnedEnemies.Clear();
 			spawnedOutposts.Clear();
 		}
 
@@ -100,6 +107,27 @@ namespace SR.Core
 			spriteShapeController.spriteShape.angleRanges[0].sprites[0] = location.cornerSprite;
 			spriteShapeController.UpdateSpriteShapeParameters();
 			//EditorUtility.SetDirty(spriteShapeController.spriteShape);
+		}
+
+		private IEnumerator HandleGeneration(float difficulty, bool bRandom, LocationDescriptor location, MapGenerator generator)
+		{
+			Clear();
+			this.difficulty = difficulty;
+			this.location = location;
+			GenerateTerrain();
+			yield return null;
+
+			UpdateVisual(location);
+			yield return null;
+
+			SpawnAllOutposts(difficulty, location);
+			yield return null;
+
+			var enemiesToSpawn = location.bPixel ? generator.pixelEnemies : generator.casualEnemies;
+			if (enemiesToSpawn != null)
+			{
+				SpawnEnemies(enemiesToSpawn);
+			}
 		}
 
 		private void GenerateTerrain()
@@ -165,6 +193,32 @@ namespace SR.Core
 			{
 				spawnedOutposts.Add(SpawnOutpost(transform.TransformPoint(point), difficulty, location));
 			}
+		}
+
+		private void SpawnEnemies(List<Enemy> enemies)
+		{
+			int maxPoints = spriteShapeController.spline.GetPointCount() - 2;
+			int spawnDelay = Mathf.Max((int)(maxPoints / difficulty / 3), 1);
+			for (int i = 0; i < maxPoints; i++)
+			{
+				if (i % spawnDelay == 0)
+				{
+					var position = transform.TransformPoint(spriteShapeController.spline.GetPosition(i));
+
+					if (IsOutpost(position))
+						continue;
+
+					var enemy = Instantiate(enemies[Random.Range(0, enemies.Count)], position, Quaternion.identity, transform);
+					enemy.SetDifficulty(difficulty);
+					spawnedEnemies.Add(enemy);
+				}
+			}
+		}
+
+		private bool IsOutpost(Vector3 position)
+		{
+			var result = outpostPoints.Find(x => { return x == position; });
+			return result != Vector3.zero;
 		}
 
 		private Outpost SpawnOutpost(Vector3 position, float difficulty, LocationDescriptor location)

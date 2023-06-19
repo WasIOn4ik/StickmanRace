@@ -66,6 +66,7 @@ namespace SR.Core
 		[SerializeField] private float cameraUpperOffset = 3f;
 		[SerializeField] private float cameraRightOffset = 3f;
 		[SerializeField] private float cameraBlendDelta = 0.25f;
+		[SerializeField] private Vector3 headPositionOffset = new Vector3(0, 0.4f, 0);
 
 		private CarDescriptor fullCarDescriptor;
 
@@ -117,7 +118,7 @@ namespace SR.Core
 
 		public Vector3 GetHeadPosition()
 		{
-			return head.transform.position;
+			return head.transform.position + headPositionOffset;
 		}
 
 		public bool IsAlive()
@@ -209,9 +210,6 @@ namespace SR.Core
 			UnFreeze();
 
 			weaponController.StartShooting();
-
-			Debug.Log(baseCarDescriptor);
-			Debug.LogWarning(fullCarDescriptor);
 		}
 
 		#endregion

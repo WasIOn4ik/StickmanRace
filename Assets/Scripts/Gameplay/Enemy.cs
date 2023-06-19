@@ -20,6 +20,7 @@ namespace SR.Core
 		[SerializeField] private float firstAttackDelay = 0.3f;
 		[SerializeField] protected int damage = 1;
 		[SerializeField] private float minimalShootDistance = 1f;
+		[SerializeField] protected LayerMask stickmanLayerMask;
 
 		protected PlayerVehicle target;
 		protected float difficultyCoef = 1f;
@@ -38,16 +39,16 @@ namespace SR.Core
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
-			if (SRUtils.IsInLayerMask(collision.gameObject.layer, playerLayerMask))
+			if (SRUtils.IsInLayerMask(collision.gameObject.layer, stickmanLayerMask))
 			{
-				target = collision.gameObject.GetComponent<PlayerVehicle>();
+				target = collision.gameObject.GetComponentInParent<PlayerVehicle>();
 				StartCoroutine(HandleAttack());
 			}
 		}
 
 		private void OnTriggerExit2D(Collider2D collision)
 		{
-			if (SRUtils.IsInLayerMask(collision.gameObject.layer, playerLayerMask))
+			if (SRUtils.IsInLayerMask(collision.gameObject.layer, destroyLayerMask))
 			{
 				target = null;
 			}

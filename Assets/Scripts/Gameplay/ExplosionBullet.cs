@@ -11,7 +11,7 @@ namespace SR.Core
 
 		protected override void OnCollisionEnter2D(Collision2D collision)
 		{
-			if (SRUtils.IsInLayerMask(collision.gameObject.layer, targetLayerMask))
+			if (SRUtils.IsInLayerMask(collision.gameObject.layer, targetLayerMask) || SRUtils.IsInLayerMask(collision.gameObject.layer, destroyLayerMask))
 			{
 				var explosion = Instantiate(objectToSpawnOnDestroy, transform.position, Quaternion.identity);
 				explosion.Explode(explosionScale, targetLayerMask);

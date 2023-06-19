@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BumperTier4
   m_EditorClassIdentifier: 
   identifier: BumperTier4
-  sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  color: {r: 0.074186325, g: 0, b: 1, a: 1}
+  sprite: {fileID: 21300000, guid: 6a7b7baebe513564e958dc7ae2c7fbe9, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
   stats:
     health: 2
     velocity: 0

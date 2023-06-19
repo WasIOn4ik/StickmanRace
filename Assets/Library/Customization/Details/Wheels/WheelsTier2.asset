@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: WheelsTier2
   m_EditorClassIdentifier: 
   identifier: WheelsTier2
-  sprite: {fileID: 21300000, guid: ae4aa3285ab7ce44991b90b09b2f62a9, type: 3}
-  color: {r: 1, g: 0.86353207, b: 0, a: 1}
+  sprite: {fileID: 21300000, guid: c1869858f81799346a6c2e36df5104f6, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
   stats:
     health: 1
     velocity: 0
-    acceleration: 75
+    acceleration: 100
     meleeDamage: 0
   type: 0

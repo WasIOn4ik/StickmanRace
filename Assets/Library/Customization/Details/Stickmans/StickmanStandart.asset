@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StickmanStandart
   m_EditorClassIdentifier: 
   identifier: StickmanStandart
-  sprite: {fileID: 21300000, guid: e1539ec4ea31b9b4f80af7d515c89bee, type: 3}
+  sprite: {fileID: 0}
   color: {r: 0.5, g: 0, b: 0, a: 1}
   stats:
     health: 0

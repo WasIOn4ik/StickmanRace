@@ -29,8 +29,8 @@ public class MapGenerator : MonoBehaviour
 	[Header("Properties")]
 	[SerializeField] private bool bRandom = false;
 	[SerializeField] private List<LocationDescriptor> locations;
-	[SerializeField] private List<Enemy> pixelEnemies;
-	[SerializeField] private List<Enemy> casualEnemies;
+	public List<Enemy> pixelEnemies;
+	public List<Enemy> casualEnemies;
 
 	public List<Outpost> pixelOutposts = new List<Outpost>();
 	public List<Outpost> casualOutposts = new List<Outpost>();
@@ -59,10 +59,10 @@ public class MapGenerator : MonoBehaviour
 
 	private void Start()
 	{
-		startTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
+		startTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation(), this);
 		var tempTerrain = Instantiate(terrainGeneratorPrefab, startTerrain.GetEndpoint(), Quaternion.identity, transform);
 		tempTerrain.name = "FirstSpawned";
-		tempTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
+		tempTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation(), this);
 		terrainsCache.Enqueue(tempTerrain);
 		ActiveTerrain = startTerrain;
 	}
@@ -75,17 +75,16 @@ public class MapGenerator : MonoBehaviour
 			{
 				var tempTerrain = Instantiate(terrainGeneratorPrefab, terrainsCache.Peek().GetEndpoint(), Quaternion.identity, transform);
 				tempTerrain.name = "SecondSpawned";
-				tempTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
+				tempTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation(), this);
 				terrainsCache.Enqueue(tempTerrain);
 
 				var tempTerrain2 = Instantiate(terrainGeneratorPrefab, tempTerrain.GetEndpoint(), Quaternion.identity, transform);
 				tempTerrain.name = "ThirdSpawned";
-				tempTerrain2.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
+				tempTerrain2.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation(), this);
 				terrainsCache.Enqueue(tempTerrain2);
 
 				ActiveTerrain = terrainsCache.Dequeue();
 				Destroy(startTerrain);
-				Debug.Log("Switch start");
 			}
 		}
 		else if (playerVehicle.transform.position.x > ActiveTerrain.GetWorldRightBorderX())
@@ -99,7 +98,7 @@ public class MapGenerator : MonoBehaviour
 
 			var tempTerrain2 = terrainsCache.Peek();
 			tempTerrain2.transform.position = ActiveTerrain.GetEndpoint();
-			tempTerrain2.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
+			tempTerrain2.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation(), this);
 
 			Debug.Log(activeTerrain.name + " / " + terrainsCache.Count);
 			Debug.Log($"Switch endless: {playerVehicle.transform.position.x} > {ActiveTerrain.GetWorldRightBorderX()}");

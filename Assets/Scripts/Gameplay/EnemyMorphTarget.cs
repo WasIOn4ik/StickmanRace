@@ -11,12 +11,14 @@ namespace SR.Extras
 	{
 		public List<SpriteRenderer> sprites;
 		public Transform bulletSpawnTransform;
+		public bool updateAnimator = true;
 		[NonSerialized] public EnemyAnimationCallbacks callbacks;
 
 		private void Awake()
 		{
 			callbacks = GetComponent<EnemyAnimationCallbacks>();
-			callbacks.animator = GetComponent<Animator>();
+			if (updateAnimator)
+				callbacks.animator = GetComponent<Animator>();
 		}
 	}
 }

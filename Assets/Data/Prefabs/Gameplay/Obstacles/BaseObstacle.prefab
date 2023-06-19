@@ -179,6 +179,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyVelocity: 1.25
-  playerLayerMask:
+  destroyLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 16384

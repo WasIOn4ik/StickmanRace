@@ -25,6 +25,10 @@ namespace SR.Core
 				if (collisionsCount <= 0)
 					Destroy(gameObject);
 			}
+			else if(SRUtils.IsInLayerMask(collision.gameObject.layer, destroyLayerMask))
+			{
+				Destroy(gameObject);
+			}
 		}
 	}
 }
