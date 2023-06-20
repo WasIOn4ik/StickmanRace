@@ -21,3 +21,4 @@ MonoBehaviour:
     acceleration: 0
     meleeDamage: 5
   type: 1
+  animatorOverride: {fileID: 0}

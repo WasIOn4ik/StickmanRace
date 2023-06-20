@@ -1,4 +1,5 @@
 using SR.Customization;
+using SR.Extras;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +10,12 @@ namespace SR.Core
 	{
 		#region Variables
 
+		[Header("Components")]
+		[SerializeField] private PlayerBumperVisual bumperVisual;
+		[SerializeField] private PlayerWheelVisual frontWheel;
+		[SerializeField] private PlayerWheelVisual backWheel;
+
 		[Header("Car")]
-		[SerializeField] private SpriteRenderer bumper;
-		[SerializeField] private SpriteRenderer frontWheel;
-		[SerializeField] private SpriteRenderer rearWheel;
 		[SerializeField] private SpriteRenderer backDoor;
 		[SerializeField] private SpriteRenderer weapon;
 
@@ -37,15 +40,13 @@ namespace SR.Core
 			switch (detail.type)
 			{
 				case CarDetailType.Wheels:
-					rearWheel.sprite = detail.sprite;
-					rearWheel.color = detail.color;
-
-					frontWheel.sprite = detail.sprite;
-					frontWheel.color = detail.color;
+					var wheels = detail as WheelsSO;
+					frontWheel.InitWheel(wheels);
+					backWheel.InitWheel(wheels);
 					break;
 				case CarDetailType.Bumper:
-					bumper.sprite = detail.sprite;
-					bumper.color = detail.color;
+					var bumper = detail as BumperSO;
+					bumperVisual.InitBumper(bumper);
 					break;
 				case CarDetailType.BackDoor:
 					backDoor.sprite = detail.sprite;

@@ -34,7 +34,8 @@ namespace SR.Core
 
 		private Vector3 lastPosition;
 
-		private List<Vector3> outpostPoints = new List<Vector3>();
+		private List<int> outpostPoints = new List<int>();
+		private List<int> emptyPoints = new List<int>();
 		private List<Outpost> spawnedOutposts = new List<Outpost>();
 
 		private LocationDescriptor location;
@@ -96,6 +97,8 @@ namespace SR.Core
 				if (enemy)
 					Destroy(enemy.gameObject);
 			}
+			outpostPoints.Clear();
+			emptyPoints.Clear();
 			spawnedEnemies.Clear();
 			spawnedOutposts.Clear();
 		}
@@ -161,6 +164,7 @@ namespace SR.Core
 				{
 					lastPosition = startOfGeneratedLevel + new Vector3(i * terrainLengthMultiplier, Mathf.PerlinNoise(0, i * terrainNoiseStep) * terrainHeightMultiplier);
 					spriteShapeController.spline.InsertPointAt(i + offset, lastPosition);
+					emptyPoints.Add(i);
 				}
 				else // Outpost generation
 				{
@@ -169,7 +173,7 @@ namespace SR.Core
 					lastPosition.y = y;
 					if (outpostPoint == outpostLength / 2)
 					{
-						outpostPoints.Add(lastPosition);
+						outpostPoints.Add(i);
 					}
 					spriteShapeController.spline.InsertPointAt(i + offset, lastPosition);
 				}
@@ -191,7 +195,7 @@ namespace SR.Core
 		{
 			foreach (var point in outpostPoints)
 			{
-				spawnedOutposts.Add(SpawnOutpost(transform.TransformPoint(point), difficulty, location));
+				spawnedOutposts.Add(SpawnOutpost(transform.TransformPoint(spriteShapeController.spline.GetPosition(point)), difficulty, location));
 			}
 		}
 
@@ -205,7 +209,7 @@ namespace SR.Core
 				{
 					var position = transform.TransformPoint(spriteShapeController.spline.GetPosition(i));
 
-					if (IsOutpost(position))
+					if (IsOutpost(i))
 						continue;
 
 					var enemy = Instantiate(enemies[Random.Range(0, enemies.Count)], position, Quaternion.identity, transform);
@@ -215,10 +219,10 @@ namespace SR.Core
 			}
 		}
 
-		private bool IsOutpost(Vector3 position)
+		private bool IsOutpost(int position)
 		{
 			var result = outpostPoints.Find(x => { return x == position; });
-			return result != Vector3.zero;
+			return result != -1;
 		}
 
 		private Outpost SpawnOutpost(Vector3 position, float difficulty, LocationDescriptor location)

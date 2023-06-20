@@ -8,6 +8,8 @@ namespace SR.Customization
 	[CreateAssetMenu(menuName = "SR/BumperDetail", fileName = "Bumper")]
 	public class BumperSO : CarDetailSO
 	{
+		public AnimatorOverrideController animatorOverride;
+
 		public BumperSO() : base()
 		{
 			base.type = CarDetailType.Bumper;

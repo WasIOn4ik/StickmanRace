@@ -10,8 +10,8 @@ namespace SR.Core
 		#region Variables
 
 		[SerializeField] private PlayerVehicle playerVehicle;
-		[SerializeField] private Bullet bulletPrefab;
 		[SerializeField] private Transform bulletSpawnPoint;
+		[SerializeField] private float aimVelocity = 3f;
 
 		private WeaponSO weaponBase;
 
@@ -30,7 +30,9 @@ namespace SR.Core
 			{
 				if (targets[0].transform.position.x > transform.position.x)
 				{
-					transform.rotation = Quaternion.Euler(0, 0, SRUtils.GetRotationTo(transform.position, targets[0].transform.position + Vector3.up * 1f));
+					float currentZ = transform.eulerAngles.z;
+					currentZ = Mathf.MoveTowardsAngle(currentZ, SRUtils.GetRotationTo(transform.position, targets[0].transform.position + Vector3.up * 1f), aimVelocity);
+					transform.rotation = Quaternion.Euler(0, 0, currentZ);
 				}
 				else
 				{
@@ -39,7 +41,9 @@ namespace SR.Core
 			}
 			else
 			{
-				transform.rotation = Quaternion.identity;
+				float currentZ = transform.eulerAngles.z;
+				currentZ = Mathf.MoveTowardsAngle(currentZ, 0, aimVelocity);
+				transform.rotation = Quaternion.Euler(0, 0, currentZ);
 			}
 		}
 

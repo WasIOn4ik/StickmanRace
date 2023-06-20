@@ -89,7 +89,6 @@ public class MapGenerator : MonoBehaviour
 		}
 		else if (playerVehicle.transform.position.x > ActiveTerrain.GetWorldRightBorderX())
 		{
-			Debug.LogWarning($"{ActiveTerrain.name}");
 			terrainsCache.Enqueue(ActiveTerrain);
 
 			var tempTerrain = terrainsCache.Dequeue();
@@ -99,10 +98,6 @@ public class MapGenerator : MonoBehaviour
 			var tempTerrain2 = terrainsCache.Peek();
 			tempTerrain2.transform.position = ActiveTerrain.GetEndpoint();
 			tempTerrain2.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation(), this);
-
-			Debug.Log(activeTerrain.name + " / " + terrainsCache.Count);
-			Debug.Log($"Switch endless: {playerVehicle.transform.position.x} > {ActiveTerrain.GetWorldRightBorderX()}");
-			Debug.Log($"Camera: {ActiveTerrain.GetCenter()}");
 		}
 
 		playerVehicle.UpdateCameraFollow(ActiveTerrain.GetCenter());

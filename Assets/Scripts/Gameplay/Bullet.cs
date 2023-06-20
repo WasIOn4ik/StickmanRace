@@ -53,7 +53,6 @@ namespace SR.Core
 		{
 			if (SRUtils.IsInLayerMask(collision.collider.gameObject.layer, targetLayerMask))
 			{
-				Debug.LogWarning(collision.gameObject.layer);
 				var target = collision.collider.GetComponent<IDamageable>();
 
 				if (target == null)
@@ -61,7 +60,6 @@ namespace SR.Core
 					Destroy(gameObject);
 					return;
 				}
-				Debug.Log($"Hit {collision.collider.gameObject.name}");
 
 				target.ApplyDamage(scaledDamage);
 				Destroy(gameObject);

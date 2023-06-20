@@ -1,0 +1,464 @@
+fileFormatVersion: 2
+guid: d0a9b9d93aec04b4bab93f7ca38ac060
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 1
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    isReadable: 0
+    streamingMipmaps: 1
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMasterTextureLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 400
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  spriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 0, y: 0}
+    spritePosition: {x: 0, y: 0}
+  mosaicSpriteImportData: []
+  rigSpriteImportData:
+  - name: StandartWheels
+    originalName: 
+    pivot: {x: 0.50000006, y: 0.51478916}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 5
+      width: 228
+      height: 239
+    spriteID: 1ab14c1331e85cb49bc18a7c7852cf2e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 16, y: 7}
+  - name: WheelsTier1
+    originalName: 
+    pivot: {x: 0.5014864, y: 0.507432}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 491
+      width: 222
+      height: 222
+    spriteID: 296fbb623218a7f4d8973d4cc00bdd27
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 491}
+    spritePosition: {x: 18, y: 19}
+  - name: WheelsTier2_NonMovement
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 7
+      y: 948
+      width: 183
+      height: 67
+    spriteID: 356ef16b892cf744dbbeb1fee7378ea3
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 948}
+    spritePosition: {x: 60, y: 65}
+  - name: WheelsTier2_Movement
+    originalName: 
+    pivot: {x: 0.50110286, y: 0.5213923}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 251
+      width: 225
+      height: 232
+    spriteID: 3a75232216aff854b939c354aaf24f20
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 251}
+    spritePosition: {x: 25, y: 7}
+  - name: WheelsTier3_NonMovement
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 240
+      y: 242
+      width: 256
+      height: 193
+    spriteID: a3b947efb18cbd0428bae95a5f6b3385
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 240, y: 242}
+    spritePosition: {x: 0, y: 21}
+  - name: WheelsTier3_Movement
+    originalName: 
+    pivot: {x: 0.49999973, y: 0.5092261}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 240
+      y: 443
+      width: 218
+      height: 218
+    spriteID: 6c0beb008bbd9a04fab0423a504812e8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 240, y: 443}
+    spritePosition: {x: 18, y: 21}
+  - name: WheelsTier4
+    originalName: 
+    pivot: {x: 0.48289755, y: 0.5085513}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 240
+      y: 4
+      width: 230
+      height: 230
+    spriteID: f3f2aadcac446494ba9f6da961b59df6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 240, y: 4}
+    spritePosition: {x: 15, y: 14}
+  - name: WheelsTier5
+    originalName: 
+    pivot: {x: 0.4992734, y: 0.49493742}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 721
+      width: 218
+      height: 219
+    spriteID: fb5159ab82dae0f429f2b45f00def1b9
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 721}
+    spritePosition: {x: 23, y: 21}
+  characterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    boneReadOnly: 0
+  sharedRigSpriteImportData: []
+  sharedRigCharacterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    boneReadOnly: 0
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Server
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Android
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: WebGL
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  mosaicLayers: 1
+  characterMode: 1
+  documentPivot: {x: 0, y: 0}
+  documentAlignment: 7
+  importHiddenLayers: 1
+  layerMappingOption: 2
+  generatePhysicsShape: 0
+  paperDollMode: 0
+  keepDupilcateSpriteName: 1
+  skeletonAssetReferenceID: 
+  spriteCategoryList:
+    categories: []
+  spritePackingTag: 
+  resliceFromLayer: 0
+  mosaicPSDLayers: []
+  rigPSDLayers:
+  - name: StandartWheels
+    spriteName: StandartWheels
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 1ab14c1331e85cb49bc18a7c7852cf2e
+    layerID: 0
+    mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: WheelsTier1
+    spriteName: WheelsTier1
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 296fbb623218a7f4d8973d4cc00bdd27
+    layerID: 447116795
+    mosaicPosition: {x: 4, y: 491}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: WheelsTier2
+    spriteName: 
+    isGroup: 1
+    parentIndex: -1
+    spriteID: 4bf61b7c7f3de4146b3f992f15dd8d27
+    layerID: 447116792
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: WheelsTier2_NonMovement
+    spriteName: WheelsTier2_NonMovement
+    isGroup: 0
+    parentIndex: 2
+    spriteID: 356ef16b892cf744dbbeb1fee7378ea3
+    layerID: -1827662965
+    mosaicPosition: {x: 4, y: 948}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: WheelsTier2_Movement
+    spriteName: WheelsTier2_Movement
+    isGroup: 0
+    parentIndex: 2
+    spriteID: 3a75232216aff854b939c354aaf24f20
+    layerID: 1267886228
+    mosaicPosition: {x: 4, y: 251}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: WheelsTier3
+    spriteName: 
+    isGroup: 1
+    parentIndex: -1
+    spriteID: a2fe3bfaef6288f41945bd9119a26eb2
+    layerID: 447116793
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: WheelsTier3_NonMovement
+    spriteName: WheelsTier3_NonMovement
+    isGroup: 0
+    parentIndex: 5
+    spriteID: a3b947efb18cbd0428bae95a5f6b3385
+    layerID: -382168886
+    mosaicPosition: {x: 240, y: 242}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: WheelsTier3_Movement
+    spriteName: WheelsTier3_Movement
+    isGroup: 0
+    parentIndex: 5
+    spriteID: 6c0beb008bbd9a04fab0423a504812e8
+    layerID: 1304717493
+    mosaicPosition: {x: 240, y: 443}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: WheelsTier4
+    spriteName: WheelsTier4
+    isGroup: 0
+    parentIndex: -1
+    spriteID: f3f2aadcac446494ba9f6da961b59df6
+    layerID: 447116798
+    mosaicPosition: {x: 240, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: WheelsTier5
+    spriteName: WheelsTier5
+    isGroup: 0
+    parentIndex: -1
+    spriteID: fb5159ab82dae0f429f2b45f00def1b9
+    layerID: 447116799
+    mosaicPosition: {x: 4, y: 721}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  sharedRigPSDLayers: []
+  pSDLayerImportSetting: []
+  generateGOHierarchy: 0
+  textureAssetName: 
+  prefabAssetName: 
+  spriteLibAssetName: 
+  skeletonAssetName: 
+  secondarySpriteTextures: []

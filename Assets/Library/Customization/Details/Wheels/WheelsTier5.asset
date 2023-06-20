@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WheelsTier5
   m_EditorClassIdentifier: 
   identifier: WheelsTier5
-  sprite: {fileID: 21300000, guid: 2f0d9cb5d89c81e449fc55fe6b7ee7b9, type: 3}
+  sprite: {fileID: 6696307198618626967, guid: d0a9b9d93aec04b4bab93f7ca38ac060, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   stats:
     health: 3
@@ -21,3 +21,5 @@ MonoBehaviour:
     acceleration: 175
     meleeDamage: 0
   type: 0
+  nonMovementPart: {fileID: 21300000, guid: 9d9ef3344a930de4b8603d53f3abea13, type: 3}
+  scaleOverride: 1.2

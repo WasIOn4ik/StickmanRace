@@ -1,4 +1,5 @@
 using SR.Customization;
+using SR.Extras;
 using SR.SceneManagement;
 using SR.UI;
 using System;
@@ -60,6 +61,7 @@ namespace SR.Core
 		[SerializeField] private StickmanHead head;
 		[SerializeField] private InGameCarCustomizer carCustomizer;
 		[SerializeField] private PlayerWeapon weaponController;
+		[SerializeField] private PlayerThrusterVisual thrusterVisual;
 
 		[Header("Properties")]
 		[SerializeField] private CarDescriptor baseCarDescriptor;
@@ -210,6 +212,7 @@ namespace SR.Core
 			UnFreeze();
 
 			weaponController.StartShooting();
+			thrusterVisual.InitEffect(backdoor.effects);
 		}
 
 		#endregion

@@ -80,7 +80,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &-5173679488276475268
 MonoBehaviour:
@@ -102,6 +102,7 @@ MonoBehaviour:
   destroyLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  maxSpeed: 25
   objectToSpawnOnDestroy: {fileID: 2951076868670694207, guid: 46520a2f8332b6547ae7e5043cd91438, type: 3}
   explosionScale: 4
 --- !u!1 &5185827388696061621

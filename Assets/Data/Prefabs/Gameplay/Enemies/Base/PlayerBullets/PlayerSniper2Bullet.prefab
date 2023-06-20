@@ -80,7 +80,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &-185369421417650119
 MonoBehaviour:
@@ -102,6 +102,7 @@ MonoBehaviour:
   destroyLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  maxSpeed: 25
   collisionsCount: 6
 --- !u!1 &5185827388696061621
 GameObject:
