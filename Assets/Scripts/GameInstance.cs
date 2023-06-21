@@ -57,6 +57,9 @@ namespace SR.Core
 
 		#region Variables
 
+		public event EventHandler<DetailEventArgs> onDetailChanged;
+		public event EventHandler onGemsCountChanged;
+
 		[Header("Components")]
 		[SerializeField] private MenusListSO menusLibrary;
 		[SerializeField] private ShopLibrarySO shopLibrary;
@@ -72,15 +75,12 @@ namespace SR.Core
 		[SerializeField] private float distanceToGemsPow = 1.5f;
 		[SerializeField] private float distanceDemultiplier = 50f;
 
-		public event EventHandler<DetailEventArgs> onDetailChanged;
-		public event EventHandler onGemsCountChanged;
+		[Inject] private SoundSystem soundSystem;
 
 		private GameRecords records = new GameRecords() { totalDistance = 0f, maxTime = 0f };
 		private CarConfig carConfig = new CarConfig();
 		private UnlockedDetails unlockedDetails;
 		private GameSettings GameSettings = new GameSettings() { bSoundsOn = true };
-
-		[Inject] private SoundSystem soundSystem;
 
 		#endregion
 
@@ -361,7 +361,6 @@ namespace SR.Core
 		{
 			shopLibrary.Initialize();
 		}
-
 
 		#endregion
 	}

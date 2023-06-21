@@ -7,8 +7,14 @@ namespace SR.Extras
 {
 	public class PlayerWheelVisual : MonoBehaviour
 	{
+		#region Variables
+
 		[SerializeField] private SpriteRenderer movementPart;
 		[SerializeField] private SpriteRenderer nonMovementPart;
+
+		#endregion
+
+		#region Functions
 
 		public void InitWheel(WheelsSO wheel)
 		{
@@ -16,5 +22,7 @@ namespace SR.Extras
 			movementPart.transform.localScale = Vector3.one * wheel.scaleOverride;
 			nonMovementPart.sprite = wheel.nonMovementPart;
 		}
+
+		#endregion
 	}
 }

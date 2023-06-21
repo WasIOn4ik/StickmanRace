@@ -7,9 +7,14 @@ namespace SR.Core
 {
 	public class ShotgunBullet : Bullet
 	{
+		#region Variables
+
 		public int pieces;
 		[SerializeField] private float degrees;
 
+		#endregion
+
+		#region Overrides
 
 		public override void InitBullet(float difficulty, float shootDistance)
 		{
@@ -25,5 +30,7 @@ namespace SR.Core
 			if (pieces > 0)
 				Destroy(gameObject);
 		}
+
+		#endregion
 	}
 }

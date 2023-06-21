@@ -28,11 +28,6 @@ namespace SR.Core
 
 		#endregion
 
-		private void Awake()
-		{
-			
-		}
-
 		#region Functions
 
 		public void SetDetail(CarDetailSO detail)

@@ -15,7 +15,6 @@ namespace SR.UI
 		[Header("Components")]
 		[SerializeField] private ShopItemSlot slotPrefab;
 		[SerializeField] private Transform itemsHolder;
-		[Inject] private GameInstance gameInstance;
 
 		[Header("Tabs")]
 		[SerializeField] private Button wheelsTabButton;
@@ -23,6 +22,8 @@ namespace SR.UI
 		[SerializeField] private Button backDoorTabButton;
 		[SerializeField] private Button bumperTabButton;
 		[SerializeField] private Button stickmanTabButton;
+
+		[Inject] private GameInstance gameInstance;
 
 		private List<ShopItemSlot> spawnedSlots = new List<ShopItemSlot>();
 

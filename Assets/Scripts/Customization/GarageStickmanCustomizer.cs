@@ -4,20 +4,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GarageStickmanCustomizer : MonoBehaviour
+namespace SR.Customization
 {
-	[SerializeField] private Image head;
-	[SerializeField] private Image body;
-	[SerializeField] private Image arm;
-	[SerializeField] private Image wrist;
-	[SerializeField] private Image hand;
-
-	public void SetStickman(StickmanSO stickman)
+	public class GarageStickmanCustomizer : MonoBehaviour
 	{
-		head.sprite = stickman.headSprite;
-		body.sprite = stickman.bodySprite;
-		arm.sprite = stickman.armSprite;
-		wrist.sprite = stickman.wristSprite;
-		hand.sprite = stickman.handSprite;
+		#region Variables
+
+		[SerializeField] private Image head;
+		[SerializeField] private Image body;
+		[SerializeField] private Image arm;
+		[SerializeField] private Image wrist;
+		[SerializeField] private Image hand;
+
+		#endregion
+
+		#region Functions
+
+		public void SetStickman(StickmanSO stickman)
+		{
+			head.sprite = stickman.headSprite;
+			body.sprite = stickman.bodySprite;
+			arm.sprite = stickman.armSprite;
+			wrist.sprite = stickman.wristSprite;
+			hand.sprite = stickman.handSprite;
+		}
+
+		#endregion
 	}
 }

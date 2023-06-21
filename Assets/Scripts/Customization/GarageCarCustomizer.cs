@@ -7,12 +7,18 @@ namespace SR.Customization
 {
 	public class GarageCarCustomizer : MonoBehaviour
 	{
+		#region Variables
+
 		[SerializeField] private Image bumper;
 		[SerializeField] private Image frontWheel;
 		[SerializeField] private Image rearWheel;
 		[SerializeField] private Image backDoor;
 		[SerializeField] private Image weapon;
 		[SerializeField] private GarageStickmanCustomizer stickman;
+
+		#endregion
+
+		#region Functions
 
 		public void SetDetail(CarDetailSO detail)
 		{
@@ -60,6 +66,8 @@ namespace SR.Customization
 			imgObj.GetComponent<RectTransform>().pivot = percentPivot;
 			imgObj.transform.localPosition = Vector3.zero;
 		}
+
+		#endregion
 	}
 }
 

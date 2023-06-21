@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SR.Customization
 {
-	[CreateAssetMenu(menuName = "SR/Stickman", fileName = "Stickman")]
+	[CreateAssetMenu(menuName = "SR/Shop/Detail/Stickman", fileName = "Stickman")]
 	public class StickmanSO : CarDetailSO
 	{
 		public Sprite headSprite;

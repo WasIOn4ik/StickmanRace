@@ -9,9 +9,14 @@ namespace SR.UI
 {
 	public class MainMenuUI : MenuBase
 	{
+		#region Variables
 		[Header("Main")]
 		[SerializeField] private Button startButton;
 		[SerializeField] private Button settingsButton;
+
+		#endregion
+
+		#region UnityMessages
 
 		private void Awake()
 		{
@@ -25,5 +30,7 @@ namespace SR.UI
 				OpenMenu(MenuType.SettingsMenu, this);
 			});
 		}
+
+		#endregion
 	}
 }

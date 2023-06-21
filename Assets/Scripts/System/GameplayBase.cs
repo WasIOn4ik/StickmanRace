@@ -16,6 +16,8 @@ namespace SR.UI
 
 		private const float DIFFICULTY_BASE = 0.025f;
 
+		public event EventHandler onGameStarted;
+
 		[Header("Components")]
 		[SerializeField] private Image faderImage;
 		[SerializeField] private GarageUI garageUI;
@@ -29,8 +31,6 @@ namespace SR.UI
 		[SerializeField] private float gameStartCarForce = 100f;
 		[SerializeField] private float slowMotionMultiplier = 0.25f;
 		[SerializeField] private float slowMotionDuration = 0.5f;
-
-		public event EventHandler onGameStarted;
 
 		[Inject] PlayerVehicle playerVehicle;
 

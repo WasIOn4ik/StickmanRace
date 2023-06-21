@@ -9,10 +9,15 @@ namespace SR.Extras
 	[RequireComponent(typeof(EnemyAnimationCallbacks))]
 	public class EnemyMorphTarget : MonoBehaviour
 	{
-		public List<SpriteRenderer> sprites;
+		#region Variables
+
 		public Transform bulletSpawnTransform;
 		public bool updateAnimator = true;
 		[NonSerialized] public EnemyAnimationCallbacks callbacks;
+
+		#endregion
+
+		#region UnityMessages
 
 		private void Awake()
 		{
@@ -20,5 +25,7 @@ namespace SR.Extras
 			if (updateAnimator)
 				callbacks.animator = GetComponent<Animator>();
 		}
+
+		#endregion
 	}
 }

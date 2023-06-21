@@ -4,9 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SR/ShopLibrary")]
+[CreateAssetMenu(menuName = "SR/Shop/ShopLibrary")]
 public class ShopLibrarySO : ScriptableObject
 {
+	#region Variables
+
 	[Header("Bumper")]
 	public int bumperStartPrice = 5;
 	public int bumperPriceMultiplier = 4;
@@ -38,6 +40,10 @@ public class ShopLibrarySO : ScriptableObject
 	public BackDoorSO startBackDoor;
 	public WeaponSO startWeapon;
 	public StickmanSO startStickman;
+
+	#endregion
+
+	#region Functions
 
 	public CarConfig GetStandartCar()
 	{
@@ -158,4 +164,6 @@ public class ShopLibrarySO : ScriptableObject
 			price *= stickmanPriceMultiplier;
 		}
 	}
+
+	#endregion
 }

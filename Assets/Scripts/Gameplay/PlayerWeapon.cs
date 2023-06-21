@@ -21,7 +21,7 @@ namespace SR.Core
 
 		#endregion
 
-		#region Functions
+		#region UnityMessages
 
 		private void Update()
 		{
@@ -50,6 +50,10 @@ namespace SR.Core
 				transform.rotation = Quaternion.Euler(0, 0, currentZ);
 			}
 		}
+
+		#endregion
+
+		#region Functions
 
 		public void SetWeapon(WeaponSO weapon)
 		{

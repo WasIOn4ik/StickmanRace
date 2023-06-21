@@ -214,24 +214,7 @@ namespace SR.Core
 		}
 
 		private void SpawnEnemies(List<Enemy> enemies)
-		{/*
-			int maxPoints = spriteShapeController.spline.GetPointCount() - 2;
-			int spawnDelay = Mathf.Max((int)(maxPoints / difficulty / 3), 1);
-			for (int i = 0; i < maxPoints; i++)
-			{
-				if (i % spawnDelay == 0)
-				{
-					var position = transform.TransformPoint(spriteShapeController.spline.GetPosition(i));
-
-					if (IsOutpost(i))
-						continue;
-
-					var enemy = Instantiate(enemies[Random.Range(0, enemies.Count)], position, Quaternion.identity, transform);
-					enemy.SetDifficulty(difficulty);
-					spawnedEnemies.Add(enemy);
-				}
-			}*/
-
+		{
 			int spawnDelay = Mathf.Max((int)(emptyPoints.Count / difficulty / 5), 1);
 			Debug.Log(spawnDelay);
 			for (int i = 2; i < emptyPoints.Count; i++)

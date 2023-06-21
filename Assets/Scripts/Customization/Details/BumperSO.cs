@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SR.Customization
 {
-	[CreateAssetMenu(menuName = "SR/BumperDetail", fileName = "Bumper")]
+	[CreateAssetMenu(menuName = "SR/Shop/Detail/BumperDetail", fileName = "Bumper")]
 	public class BumperSO : CarDetailSO
 	{
 		public AnimatorOverrideController animatorOverride;

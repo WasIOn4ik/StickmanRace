@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SR.Customization
 {
-	[CreateAssetMenu(menuName = "SR/BackDoorDetail", fileName = "BackDoor")]
+	[CreateAssetMenu(menuName = "SR/Shop/Detail/BackDoorDetail", fileName = "BackDoor")]
 	public class BackDoorSO : CarDetailSO
 	{
 		public PlayerEffectLevel effects = PlayerEffectLevel.Nothing;

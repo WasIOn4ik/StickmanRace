@@ -19,29 +19,12 @@ namespace SR.Core
 
 		#endregion
 
-		#region Functions
+		#region UnityMessages
 
 		private void Awake()
 		{
 			scaledDamage = damage;
 			scaledVelocity = velocity;
-		}
-
-		public virtual void InitBullet(float difficulty, float shootDistance)
-		{/*
-			scaledDamage = (int)(damage * difficulty);*/
-			scaledVelocity = Mathf.Min(maxSpeed, scaledVelocity * difficulty);
-			Destroy(gameObject, shootDistance);
-		}
-
-		public void SetVelocity(float vel)
-		{
-			scaledVelocity = vel;
-		}
-
-		public void SetDamage(int dmg)
-		{
-			scaledDamage = dmg;
 		}
 
 		private void Update()
@@ -68,6 +51,27 @@ namespace SR.Core
 			{
 				Destroy(gameObject);
 			}
+		}
+
+		#endregion
+
+		#region Functions
+
+		public virtual void InitBullet(float difficulty, float shootDistance)
+		{/*
+			scaledDamage = (int)(damage * difficulty);*/
+			scaledVelocity = Mathf.Min(maxSpeed, scaledVelocity * difficulty);
+			Destroy(gameObject, shootDistance);
+		}
+
+		public void SetVelocity(float vel)
+		{
+			scaledVelocity = vel;
+		}
+
+		public void SetDamage(int dmg)
+		{
+			scaledDamage = dmg;
 		}
 
 		#endregion

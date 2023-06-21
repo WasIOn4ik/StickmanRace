@@ -6,9 +6,17 @@ namespace SR.Core
 {
 	public class Explosion : MonoBehaviour
 	{
+		#region Variables
+
+		[SerializeField] private Collider2D explosionCollider;
+
 		private LayerMask targets;
 		private float targetScale;
-		[SerializeField] private Collider2D explosionCollider;
+
+		#endregion
+
+		#region Functions
+
 		public void Explode(float scale, LayerMask mask)
 		{
 			targets = mask;
@@ -42,51 +50,7 @@ namespace SR.Core
 		{
 			Destroy(gameObject);
 		}
-		/*
-				private void OnTriggerEnter2D(Collider2D collision)
-				{
-					if (SRUtils.IsInLayerMask(collision.gameObject.layer, targets))
-					{
-						var target = collision.gameObject.GetComponent<IDamageable>();
 
-						if (target != null)
-						{
-							target.ApplyDamage(1);
-						}
-					}
-				}*/
-
-		/*
-				private IEnumerator HandleExplosion()
-				{
-					float scale = 0f;
-					float delta = targetScale / 30f;
-					while (scale < targetScale)
-					{
-						scale = Mathf.MoveTowards(scale, targetScale, delta);
-
-						transform.localScale = Vector3.one * scale;
-
-						var cast = Physics2D.CircleCastAll(transform.position, scale / 2, Vector2.zero, 0f, targets);
-						Debug.LogError(cast.Length);
-						if (cast.Length > 0)
-						{
-							foreach (var el in cast)
-							{
-								var collision = el.collider;
-
-								var target = collision.gameObject.GetComponent<IDamageable>();
-								if (target != null)
-								{
-									target.ApplyDamage(1);
-								}
-							}
-						}
-
-						yield return null;
-					}
-
-					Destroy(gameObject);
-				}*/
+		#endregion
 	}
 }

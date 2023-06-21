@@ -6,8 +6,14 @@ namespace SR.Core
 {
 	public class AdvancedBullet : Bullet
 	{
+		#region Variables
+
 		[Header("Advanced Bullet")]
 		[SerializeField] private int collisionsCount = 1;
+
+		#endregion
+
+		#region Overrides
 
 		protected override void OnCollisionEnter2D(Collision2D collision)
 		{
@@ -30,5 +36,7 @@ namespace SR.Core
 				Destroy(gameObject);
 			}
 		}
+
+		#endregion
 	}
 }

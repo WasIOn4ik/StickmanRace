@@ -10,6 +10,7 @@ namespace SR.Extras
 		#region Variables
 
 		private const string ANIMATION = "BumperAnimation";
+
 		[SerializeField] private SpriteRenderer staticBumper;
 		[SerializeField] private SpriteRenderer part1;
 		[SerializeField] private SpriteRenderer part2;
