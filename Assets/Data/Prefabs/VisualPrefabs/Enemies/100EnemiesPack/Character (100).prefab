@@ -103,7 +103,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1279
+  m_SortingOrder: 31
   m_Sprite: {fileID: -2044171535, guid: 0c1e734fa85636743af3bc22c6d99ba8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -187,7 +187,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1283
+  m_SortingOrder: 34
   m_Sprite: {fileID: -756862302, guid: 0c1e734fa85636743af3bc22c6d99ba8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -270,13 +270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88fcd83d4a331f0469b2fffc07b7f394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 6923228289010182194}
-  - {fileID: 6923228288852191090}
-  - {fileID: 6923228288824888524}
-  - {fileID: 6923228288952117350}
-  - {fileID: 6923228289883525232}
   bulletSpawnTransform: {fileID: 4399623913912781594}
+  updateAnimator: 1
 --- !u!114 &1418154690083123518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,7 +358,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1281
+  m_SortingOrder: 34
   m_Sprite: {fileID: -17678582, guid: 0c1e734fa85636743af3bc22c6d99ba8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -449,7 +444,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1280
+  m_SortingOrder: 32
   m_Sprite: {fileID: -790328767, guid: 0c1e734fa85636743af3bc22c6d99ba8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -533,7 +528,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1279
+  m_SortingOrder: 31
   m_Sprite: {fileID: -17678582, guid: 0c1e734fa85636743af3bc22c6d99ba8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

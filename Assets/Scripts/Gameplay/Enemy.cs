@@ -22,6 +22,10 @@ namespace SR.Core
 		[SerializeField] private float minimalShootDistance = 1f;
 		[SerializeField] protected LayerMask stickmanLayerMask;
 
+		[Header("MaxDIfficultySettings")]
+		[SerializeField] private float minFirstAttackDelay = 0.05f;
+		[SerializeField] private float minAttackDelay = 0.4f;
+
 		protected PlayerVehicle target;
 		protected float difficultyCoef = 1f;
 
@@ -74,7 +78,7 @@ namespace SR.Core
 
 		private IEnumerator HandleAttack()
 		{
-			yield return new WaitForSeconds(firstAttackDelay);
+			yield return new WaitForSeconds(Mathf.Max(minFirstAttackDelay,firstAttackDelay/ difficultyCoef));
 
 			while (isAlive && target != null && target.IsAlive() && (target.transform.position - transform.position).magnitude
 				> minimalShootDistance && target.transform.position.x < transform.position.x)
@@ -85,7 +89,7 @@ namespace SR.Core
 					StartAttack();
 				}
 
-				yield return new WaitForSeconds(attackDelay);
+				yield return new WaitForSeconds(Mathf.Max(minAttackDelay,attackDelay/difficultyCoef));
 			}
 		}
 
@@ -104,7 +108,6 @@ namespace SR.Core
 		public override void SetDifficulty(float difficulty)
 		{
 			difficultyCoef = difficulty;
-			base.SetDifficulty(difficulty);
 		}
 
 		#endregion

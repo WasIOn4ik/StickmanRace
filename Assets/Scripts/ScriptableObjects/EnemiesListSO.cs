@@ -10,6 +10,9 @@ namespace SR.Extras
 	{
 		[SerializeField] private List<Enemy> enemies;
 
-		public List<Enemy> Enemies { get { return enemies; } }
+		public Enemy GetRandomEnemy()
+		{
+			return enemies[Random.Range(0, enemies.Count)];
+		}
 	}
 }

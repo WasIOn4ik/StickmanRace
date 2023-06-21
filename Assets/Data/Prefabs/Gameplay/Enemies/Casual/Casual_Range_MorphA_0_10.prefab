@@ -109,10 +109,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1577980910204100886, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2441377149810897296, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 7347656754744222959, guid: 71da1a34984cbbd4b9e0914bf4a808cc, type: 3}
+    - target: {fileID: 2441377149810897296, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
+      propertyPath: aimVerticalOffset
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 2488943214382790746, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_Icon
       value: 
@@ -265,18 +273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 6067276974103575470}
   spawnTransform: {fileID: 1191489171185470751}
-  morphs:
-  - {fileID: 5590498295199441515, guid: 34a3833850ccfea4d8e03f8f79f95a8e, type: 3}
-  - {fileID: -8017092920284170151, guid: 0e280cd4ce521994eb618b6731c6a2f4, type: 3}
-  - {fileID: -588665642606559355, guid: 2193cfa0c41207e4399c5aa3be1aa7e1, type: 3}
-  - {fileID: -986635508454275604, guid: 8380884e642db8443af87c7857bf7829, type: 3}
-  - {fileID: 2400001033509590783, guid: 77be1b8f1402d744cb067e39258fcedc, type: 3}
-  - {fileID: 3372016074385998447, guid: 108430a325e08c14a980d8c5955d7732, type: 3}
-  - {fileID: -4442753176428912122, guid: d6690c8a416d60d40a83a0ef96994663, type: 3}
-  - {fileID: -5729720740613629872, guid: 04557c871a7e606499e4598668edaafa, type: 3}
-  - {fileID: 6678431884957837637, guid: 361981530247ec54bb679f89e208d82f, type: 3}
-  - {fileID: 3819612131189661919, guid: 60b087c28ab8707418b27d15864b078e, type: 3}
-  spriteOrderOffset: 15
+  morphsList: {fileID: 11400000, guid: f5f7509f9d21d054e91d6edcaf3d369d, type: 2}
 --- !u!95 &6438179831671845352 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3209885263698344918, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}

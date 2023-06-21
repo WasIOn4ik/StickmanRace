@@ -26,6 +26,10 @@ namespace SR.Core
 			//StartCoroutine(HandleExplosion());
 		}
 
+		#endregion
+
+		#region AnimationCallbacks
+
 		private void HandleExplode()
 		{
 			RaycastHit2D[] collisions = new RaycastHit2D[10];

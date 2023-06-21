@@ -77,7 +77,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3152496524883276227, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
       propertyPath: m_Constraints
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5703635519362183176, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
       propertyPath: m_Sprite
@@ -94,6 +94,10 @@ PrefabInstance:
     - target: {fileID: 6031208988906408091, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
       propertyPath: m_Offset.y
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540587253880486085, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
+      propertyPath: aimVerticalOffset
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}

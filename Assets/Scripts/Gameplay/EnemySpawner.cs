@@ -14,10 +14,10 @@ namespace SR.Core
 		public Transform spawnTransform;
 		public List<Enemy> enemiesToSpawn;
 		public float spawnDelay;
-		public int maxSpawnedAtOnce = 2;
+		public int maxSpawnedAtOnce = 1;
 		[HideInInspector] public float currentTimer = 0;
 
-		List<Enemy> spawnedEnemies = new List<Enemy>();
+		public List<Enemy> spawnedEnemies = new List<Enemy>();
 
 		#endregion
 
@@ -35,14 +35,6 @@ namespace SR.Core
 			spawnedEnemies.Add(enemy);
 			enemy.onDeathStarted += Enemy_onDeathStarted;
 			return enemy;
-		}
-
-		public void Clear()
-		{
-			foreach (var el in spawnedEnemies)
-			{
-				GameObject.Destroy(el.gameObject);
-			}
 		}
 
 		private void Enemy_onDeathStarted(object sender, EventArgs e)

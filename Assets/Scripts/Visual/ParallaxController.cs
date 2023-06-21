@@ -17,7 +17,7 @@ namespace SR.Extras
 
 		#region Functions
 
-		public void SetLocation(LocationDescriptor location)
+		public void SetLocation(LocationDescriptorSO location)
 		{
 			for (int i = 0; i < backgrounds.Count; i++)
 			{

@@ -30,7 +30,7 @@ namespace SR.Extras
 
 		#region Functions
 
-		public void UpdateLocation(LocationDescriptor location)
+		public void UpdateLocation(LocationDescriptorSO location)
 		{
 			activeParallaxController.Fade();
 			activeParallaxController = activeParallaxController == firstParallax ? secondParallax : firstParallax;

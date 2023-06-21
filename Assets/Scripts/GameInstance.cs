@@ -99,6 +99,11 @@ namespace SR.Core
 
 		#region Functions
 
+		public int DistanceToGems(float distance)
+		{
+			return (int)Mathf.Pow(distance / distanceDemultiplier, distanceToGemsPow);
+		}
+
 		public bool IsEquipped(CarDetailSO detail)
 		{
 			switch (detail.type)
@@ -350,11 +355,6 @@ namespace SR.Core
 			{
 				shopLibrary.GetStickman(s).bUnlocked = true;
 			}
-		}
-
-		private int DistanceToGems(float distance)
-		{
-			return (int)Mathf.Pow(distance / distanceDemultiplier, distanceToGemsPow);
 		}
 
 		private void InitializeShop()

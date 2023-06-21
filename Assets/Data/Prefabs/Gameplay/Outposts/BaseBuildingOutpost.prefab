@@ -139,7 +139,7 @@ MonoBehaviour:
   obstacles: []
   healthBar: {fileID: 4737988457068597151}
   spawners: []
-  baseHP: 4
+  baseHP: 9
   destroyPS: {fileID: 4399645819988482112}
   colliderToDisable: {fileID: 7872105241968065261}
   spriteToDisable: {fileID: 3653208588304128081}
@@ -1260,7 +1260,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 500
+        scalar: 1000
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -5256,7 +5256,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 19937e6831a1b794da9a3fc950554f1a, type: 2}
+  - {fileID: 2100000, guid: f503f3fc6c4d23c4d9903b3ca386ce73, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5276,7 +5276,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 11
   m_Sprite: {fileID: 21300000, guid: 325f4579683eff24c81eb687b0e80a33, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5388,7 +5388,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 2.23, y: 4.25}
+  m_AnchoredPosition: {x: 2.23, y: 3}
   m_SizeDelta: {x: 4, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5840763694029552456
@@ -5410,7 +5410,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 200
   m_TargetDisplay: 0
 --- !u!114 &9190927102319571740
 MonoBehaviour:

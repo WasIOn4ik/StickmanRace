@@ -101,6 +101,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1577980910204100886, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2441377149810897296, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: bulletPrefab
       value: 
@@ -261,18 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 6067276974103575470}
   spawnTransform: {fileID: 5320129803015326363}
-  morphs:
-  - {fileID: 3729465178029445222, guid: b6665c1d1459a9648b89cb38e5090a5e, type: 3}
-  - {fileID: -259552944919419240, guid: 99ea183cd1f90814eb99d1c2db2de578, type: 3}
-  - {fileID: 8623982280373760473, guid: a1102dd48e9fe5f4ab6632d22b3a3682, type: 3}
-  - {fileID: 6682325746657566504, guid: 0db0fd3c61b5a7f4d9cc86d9dd2e7ca6, type: 3}
-  - {fileID: 2402894427285906422, guid: 39385abaa1419dd49a82630f158c9b93, type: 3}
-  - {fileID: -2198719429644489140, guid: 5316090c50cf9cb498514e733e8542b3, type: 3}
-  - {fileID: -955217903848796969, guid: 7f870ed1a3aa0c74cbda9323878b98a1, type: 3}
-  - {fileID: -1799687596678962539, guid: f711d69cc0ee1aa4dac239e5ab4e3ed9, type: 3}
-  - {fileID: 4499984540543700116, guid: d3992a94349c31542955b8482f5ed304, type: 3}
-  - {fileID: 4700917746757460343, guid: 96944988f695d4c47af0515556018ce3, type: 3}
-  spriteOrderOffset: 15
+  morphsList: {fileID: 11400000, guid: 29778bd7430062c41a4c5c718f1c200e, type: 2}
 --- !u!95 &6438179831671845352 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3209885263698344918, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}

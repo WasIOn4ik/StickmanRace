@@ -22,8 +22,8 @@ MonoBehaviour:
     meleeDamage: 0
   type: 3
   weaponStats:
-    damage: 1
-    fireRate: 80
-    shootDistance: 3
-    velocity: 10
+    damage: 5
+    fireRate: 50
+    shootDistance: 3.5
+    velocity: 4
   bulletPrefab: {fileID: -5173679488276475268, guid: fd43149bcfd730f4d8fb2776bcf59d97, type: 3}

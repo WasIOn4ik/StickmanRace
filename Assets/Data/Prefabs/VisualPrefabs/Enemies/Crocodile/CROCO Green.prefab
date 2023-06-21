@@ -487,7 +487,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88fcd83d4a331f0469b2fffc07b7f394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites: []
   bulletSpawnTransform: {fileID: 0}
   updateAnimator: 0
 --- !u!210 &-5509664466696223355
@@ -500,7 +499,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 31
 --- !u!1 &1157769940876824
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,7 +646,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: f9c4faa7e19caf84cac0b986fc797607, type: 3}
   m_Controller: {fileID: 9100000, guid: 2d31f22bd57c3af4d91398a860e84c0e, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0

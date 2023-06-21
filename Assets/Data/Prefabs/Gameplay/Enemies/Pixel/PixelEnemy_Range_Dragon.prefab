@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1577980910204100886, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_Constraints
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2441377149810897296, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: bulletPrefab
@@ -29,11 +29,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2536870231740593066, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.158
       objectReference: {fileID: 0}
     - target: {fileID: 2536870231740593066, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.21
+      value: 1.883
       objectReference: {fileID: 0}
     - target: {fileID: 3209885263698344918, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_Controller
@@ -89,15 +89,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6362219901883523860, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.97
+      value: 1.17
       objectReference: {fileID: 0}
     - target: {fileID: 6362219901883523860, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.71
+      value: -0.674
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920388339644684366, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920388339644684366, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
+      propertyPath: m_Size.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7920388339644684366, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_Offset.y
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8178138817914478813, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_Sprite

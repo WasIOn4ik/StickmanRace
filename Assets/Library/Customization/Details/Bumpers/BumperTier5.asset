@@ -19,6 +19,6 @@ MonoBehaviour:
     health: 2
     velocity: 0
     acceleration: 0
-    meleeDamage: 5
+    meleeDamage: 3
   type: 1
   animatorOverride: {fileID: 22100000, guid: 8660f8ddfde2071478fbf644fc94eaed, type: 2}

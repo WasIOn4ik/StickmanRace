@@ -68,21 +68,15 @@ namespace SR.Core
 		{
 			onHPChanged += healthBar.OnHPChanged;
 			SetDifficulty(1f);
+			SpawnRandomIgnoreTimer();
 		}
 
 		private void Update()
 		{
 			if (!bSpawning)
 				return;
-			for (int i = 0; i < spawners.Count; i++)
-			{
-				spawners[i].currentTimer += Time.deltaTime;
-				if (spawners[i].currentTimer >= spawners[i].spawnDelay && spawners[i].CanSpawn())
-				{
-					spawners[i].currentTimer = 0;
-					spawners[i].SpawnEnemy();
-				}
-			}
+
+			SpawnEnemies();
 		}
 
 		private void OnCollisionEnter2D(Collision2D collision)
@@ -103,19 +97,59 @@ namespace SR.Core
 			}
 		}
 
+		#endregion
+
+		#region Overrides
+
 		public override void DestroyOutpost()
 		{
+			bSpawning = false;
 			if (spriteToDisable)
 			{
-				foreach (var s in spawners)
-				{
-					s.Clear();
-				}
+				FreeEnemies();
+
 				healthBar.gameObject.SetActive(false);
 				spriteToDisable.gameObject.SetActive(false);
 				colliderToDisable.enabled = false;
 				destroyPS.Play();
 				Destroy(gameObject, destroyPS.main.duration);
+			}
+		}
+
+		#endregion
+
+		#region Functions
+
+		private void SpawnEnemies()
+		{
+			for (int i = 0; i < spawners.Count; i++)
+			{
+				spawners[i].currentTimer += Time.deltaTime * currentDifficulty;
+				if (spawners[i].currentTimer >= spawners[i].spawnDelay && spawners[i].CanSpawn())
+				{
+					spawners[i].currentTimer = 0;
+					spawners[i].SpawnEnemy();
+				}
+			}
+		}
+
+		private void SpawnRandomIgnoreTimer()
+		{
+			int i = UnityEngine.Random.Range(0, spawners.Count);
+			spawners[i].currentTimer = 0;
+			spawners[i].SpawnEnemy();
+		}
+
+		private void FreeEnemies()
+		{
+			foreach (var sp in spawners)
+			{
+				foreach (var e in sp.spawnedEnemies)
+				{
+					e.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+					transform.parent.GetComponent<TerrainGenerator>().AddToEnemies(e);
+					e.transform.parent = transform.parent;
+				}
 			}
 		}
 

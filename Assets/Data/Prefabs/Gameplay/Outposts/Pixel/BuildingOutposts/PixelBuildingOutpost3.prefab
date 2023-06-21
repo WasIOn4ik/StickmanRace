@@ -59,10 +59,6 @@ PrefabInstance:
       value: 2.96
       objectReference: {fileID: 0}
     - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
-      propertyPath: baseHP
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
       propertyPath: spawners.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -249,6 +245,10 @@ PrefabInstance:
     - target: {fileID: 7619955751713709383, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872105241968065261, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
+      propertyPath: m_Size.x
+      value: 3.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}

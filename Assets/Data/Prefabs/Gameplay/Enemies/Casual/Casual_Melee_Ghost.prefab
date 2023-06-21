@@ -87,6 +87,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Casual_Melee_Ghost
       objectReference: {fileID: 0}
+    - target: {fileID: 3152496524883276227, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6031208988906408091, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
       propertyPath: m_Size.x
       value: 0.4
@@ -98,6 +102,10 @@ PrefabInstance:
     - target: {fileID: 6031208988906408091, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
       propertyPath: m_Offset.y
       value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898545703294401470, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}
@@ -140,10 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 5217617692548769812}
   spawnTransform: {fileID: 394961754943954968}
-  morphs:
-  - {fileID: -5870816314782593239, guid: d1aaf096d792a914a96e33f8805b70e5, type: 3}
-  - {fileID: 5433063511495272762, guid: 842a9e8c163d4d94a90de7619ca8e9f4, type: 3}
-  spriteOrderOffset: 0
+  morphsList: {fileID: 0}
 --- !u!4 &1812289498744428774 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 831738094838532151, guid: 44991d8637802c7468b3a98c36a91c01, type: 3}

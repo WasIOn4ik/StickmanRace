@@ -11,7 +11,7 @@ namespace SR.Extras
 
 		[SerializeField] private Enemy enemy;
 		[SerializeField] private Transform spawnTransform;
-		[SerializeField] private List<EnemyMorphTarget> morphs;
+		[SerializeField] private EnemyMorphsListSO morphsList;
 
 		#endregion
 
@@ -24,8 +24,8 @@ namespace SR.Extras
 				Destroy(ch.gameObject);
 			}
 
-			int index = Random.Range(0, morphs.Count);
-			var morph = morphs[index];
+			int index = Random.Range(0, morphsList.MorphTargets.Count);
+			var morph = morphsList.MorphTargets[index];
 			var instantiated = Instantiate(morph, spawnTransform);
 			instantiated.callbacks.enemy = enemy;
 

@@ -30,6 +30,7 @@ namespace SR.Core
 				{
 					if (player.GetVelocity() > highSpeedDestruction)
 					{
+						player.BackVelocity();
 						HandleHighSpeedDestruction();
 					}
 					OnPlayerCollisionConfirmed();

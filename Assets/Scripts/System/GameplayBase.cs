@@ -14,8 +14,6 @@ namespace SR.UI
 	{
 		#region Variables
 
-		private const float DIFFICULTY_BASE = 0.025f;
-
 		public event EventHandler onGameStarted;
 
 		[Header("Components")]
@@ -25,7 +23,7 @@ namespace SR.UI
 		[Header("Properties")]
 		[SerializeField] private float afterDeathTimeout = 5f;
 		[SerializeField] private float startDifficulty = 1f;
-		[SerializeField] private float difficultyIncreaseCoef = 1f;
+		[SerializeField] private float difficultiMultiplierPerSecond = 1.02f;
 		[SerializeField] private float fadeTime = 1f;
 		[SerializeField] private float gameStartUnfadeTime = 0.5f;
 		[SerializeField] private float gameStartCarForce = 100f;
@@ -34,9 +32,7 @@ namespace SR.UI
 
 		[Inject] PlayerVehicle playerVehicle;
 
-		private float difficulty;
-
-		private float difficultyCoef;
+		private float totalDifficulty;
 
 		#endregion
 
@@ -44,8 +40,7 @@ namespace SR.UI
 
 		private void Awake()
 		{
-			difficulty = startDifficulty;
-			difficultyCoef = difficultyIncreaseCoef * DIFFICULTY_BASE + 1;
+			totalDifficulty = startDifficulty;
 			playerVehicle.onDeath += PlayerVehicle_onDeath;
 			StartCoroutine(FadeImage(faderImage, fadeTime));
 		}
@@ -63,7 +58,7 @@ namespace SR.UI
 
 		public float GetDifficulty()
 		{
-			return difficulty;
+			return totalDifficulty;
 		}
 
 		public void StartGame()
@@ -120,7 +115,7 @@ namespace SR.UI
 			{
 				yield return new WaitForSeconds(1f);
 
-				difficulty *= difficultyCoef;
+				totalDifficulty *= difficultiMultiplierPerSecond;
 			}
 		}
 

@@ -71,10 +71,6 @@ PrefabInstance:
       value: 2.44
       objectReference: {fileID: 0}
     - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
-      propertyPath: baseHP
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
       propertyPath: spawners.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -309,10 +305,6 @@ PrefabInstance:
     - target: {fileID: 4497994488049215819, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.74
-      objectReference: {fileID: 0}
-    - target: {fileID: 5840763694029552456, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
-      propertyPath: m_SortingOrder
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6658682524561296416, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
       propertyPath: m_LocalScale.x

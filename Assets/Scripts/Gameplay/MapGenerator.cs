@@ -13,7 +13,7 @@ public class MapGenerator : MonoBehaviour
 
 	public class TerrainChangedEventArgs : EventArgs
 	{
-		public LocationDescriptor location;
+		public LocationDescriptorSO location;
 	}
 
 	#endregion
@@ -28,12 +28,7 @@ public class MapGenerator : MonoBehaviour
 
 	[Header("Properties")]
 	[SerializeField] private bool bRandom = false;
-	[SerializeField] private List<LocationDescriptor> locations;
-	public List<Enemy> pixelEnemies;
-	public List<Enemy> casualEnemies;
-
-	public List<Outpost> pixelOutposts = new List<Outpost>();
-	public List<Outpost> casualOutposts = new List<Outpost>();
+	[SerializeField] private List<LocationDescriptorSO> locations;
 
 	[Inject] private PlayerVehicle playerVehicle;
 	[Inject] private GameplayBase gameplayBase;
@@ -59,10 +54,10 @@ public class MapGenerator : MonoBehaviour
 
 	private void Start()
 	{
-		startTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation(), this);
+		startTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
 		var tempTerrain = Instantiate(terrainGeneratorPrefab, startTerrain.GetEndpoint(), Quaternion.identity, transform);
 		tempTerrain.name = "FirstSpawned";
-		tempTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation(), this);
+		tempTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
 		terrainsCache.Enqueue(tempTerrain);
 		ActiveTerrain = startTerrain;
 	}
@@ -75,12 +70,12 @@ public class MapGenerator : MonoBehaviour
 			{
 				var tempTerrain = Instantiate(terrainGeneratorPrefab, terrainsCache.Peek().GetEndpoint(), Quaternion.identity, transform);
 				tempTerrain.name = "SecondSpawned";
-				tempTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation(), this);
+				tempTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
 				terrainsCache.Enqueue(tempTerrain);
 
 				var tempTerrain2 = Instantiate(terrainGeneratorPrefab, tempTerrain.GetEndpoint(), Quaternion.identity, transform);
 				tempTerrain.name = "ThirdSpawned";
-				tempTerrain2.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation(), this);
+				tempTerrain2.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
 				terrainsCache.Enqueue(tempTerrain2);
 
 				ActiveTerrain = terrainsCache.Dequeue();
@@ -97,7 +92,7 @@ public class MapGenerator : MonoBehaviour
 
 			var tempTerrain2 = terrainsCache.Peek();
 			tempTerrain2.transform.position = ActiveTerrain.GetEndpoint();
-			tempTerrain2.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation(), this);
+			tempTerrain2.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
 		}
 
 		playerVehicle.UpdateCameraFollow(ActiveTerrain.GetCenter());
@@ -107,7 +102,7 @@ public class MapGenerator : MonoBehaviour
 
 	#region Functions
 
-	private LocationDescriptor GetRandomLocation()
+	private LocationDescriptorSO GetRandomLocation()
 	{
 
 		int index = UnityEngine.Random.Range(0, locations.Count);
@@ -120,10 +115,6 @@ public class MapGenerator : MonoBehaviour
 		currentLocationId = index;
 
 		var location = locations[index];
-		if (location.bUseDefault)
-		{
-			location.availableOutposts = location.bPixel ? pixelOutposts : casualOutposts;
-		}
 		return location;
 	}
 

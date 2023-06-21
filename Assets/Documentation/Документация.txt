@@ -1,0 +1,10 @@
+Слои:
+ BackgroundParallax - 0-4
+ BuildingObstacles - 11-20
+Enemies - 31-50
+ FireFX - 59
+ SmokePS - 60
+ PlayerVehicle - 61
+ PlayerParts - 62-70
+Trees - 100
+Terrain - 101

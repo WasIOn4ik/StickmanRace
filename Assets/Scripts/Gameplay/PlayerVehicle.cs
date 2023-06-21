@@ -1,3 +1,4 @@
+using ModestTree;
 using SR.Customization;
 using SR.Extras;
 using SR.SceneManagement;
@@ -62,6 +63,7 @@ namespace SR.Core
 		[SerializeField] private InGameCarCustomizer carCustomizer;
 		[SerializeField] private PlayerWeapon weaponController;
 		[SerializeField] private PlayerThrusterVisual thrusterVisual;
+		[SerializeField] private Transform meleeDamageStart;
 
 		[Header("Properties")]
 		[SerializeField] private CarDescriptor baseCarDescriptor;
@@ -69,6 +71,9 @@ namespace SR.Core
 		[SerializeField] private float cameraRightOffset = 3f;
 		[SerializeField] private float cameraBlendDelta = 0.25f;
 		[SerializeField] private Vector3 headPositionOffset = new Vector3(0, 0.4f, 0);
+		[SerializeField] private float meleeDamageCheckDelay = 0.25f;
+		[SerializeField] private float meleeDamageDistance = 1f;
+		[SerializeField] private LayerMask meleeLayerMask;
 
 		private CarDescriptor fullCarDescriptor;
 
@@ -116,6 +121,11 @@ namespace SR.Core
 			return cachedVelocity;
 		}
 
+		public void BackVelocity()
+		{
+			carRB.velocity = Vector2.right * cachedVelocity;
+		}
+
 		public float GetDamage()
 		{
 			return cachedVelocity / 2f + cachedVelocity / 4 * fullCarDescriptor.meleeDamage;
@@ -152,6 +162,7 @@ namespace SR.Core
 
 			Freeze();
 			bAlive = false;
+			weaponController.StopAim();
 			onDeath?.Invoke(this, EventArgs.Empty);
 			Debug.Log("Dead");
 		}
@@ -214,8 +225,41 @@ namespace SR.Core
 			bAlive = true;
 			UnFreeze();
 
-			weaponController.StartShooting();
+			if (weapon.weaponStats.fireRate != 0)
+			{
+				weaponController.StartShooting();
+				weaponController.StartAim();
+			}
 			thrusterVisual.InitEffect(backdoor.effects);
+
+			StartCoroutine(HandleMelee());
+		}
+
+		#endregion
+
+		#region Coroutines
+
+		private IEnumerator HandleMelee()
+		{
+			while (IsAlive())
+			{
+				//var targets = Physics2D.BoxCastAll(transform.position, Vector2.one, 0, Vector2.zero, 0, meleeLayerMask);
+				Debug.DrawRay(meleeDamageStart.position, Vector2.right * meleeDamageDistance, Color.red, meleeDamageCheckDelay);
+				var targets = Physics2D.RaycastAll(meleeDamageStart.position, meleeDamageStart.TransformDirection(Vector2.right), meleeDamageDistance, meleeLayerMask);
+				foreach (var target in targets)
+				{
+					if (target.collider.isTrigger)
+						continue;
+
+					var dmgt = target.rigidbody.gameObject.GetComponent<IDamageable>();
+					if (dmgt != null)
+					{
+						dmgt.ApplyDamage((int)(fullCarDescriptor.meleeDamage));
+					}
+				}
+
+				yield return new WaitForSeconds(meleeDamageCheckDelay);
+			}
 		}
 
 		#endregion

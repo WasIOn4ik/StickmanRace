@@ -13,12 +13,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1577980910204100886, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_Constraints
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2441377149810897296, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 7347656754744222959, guid: 87db9ff2b29015243b236bd9e203a1de, type: 3}
+    - target: {fileID: 2441377149810897296, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
+      propertyPath: aimVerticalOffset
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 2488943214382790746, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_Name
       value: PixelEnemy_Range_Eye
@@ -33,7 +37,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2536870231740593066, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.309
       objectReference: {fileID: 0}
     - target: {fileID: 2536870231740593066, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_LocalPosition.z
@@ -93,11 +97,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6362219901883523860, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.696
+      value: 0.657
       objectReference: {fileID: 0}
     - target: {fileID: 6362219901883523860, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.359
+      value: 0.015
       objectReference: {fileID: 0}
     - target: {fileID: 7920388339644684366, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_Size.y

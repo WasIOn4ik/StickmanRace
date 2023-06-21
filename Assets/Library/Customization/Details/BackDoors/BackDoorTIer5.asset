@@ -17,7 +17,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 1}
   stats:
     health: 1
-    velocity: 4
+    velocity: 5
     acceleration: 0
     meleeDamage: 0
   type: 2

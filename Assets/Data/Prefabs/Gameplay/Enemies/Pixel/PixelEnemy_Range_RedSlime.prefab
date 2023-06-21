@@ -13,12 +13,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1577980910204100886, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_Constraints
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2441377149810897296, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 7347656754744222959, guid: 71da1a34984cbbd4b9e0914bf4a808cc, type: 3}
+    - target: {fileID: 2441377149810897296, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
+      propertyPath: aimVerticalOffset
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 2488943214382790746, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}
       propertyPath: m_Name
       value: PixelEnemy_Range_RedSlime

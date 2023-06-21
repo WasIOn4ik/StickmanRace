@@ -104,7 +104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6951579280448374081, guid: 1718f8ce96585c1408e49b471ed5340c, type: 3}
       propertyPath: m_Radius
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1718f8ce96585c1408e49b471ed5340c, type: 3}
@@ -134,14 +134,19 @@ MonoBehaviour:
   destroyLayerMask:
     serializedVersion: 2
     m_Bits: 16384
+  aimVerticalOffset: 1
+  destroyParticles: {fileID: 0}
+  highSpeedDestruction: 5
   rigidBody2D: {fileID: 1577980910204100886}
-  attackDelay: 3
-  firstAttackDelay: 0.2
+  attackDelay: 2.5
+  firstAttackDelay: 0.15
   damage: 1
   minimalShootDistance: 1
   stickmanLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  minFirstAttackDelay: 0.03
+  minAttackDelay: 0.4
   bulletPrefab: {fileID: 8914481815421465963, guid: 7492530c0b3ded141b79b0f7350addd1, type: 3}
   bulletSpawnpoint: {fileID: 6362219901883523860}
 --- !u!4 &2536870231740593066 stripped
