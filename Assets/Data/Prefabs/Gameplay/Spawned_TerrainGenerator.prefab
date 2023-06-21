@@ -690,6 +690,12 @@ MonoBehaviour:
   terrainSmoothness: 0.5
   terrainNoiseStep: 0.5
   terrainBottomHeight: 10
+  pixelObstacles:
+  - {fileID: 1196501516297951612, guid: 44c2971ea83e70f4190bf82e8a727c88, type: 3}
+  - {fileID: 1196501516297951612, guid: 215debe696b27894db2dc76fcc9e6f05, type: 3}
+  casualObstacles:
+  - {fileID: 2384063184458935421, guid: 19b3d107f910ee940a6f6d062075c69d, type: 3}
+  - {fileID: 2384063184458935421, guid: 5460ef955388aa94d9264191c6347d3b, type: 3}
 --- !u!68 &1271138085927956371
 EdgeCollider2D:
   m_ObjectHideFlags: 0

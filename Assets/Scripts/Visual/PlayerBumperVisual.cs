@@ -10,6 +10,7 @@ namespace SR.Extras
 		#region Variables
 
 		private const string ANIMATION = "BumperAnimation";
+		[SerializeField] private SpriteRenderer staticBumper;
 		[SerializeField] private SpriteRenderer part1;
 		[SerializeField] private SpriteRenderer part2;
 		[SerializeField] private SpriteRenderer part3;
@@ -25,13 +26,14 @@ namespace SR.Extras
 		{
 			if (bumper.animatorOverride != null)
 			{
+				staticBumper.gameObject.SetActive(false);
 				animator.runtimeAnimatorController = bumper.animatorOverride;
 				animator.Play(ANIMATION);
 			}
 			else
 			{
-				part1.gameObject.SetActive(true);
-				part1.sprite = bumper.sprite;
+				staticBumper.gameObject.SetActive(true);
+				staticBumper.sprite = bumper.sprite;
 				animator.StopPlayback();
 				animator.runtimeAnimatorController = null;
 			}

@@ -268,7 +268,7 @@ MonoBehaviour:
   - {fileID: -7994327301435627514, guid: 2148be545aabd1c4fa1390327151b0ff, type: 3}
   - {fileID: -9112500900764558809, guid: 80eb693f7c9ad06449a916427c057f7a, type: 3}
   - {fileID: 4022518150786648690, guid: e4e21487c6e95fa47bf05ec3820ff093, type: 3}
-  spriteOrderOffset: 20
+  spriteOrderOffset: 15
 --- !u!95 &6438179831671845352 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3209885263698344918, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}

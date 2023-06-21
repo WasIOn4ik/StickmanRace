@@ -95,7 +95,7 @@ ScriptedImporter:
   rigSpriteImportData:
   - name: Bumper_Tier5
     originalName: 
-    pivot: {x: 0.0023310024, y: 0.48924732}
+    pivot: {x: 0.037296038, y: 0.10752688}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -161,7 +161,7 @@ ScriptedImporter:
     spritePosition: {x: 139, y: 16}
   - name: Bumper_Tier4
     originalName: 
-    pivot: {x: 0.17538461, y: 0.004201681}
+    pivot: {x: 0.35692307, y: 0.0882353}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:

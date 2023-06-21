@@ -257,7 +257,7 @@ MonoBehaviour:
   - {fileID: -1311402525135496168, guid: 5a05396cc3a326e40a09d09054e09d2a, type: 3}
   - {fileID: 3432116861914910853, guid: 499378fa1b3325f418a4969b1fc6506a, type: 3}
   - {fileID: 8678919812081133292, guid: 286d16fffd5089345bfa77466ffbdeef, type: 3}
-  spriteOrderOffset: 20
+  spriteOrderOffset: 15
 --- !u!114 &9064504989418017637
 MonoBehaviour:
   m_ObjectHideFlags: 0

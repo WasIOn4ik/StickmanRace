@@ -103,7 +103,7 @@ MonoBehaviour:
   velocity: 5
   targetLayerMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 131840
   destroyLayerMask:
     serializedVersion: 2
     m_Bits: 128

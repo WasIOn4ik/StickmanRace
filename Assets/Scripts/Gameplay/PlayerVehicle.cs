@@ -81,6 +81,7 @@ namespace SR.Core
 
 		private bool bFrozen;
 		private bool bAlive;
+		private float cachedVelocity;
 
 		#endregion
 
@@ -97,6 +98,8 @@ namespace SR.Core
 			if (bFrozen || !bAlive)
 				return;
 
+			cachedVelocity = carRB.velocity.magnitude;
+
 			float input = gameInputs.GetMovement();
 			frontTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
 			backTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
@@ -110,12 +113,12 @@ namespace SR.Core
 
 		public float GetVelocity()
 		{
-			return carRB.velocity.magnitude;
+			return cachedVelocity;
 		}
 
 		public float GetDamage()
 		{
-			return carRB.velocity.magnitude + fullCarDescriptor.meleeDamage;
+			return cachedVelocity / 2f + cachedVelocity / 4 * fullCarDescriptor.meleeDamage;
 		}
 
 		public Vector3 GetHeadPosition()

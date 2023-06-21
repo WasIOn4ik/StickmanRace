@@ -200,7 +200,7 @@ MonoBehaviour:
   spawnTransform: {fileID: 7456689526588418100}
   morphs:
   - {fileID: 6058864010492002086, guid: 332b21a684312b34798ace98affe4eed, type: 3}
-  spriteOrderOffset: 20
+  spriteOrderOffset: 15
 --- !u!95 &6438179831671845352 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3209885263698344918, guid: 6aee7ad4c76131e40a06bc00a6944360, type: 3}

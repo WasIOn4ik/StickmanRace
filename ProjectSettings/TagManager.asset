@@ -21,8 +21,8 @@ TagManager:
   - PlayerBullet
   - PlayerVehicle
   - PlayerWeapon
-  - 
-  - 
+  - BuildingDestroyBullet
+  - BuildingObstacle
   - 
   - 
   - 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D;
+using UnityEngine.UIElements;
 
 namespace SR.Core
 {
@@ -32,6 +33,9 @@ namespace SR.Core
 		[SerializeField] private float terrainNoiseStep = 0.5f;
 		[SerializeField] private float terrainBottomHeight = 10f;
 
+		public List<Obstacle> pixelObstacles = new List<Obstacle>();
+		public List<Obstacle> casualObstacles = new List<Obstacle>();
+
 		private Vector3 lastPosition;
 
 		private List<int> outpostPoints = new List<int>();
@@ -43,6 +47,7 @@ namespace SR.Core
 		private float difficulty = 1f;
 
 		private List<Enemy> spawnedEnemies = new List<Enemy>();
+		private List<Obstacle> spawnedObstacles = new List<Obstacle>();
 
 		#endregion
 
@@ -97,6 +102,12 @@ namespace SR.Core
 				if (enemy)
 					Destroy(enemy.gameObject);
 			}
+			foreach (var obs in spawnedObstacles)
+			{
+				if (obs)
+					Destroy(obs.gameObject);
+			}
+			spawnedObstacles.Clear();
 			outpostPoints.Clear();
 			emptyPoints.Clear();
 			spawnedEnemies.Clear();
@@ -131,6 +142,9 @@ namespace SR.Core
 			{
 				SpawnEnemies(enemiesToSpawn);
 			}
+			yield return null;
+
+			SpawnObstacles();
 		}
 
 		private void GenerateTerrain()
@@ -200,7 +214,7 @@ namespace SR.Core
 		}
 
 		private void SpawnEnemies(List<Enemy> enemies)
-		{
+		{/*
 			int maxPoints = spriteShapeController.spline.GetPointCount() - 2;
 			int spawnDelay = Mathf.Max((int)(maxPoints / difficulty / 3), 1);
 			for (int i = 0; i < maxPoints; i++)
@@ -216,13 +230,33 @@ namespace SR.Core
 					enemy.SetDifficulty(difficulty);
 					spawnedEnemies.Add(enemy);
 				}
+			}*/
+
+			int spawnDelay = Mathf.Max((int)(emptyPoints.Count / difficulty / 5), 1);
+			Debug.Log(spawnDelay);
+			for (int i = 2; i < emptyPoints.Count; i++)
+			{
+				if (i % spawnDelay != 0)
+					continue;
+
+				var enemy = Instantiate(enemies[Random.Range(0, enemies.Count)], transform.TransformPoint
+					(spriteShapeController.spline.GetPosition(emptyPoints[i])), Quaternion.identity, transform);
+				enemy.SetDifficulty(difficulty);
+				spawnedEnemies.Add(enemy);
 			}
 		}
 
-		private bool IsOutpost(int position)
+		private void SpawnObstacles()
 		{
-			var result = outpostPoints.Find(x => { return x == position; });
-			return result != -1;
+			var list = location.bPixel ? pixelObstacles : casualObstacles;
+
+			for (int i = 0; i < 10; i++)
+			{
+				int index = Random.Range(0, list.Count);
+				int randomPoint = Random.Range(1, spriteShapeController.spline.GetPointCount() - 2);
+				var obstacle = Instantiate(list[index], transform.TransformPoint(spriteShapeController.spline.GetPosition(randomPoint) + Vector3.up), Quaternion.identity, transform);
+				spawnedObstacles.Add(obstacle);
+			}
 		}
 
 		private Outpost SpawnOutpost(Vector3 position, float difficulty, LocationDescriptor location)

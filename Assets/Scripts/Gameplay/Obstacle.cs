@@ -11,6 +11,9 @@ namespace SR.Core
 
 		[SerializeField] protected float destroyVelocity;
 		[SerializeField] protected LayerMask destroyLayerMask;
+		[SerializeField] private float aimVerticalOffset = 1f;
+		[SerializeField] private ParticleSystem destroyParticles;
+		[SerializeField] private float highSpeedDestruction = 5f;
 
 		private float scaledDestroyVelocity;
 
@@ -25,6 +28,10 @@ namespace SR.Core
 				var player = collision.gameObject.GetComponent<PlayerVehicle>();
 				if (player && player.GetDamage() > scaledDestroyVelocity)
 				{
+					if (player.GetVelocity() > highSpeedDestruction)
+					{
+						HandleHighSpeedDestruction();
+					}
 					OnPlayerCollisionConfirmed();
 				}
 			}
@@ -33,6 +40,23 @@ namespace SR.Core
 		#endregion
 
 		#region Functions
+
+		public virtual void HandleHighSpeedDestruction()
+		{
+			if (destroyParticles == null)
+				return;
+
+			var ps = Instantiate(destroyParticles);
+			Destroy(ps.gameObject, ps.main.duration);
+			ps.gameObject.SetActive(true);
+			ps.transform.position = destroyParticles.transform.position;
+			ps.Play();
+		}
+
+		public Vector3 GetAimPosition()
+		{
+			return transform.position + Vector3.up * aimVerticalOffset;
+		}
 
 		protected virtual void OnPlayerCollisionConfirmed()
 		{
