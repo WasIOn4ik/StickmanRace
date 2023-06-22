@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UIElements;
+using Zenject;
 
 namespace SR.Core
 {
@@ -251,6 +252,7 @@ namespace SR.Core
 		private Outpost SpawnOutpost(Vector3 position, float difficulty, LocationDescriptorSO location)
 		{
 			var outpost = Instantiate(location.availableOutposts.GetRandomOutpost(), position, Quaternion.identity, transform);
+			ProjectContext.Instance.Container.Inject(outpost);
 			outpost.SetDifficulty(difficulty);
 			return outpost;
 		}

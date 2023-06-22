@@ -1,4 +1,5 @@
 using SR.Core;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,14 @@ namespace SR.Core
 	{
 		#region Variables
 
+		public static event EventHandler onObstacleDestroyed;
+
 		[SerializeField] protected float destroyVelocity;
 		[SerializeField] protected LayerMask destroyLayerMask;
 		[SerializeField] private float aimVerticalOffset = 1f;
 		[SerializeField] private ParticleSystem destroyParticles;
 		[SerializeField] private float highSpeedDestruction = 5f;
+		protected bool bDestroyed = false;
 
 		private float scaledDestroyVelocity;
 
@@ -64,8 +68,15 @@ namespace SR.Core
 			HandleDestroy();
 		}
 
-		public virtual void HandleDestroy()
+		public bool IsAlive()
 		{
+			return !bDestroyed;
+		}
+
+		public void HandleDestroy()
+		{
+			bDestroyed = true;
+			onObstacleDestroyed?.Invoke(this, EventArgs.Empty);
 			Destroy(gameObject);
 		}
 

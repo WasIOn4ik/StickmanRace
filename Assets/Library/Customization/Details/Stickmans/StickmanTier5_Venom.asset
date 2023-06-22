@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c50b2b9779f134792bf8aecdf5c73f, type: 3}
+  m_Name: StickmanTier5_Venom
+  m_EditorClassIdentifier: 
+  identifier: StickmanTier5
+  sprite: {fileID: -2071497203850113361, guid: dc1053389b34d14438ef8b3deae2fe70, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  stats:
+    health: 0
+    velocity: 0
+    acceleration: 0
+    meleeDamage: 0
+  type: 4
+  headSprite: {fileID: -2071497203850113361, guid: dc1053389b34d14438ef8b3deae2fe70, type: 3}
+  bodySprite: {fileID: -5423970424407439620, guid: dc1053389b34d14438ef8b3deae2fe70, type: 3}
+  armSprite: {fileID: 107633516022723161, guid: dc1053389b34d14438ef8b3deae2fe70, type: 3}
+  wristSprite: {fileID: 4256722957383563370, guid: dc1053389b34d14438ef8b3deae2fe70, type: 3}
+  handSprite: {fileID: 1517264730949682367, guid: dc1053389b34d14438ef8b3deae2fe70, type: 3}
+  thighSprite: {fileID: -8508484217261513844, guid: dc1053389b34d14438ef8b3deae2fe70, type: 3}
+  calfSprite: {fileID: 303504348496097158, guid: dc1053389b34d14438ef8b3deae2fe70, type: 3}
+  footSprite: {fileID: 6680744117129699359, guid: dc1053389b34d14438ef8b3deae2fe70, type: 3}

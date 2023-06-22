@@ -12,6 +12,7 @@ namespace SR.Extras
 	{
 		public bool bPixel;
 		public bool bUseDefault = true;
+		public float verticalOffset;
 
 		public OutpostsListSO availableOutposts;
 		public EnemiesListSO availableEnemies;

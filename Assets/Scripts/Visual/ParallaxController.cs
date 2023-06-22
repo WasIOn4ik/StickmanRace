@@ -23,7 +23,7 @@ namespace SR.Extras
 			{
 				bool visible = i < location.backgrounds.Count;
 				if (visible)
-					backgrounds[i].SetBackground(location.backgrounds[i]);
+					backgrounds[i].SetBackground(location.backgrounds[i], location.verticalOffset);
 
 				backgrounds[i].gameObject.SetActive(visible);
 			}

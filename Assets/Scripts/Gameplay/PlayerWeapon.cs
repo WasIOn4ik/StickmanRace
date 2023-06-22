@@ -131,13 +131,17 @@ namespace SR.Core
 						targets.RemoveAt(i);
 						continue;
 					}
-
-					float currentDist = (transform.position - targets[i].transform.position).magnitude;
-					if (currentDist < minDist)
+					if (targets[i].IsAlive())
 					{
-						minDist = currentDist;
-						index = i;
+
+						float currentDist = (transform.position - targets[i].transform.position).magnitude;
+						if (currentDist < minDist)
+						{
+							minDist = currentDist;
+							index = i;
+						}
 					}
+
 					i++;
 				}
 
@@ -154,6 +158,8 @@ namespace SR.Core
 			while (playerVehicle.IsAlive())
 			{
 				yield return new WaitForSeconds(60f / weaponBase.weaponStats.fireRate);
+				if (currentTarget && !currentTarget.IsAlive())
+					currentTarget = null;
 				Shoot();
 			}
 		}
@@ -164,6 +170,15 @@ namespace SR.Core
 			if (target)
 			{
 				targets.Add(target);
+			}
+		}
+
+		private void OnTriggerExit2D(Collider2D collision)
+		{
+			var target = collision.gameObject.GetComponent<Obstacle>();
+			if (target)
+			{
+				targets.Remove(target);
 			}
 		}
 

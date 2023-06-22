@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Purchasing;
 using Zenject;
 
 namespace SR.Core
@@ -75,6 +76,8 @@ namespace SR.Core
 		[SerializeField] private float distanceToGemsPow = 1.5f;
 		[SerializeField] private float distanceDemultiplier = 50f;
 
+		public SoundSystem Sounds { get { return soundSystem; } }
+
 		[Inject] private SoundSystem soundSystem;
 
 		private GameRecords records = new GameRecords() { totalDistance = 0f, maxTime = 0f };
@@ -92,12 +95,26 @@ namespace SR.Core
 			LoadRecords();
 			LoadCarConfig();
 			LoadUnlockedDetails();
+			LoadGameSettings();
 			InitializeShop();
+			Obstacle.onObstacleDestroyed += Obstacle_onObstacleDestroyed;
 		}
 
 		#endregion
 
 		#region Functions
+
+		public void SetSounds(bool sounds)
+		{
+			GameSettings.bSoundsOn = sounds;
+		}
+
+		public void AddBoughtGems(int count)
+		{
+			records.gems += count;
+			onGemsCountChanged?.Invoke(this, EventArgs.Empty);
+			SaveRecords();
+		}
 
 		public int DistanceToGems(float distance)
 		{
@@ -360,6 +377,15 @@ namespace SR.Core
 		private void InitializeShop()
 		{
 			shopLibrary.Initialize();
+		}
+
+		#endregion
+
+		#region Callbacks
+
+		private void Obstacle_onObstacleDestroyed(object sender, EventArgs e)
+		{
+			soundSystem.PlayObstacleDestruction();
 		}
 
 		#endregion

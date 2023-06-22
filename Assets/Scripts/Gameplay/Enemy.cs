@@ -29,8 +29,6 @@ namespace SR.Core
 		protected PlayerVehicle target;
 		protected float difficultyCoef = 1f;
 
-		protected bool isAlive = true;
-
 		#endregion
 
 		#region StaticVariables
@@ -80,7 +78,7 @@ namespace SR.Core
 		{
 			yield return new WaitForSeconds(Mathf.Max(minFirstAttackDelay,firstAttackDelay/ difficultyCoef));
 
-			while (isAlive && target != null && target.IsAlive() && (target.transform.position - transform.position).magnitude
+			while (IsAlive() && target != null && target.IsAlive() && (target.transform.position - transform.position).magnitude
 				> minimalShootDistance && target.transform.position.x < transform.position.x)
 			{
 
@@ -102,7 +100,7 @@ namespace SR.Core
 			onEnemyDeath?.Invoke(this, EventArgs.Empty);
 			onDeathStarted?.Invoke(this, EventArgs.Empty);
 			rigidBody2D.simulated = false;
-			isAlive = false;
+			bDestroyed = true;
 		}
 
 		public override void SetDifficulty(float difficulty)

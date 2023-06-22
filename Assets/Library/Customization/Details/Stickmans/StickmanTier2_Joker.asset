@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c50b2b9779f134792bf8aecdf5c73f, type: 3}
+  m_Name: StickmanTier2_Joker
+  m_EditorClassIdentifier: 
+  identifier: StickmanTier2
+  sprite: {fileID: -2166880278557552720, guid: dc6b54123a064654d873ebb26b723ff7, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  stats:
+    health: 0
+    velocity: 0
+    acceleration: 0
+    meleeDamage: 0
+  type: 4
+  headSprite: {fileID: -2166880278557552720, guid: dc6b54123a064654d873ebb26b723ff7, type: 3}
+  bodySprite: {fileID: 3953345957904105928, guid: dc6b54123a064654d873ebb26b723ff7, type: 3}
+  armSprite: {fileID: 1187244187712137239, guid: dc6b54123a064654d873ebb26b723ff7, type: 3}
+  wristSprite: {fileID: 5941402960561495803, guid: dc6b54123a064654d873ebb26b723ff7, type: 3}
+  handSprite: {fileID: -1326470919297182836, guid: dc6b54123a064654d873ebb26b723ff7, type: 3}
+  thighSprite: {fileID: 4290776318974545568, guid: dc6b54123a064654d873ebb26b723ff7, type: 3}
+  calfSprite: {fileID: 2783740101670777644, guid: dc6b54123a064654d873ebb26b723ff7, type: 3}
+  footSprite: {fileID: -529299201910271891, guid: dc6b54123a064654d873ebb26b723ff7, type: 3}

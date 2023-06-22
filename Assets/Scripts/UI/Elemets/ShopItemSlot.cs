@@ -37,6 +37,7 @@ namespace SR.UI
 		{
 			slotButton.onClick.AddListener(() =>
 			{
+				gameInstance.Sounds.PlayButton1();
 				if (carDetailSO.bUnlocked)
 				{
 					gameInstance.TryUpdateCarConfig(carDetailSO);

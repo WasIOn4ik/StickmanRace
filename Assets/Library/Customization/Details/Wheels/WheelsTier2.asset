@@ -22,4 +22,4 @@ MonoBehaviour:
     meleeDamage: 0
   type: 0
   nonMovementPart: {fileID: -6453960657971562388, guid: d0a9b9d93aec04b4bab93f7ca38ac060, type: 3}
-  scaleOverride: 1
+  scaleOverride: 1.4

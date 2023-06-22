@@ -25,6 +25,10 @@ namespace SR.Core
 		private void Awake()
 		{
 			gameInstance.onDetailChanged += GameInstance_onDetailChanged;
+		}
+
+		private void Start()
+		{
 			Init();
 		}
 

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
+using Zenject;
 
 namespace SR.Core
 {
@@ -31,6 +31,7 @@ namespace SR.Core
 		private float maxHP;
 		private float currentHP;
 		private bool bSpawning = false;
+		[Inject] private SoundSystem soundSystem;
 
 		#endregion
 
@@ -53,6 +54,7 @@ namespace SR.Core
 			Debug.Log($"BUilding reached {value} when hp is {currentHP}");
 			if (currentHP > 0)
 			{
+				soundSystem.PlayBuildingDamage();
 				onHPChanged?.Invoke(this, new HPEventArgs() { hpRatio = currentHP / maxHP });
 				return;
 			}
@@ -112,6 +114,7 @@ namespace SR.Core
 				spriteToDisable.gameObject.SetActive(false);
 				colliderToDisable.enabled = false;
 				destroyPS.Play();
+				soundSystem.PlayHighVelocityDamage();
 				Destroy(gameObject, destroyPS.main.duration);
 			}
 		}

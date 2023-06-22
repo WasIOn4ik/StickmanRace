@@ -183,7 +183,7 @@ MonoBehaviour:
   destroyLayerMask:
     serializedVersion: 2
     m_Bits: 16384
-  aimVerticalOffset: 1
+  aimVerticalOffset: 0.1
   destroyParticles: {fileID: 5962862390373210817}
   highSpeedDestruction: 5
 --- !u!1 &8044477085226385359

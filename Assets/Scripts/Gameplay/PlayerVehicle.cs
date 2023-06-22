@@ -80,9 +80,10 @@ namespace SR.Core
 		public event EventHandler<HealthEventArgs> onHealthChanged;
 		public event EventHandler onDeath;
 
-		[Inject] GameplayBase gameplayBase;
-		[Inject] GameInputs gameInputs;
-		[Inject] GameInstance gameInstance;
+		[Inject] private GameplayBase gameplayBase;
+		[Inject] private GameInputs gameInputs;
+		[Inject] private GameInstance gameInstance;
+		[Inject] private SoundSystem soundSystem;
 
 		private bool bFrozen;
 		private bool bAlive;
@@ -96,6 +97,8 @@ namespace SR.Core
 		{
 			Freeze();
 			gameplayBase.onGameStarted += GameplayBase_onGameStarted;
+			GameInputs.onMovementStarted += GameInputs_onMovementStarted;
+			GameInputs.onMovementEnded += GameInputs_onMovementEnded;
 		}
 
 		private void FixedUpdate()
@@ -110,6 +113,13 @@ namespace SR.Core
 			backTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
 			carRB.AddTorque(input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
 			carRB.velocity = Vector2.ClampMagnitude(carRB.velocity, fullCarDescriptor.velocity);
+			soundSystem.SetMaxCarSound(GetVelocity() / 10f);
+		}
+
+		public void OnDestroy()
+		{
+			GameInputs.onMovementStarted -= GameInputs_onMovementStarted;
+			GameInputs.onMovementEnded -= GameInputs_onMovementEnded;
 		}
 
 		#endregion
@@ -159,6 +169,8 @@ namespace SR.Core
 		{
 			if (!bAlive)
 				return;
+
+			soundSystem.PlayDeath();
 
 			Freeze();
 			bAlive = false;
@@ -233,6 +245,16 @@ namespace SR.Core
 			thrusterVisual.InitEffect(backdoor.effects);
 
 			StartCoroutine(HandleMelee());
+		}
+
+		private void GameInputs_onMovementEnded(object sender, EventArgs e)
+		{
+			soundSystem.PlayCarMovement(false);
+		}
+
+		private void GameInputs_onMovementStarted(object sender, EventArgs e)
+		{
+			soundSystem.PlayCarMovement(true);
 		}
 
 		#endregion

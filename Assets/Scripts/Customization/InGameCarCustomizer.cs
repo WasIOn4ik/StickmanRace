@@ -14,6 +14,7 @@ namespace SR.Core
 		[SerializeField] private PlayerBumperVisual bumperVisual;
 		[SerializeField] private PlayerWheelVisual frontWheel;
 		[SerializeField] private PlayerWheelVisual backWheel;
+		[SerializeField] private Sprite emptyText;
 
 		[Header("Car")]
 		[SerializeField] private SpriteRenderer backDoor;
@@ -25,6 +26,11 @@ namespace SR.Core
 		[SerializeField] private SpriteRenderer arm;
 		[SerializeField] private SpriteRenderer wrist;
 		[SerializeField] private SpriteRenderer hand;
+		[SerializeField] private SpriteRenderer thigh;
+		[SerializeField] private SpriteRenderer calf;
+		[SerializeField] private SpriteRenderer foot;
+		[SerializeField] private SpriteRenderer bodyDecor;
+		[SerializeField] private SpriteRenderer legsDecor;
 
 		#endregion
 
@@ -58,6 +64,11 @@ namespace SR.Core
 					wrist.sprite = stickmanDetail.wristSprite;
 					hand.sprite = stickmanDetail.handSprite;
 					body.sprite = stickmanDetail.bodySprite;
+					thigh.sprite = stickmanDetail.thighSprite;
+					calf.sprite = stickmanDetail.calfSprite;
+					foot.sprite = stickmanDetail.footSprite;
+					bodyDecor.sprite = stickmanDetail.bodyDecorSprite;
+					legsDecor.sprite = stickmanDetail.legsDecorSprite;
 					break;
 			}
 		}
