@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69cc24d8ebb71084ba93da53f59bdf2d, type: 3}
+  m_Name: MeleePixelEnemies
+  m_EditorClassIdentifier: 
+  enemies:
+  - {fileID: 2267868022257323874, guid: bd9d00dac7c77f74c882d321875effbd, type: 3}
+  - {fileID: 8632933784697865449, guid: 81631095f5f9bec4283066f1eab012b4, type: 3}
+  - {fileID: 6158094318808440564, guid: d7b3cb5767b5a5846be066ad3e94ffc9, type: 3}
+  - {fileID: 4267640131041763264, guid: b59d309d3e305c049bb65ece8e16f747, type: 3}

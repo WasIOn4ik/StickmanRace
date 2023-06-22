@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b648a374a50277747a815843bce16d23, type: 3}
+  m_Name: CasualMorph_Pets
+  m_EditorClassIdentifier: 
+  morphs:
+  - {fileID: -2038038710783562250, guid: e58707be53ce181488598d8a2e9999f8, type: 3}
+  - {fileID: -6638761570240432086, guid: a207b4e6e78344141a3ded9a499c309c, type: 3}
+  - {fileID: 7943502600909605039, guid: 82abff919e65b414dbba2ec515b8671c, type: 3}
+  - {fileID: 6318838563816730956, guid: 4e6b12b5b0559ee4b8216b17e45139e8, type: 3}
+  - {fileID: 8643169920944203654, guid: 7740acc305412ca439882a5fc2653f2d, type: 3}

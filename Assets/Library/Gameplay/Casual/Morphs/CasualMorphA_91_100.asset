@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b648a374a50277747a815843bce16d23, type: 3}
+  m_Name: CasualMorphA_91_100
+  m_EditorClassIdentifier: 
+  morphs:
+  - {fileID: -8389297993677059670, guid: 2b214d67225396c41b6e252ceb50cf9f, type: 3}
+  - {fileID: -4526330301032984885, guid: 38d1b8d56cd9d64438e48e07a5870cab, type: 3}
+  - {fileID: -206074471367022463, guid: 9a7944158da617d4391cc99b81b47759, type: 3}
+  - {fileID: -5444040883585278624, guid: 40b8a96eaef38c344a812912543da0e3, type: 3}
+  - {fileID: 2559768636657193830, guid: 5f5faae7cc322914d8efc12de3d191ef, type: 3}
+  - {fileID: -4926975430513109919, guid: 4a720944a115d9447a4996ddaa03525b, type: 3}
+  - {fileID: -8836746694155632647, guid: 13113bd87a3e8004c942e8082089cad9, type: 3}
+  - {fileID: -7619467091586087046, guid: aeba40512eeb4e547ac7c0ca6f5ebcd1, type: 3}
+  - {fileID: 2871225180922558921, guid: 5d1ab9b0228d05a40832b62ab4035c82, type: 3}
+  - {fileID: 5075821952545040323, guid: 66d6b25677cc926438be05a46d880c14, type: 3}

@@ -15,7 +15,6 @@ namespace SR.UI
 		[Header("Components")]
 		[SerializeField] private ShopItemSlot slotPrefab;
 		[SerializeField] private Transform itemsHolder;
-		[Inject] private GameInstance gameInstance;
 
 		[Header("Tabs")]
 		[SerializeField] private Button wheelsTabButton;
@@ -24,7 +23,11 @@ namespace SR.UI
 		[SerializeField] private Button bumperTabButton;
 		[SerializeField] private Button stickmanTabButton;
 
+		[Inject] private GameInstance gameInstance;
+
 		private List<ShopItemSlot> spawnedSlots = new List<ShopItemSlot>();
+
+		private CarDetailType currentCategory;
 
 		#endregion
 
@@ -32,8 +35,10 @@ namespace SR.UI
 
 		private void Awake()
 		{
+			gameInstance.onGemsCountChanged += GameInstance_onGemsCountChanged;
 			wheelsTabButton.onClick.AddListener(() =>
 			{
+				gameInstance.Sounds.PlayButton1();
 				SetCategory(CarDetailType.Wheels);
 				wheelsTabButton.interactable = false;
 				weaponTabBUtton.interactable = true;
@@ -44,6 +49,7 @@ namespace SR.UI
 
 			weaponTabBUtton.onClick.AddListener(() =>
 			{
+				gameInstance.Sounds.PlayButton1();
 				SetCategory(CarDetailType.Weapon);
 				wheelsTabButton.interactable = true;
 				weaponTabBUtton.interactable = false;
@@ -54,6 +60,7 @@ namespace SR.UI
 
 			backDoorTabButton.onClick.AddListener(() =>
 			{
+				gameInstance.Sounds.PlayButton1();
 				SetCategory(CarDetailType.BackDoor);
 				wheelsTabButton.interactable = true;
 				weaponTabBUtton.interactable = true;
@@ -64,6 +71,7 @@ namespace SR.UI
 
 			bumperTabButton.onClick.AddListener(() =>
 			{
+				gameInstance.Sounds.PlayButton1();
 				SetCategory(CarDetailType.Bumper);
 				wheelsTabButton.interactable = true;
 				weaponTabBUtton.interactable = true;
@@ -74,6 +82,7 @@ namespace SR.UI
 
 			stickmanTabButton.onClick.AddListener(() =>
 			{
+				gameInstance.Sounds.PlayButton1();
 				SetCategory(CarDetailType.Stickman);
 				wheelsTabButton.interactable = true;
 				weaponTabBUtton.interactable = true;
@@ -96,6 +105,7 @@ namespace SR.UI
 
 		public void SetCategory(CarDetailType category)
 		{
+			currentCategory = category;
 			var list = gameInstance.GetShopLibrary().GetCategoryList(category);
 
 			//Disabling slots
@@ -120,6 +130,15 @@ namespace SR.UI
 			{
 				spawnedSlots[i].InitSlot(this, gameInstance, list[i]);
 			}
+		}
+
+		#endregion
+
+		#region Callbacks
+
+		private void GameInstance_onGemsCountChanged(object sender, System.EventArgs e)
+		{
+			SetCategory(currentCategory);
 		}
 
 		#endregion

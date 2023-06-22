@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
+  - Stickman
   - Terrain
   - Obstacle
   - Enemy
@@ -19,11 +19,11 @@ TagManager:
   - PlayerParts
   - WorldBorder
   - PlayerBullet
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PlayerVehicle
+  - PlayerWeapon
+  - BuildingDestroyBullet
+  - BuildingObstacle
+  - PlayerExplosion
   - 
   - 
   - 

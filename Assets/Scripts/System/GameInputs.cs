@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,16 +10,12 @@ namespace SR.Core
 	{
 		#region Variables
 
+		public static event EventHandler onMovementStarted;
+		public static event EventHandler onMovementEnded;
+
 		private float movementInput;
 
-		#endregion
-
-		#region UnityMessages
-
-		private void Update()
-		{
-			movementInput = Input.GetAxis("Horizontal");
-		}
+		private float previousMovementInput;
 
 		#endregion
 
@@ -31,7 +28,14 @@ namespace SR.Core
 
 		public void SetMovement(float movement)
 		{
+			previousMovementInput = movementInput;
 			movementInput = movement;
+
+			if (previousMovementInput < 0.05f && movementInput > 0.05f)
+				onMovementStarted?.Invoke(this, EventArgs.Empty);
+
+			if(previousMovementInput > 0.05f && movementInput < 0.05f)
+				onMovementEnded?.Invoke(this, EventArgs.Empty);
 		}
 
 		#endregion

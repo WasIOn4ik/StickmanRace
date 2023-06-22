@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 003b175d3fa9b2f438986c3a94a02967, type: 3}
+  m_Name: WheelsTier5
+  m_EditorClassIdentifier: 
+  identifier: WheelsTier5
+  sprite: {fileID: 6696307198618626967, guid: d0a9b9d93aec04b4bab93f7ca38ac060, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  stats:
+    health: 2
+    velocity: 0
+    acceleration: 150
+    meleeDamage: 0
+  type: 0
+  nonMovementPart: {fileID: 21300000, guid: 9d9ef3344a930de4b8603d53f3abea13, type: 3}
+  scaleOverride: 1.5

@@ -47,6 +47,10 @@ MonoBehaviour:
     m_Key: LoseMenu_Time_Label
     m_Metadata:
       m_Items: []
+  - m_Id: 3321895183142912
+    m_Key: LoseMenu_Gems_Label
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

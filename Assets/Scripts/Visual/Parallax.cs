@@ -56,13 +56,18 @@ namespace SR.Core
 			}
 		}
 
-		public void SetBackground(Sprite sprite)
+		public void SetBackground(Sprite sprite, float vOffset)
 		{
 			sprites[0].sprite = sprite;
+			sprites[0].transform.localPosition = new Vector3(0, vOffset, 0);
 			sprites[1].sprite = sprite;
 			sprites[1].transform.localPosition = new Vector3(-sprites[1].bounds.size.x, 0, 0);
 			sprites[2].sprite = sprite;
 			sprites[2].transform.localPosition = new Vector3(sprites[2].bounds.size.x, 0, 0);
+			sprites[3].sprite = sprite;
+			sprites[3].transform.localPosition = new Vector3(sprites[2].bounds.size.x * 2, 0, 0);
+			sprites[4].sprite = sprite;
+			sprites[4].transform.localPosition = new Vector3(-sprites[2].bounds.size.x * 2, 0, 0);
 			length = sprites[0].bounds.size.x;
 		}
 

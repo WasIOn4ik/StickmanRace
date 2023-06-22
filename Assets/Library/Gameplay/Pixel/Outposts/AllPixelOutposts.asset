@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc215e3549e72e46a0416f8b681a9ab, type: 3}
+  m_Name: AllPixelOutposts
+  m_EditorClassIdentifier: 
+  outposts:
+  - {fileID: 1769213402092868691, guid: d64af04b186b2644a82314d863c2ae2b, type: 3}
+  - {fileID: 1769213402092868691, guid: e95177246b25d184a8796311146bb905, type: 3}
+  - {fileID: 1769213402092868691, guid: e1998bc523bd40d4bab7347c5a46b9d1, type: 3}
+  - {fileID: 1769213402092868691, guid: 8cf1128715cc12b4997e67c98255163a, type: 3}
+  - {fileID: 1769213402092868691, guid: 15a99b3a3dd7f934e8f06de147a684b2, type: 3}
+  - {fileID: 1769213402092868691, guid: 4c46ad405d0043742acf7f7a460a979e, type: 3}
+  - {fileID: 1769213402092868691, guid: 8634d30e64914244e88b11446130937d, type: 3}

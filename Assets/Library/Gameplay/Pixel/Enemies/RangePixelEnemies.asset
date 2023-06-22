@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69cc24d8ebb71084ba93da53f59bdf2d, type: 3}
+  m_Name: RangePixelEnemies
+  m_EditorClassIdentifier: 
+  enemies:
+  - {fileID: 8786829109112203450, guid: da5f3821173bb394780ec49324efcd1d, type: 3}
+  - {fileID: 401063943917092003, guid: 22923f9b711acfc4483354862f09e87d, type: 3}
+  - {fileID: 6961704381005598260, guid: df25dbd7496d3df45be23335ffa06a7b, type: 3}
+  - {fileID: 6961704381005598260, guid: 93363e7e9c928bd4dae5465618b69821, type: 3}
+  - {fileID: 3131145148425403851, guid: 17d27ca124119ce449e91e8eff15a652, type: 3}

@@ -10,24 +10,58 @@ namespace SR.Core
 
 		[SerializeField] private int damage = 1;
 		[SerializeField] private float velocity = 3f;
-		[SerializeField] private LayerMask targetLayerMask;
+		[SerializeField] protected LayerMask targetLayerMask;
+		[SerializeField] protected LayerMask destroyLayerMask;
+		[SerializeField] protected float maxSpeed = 10f;
 
-		private int scaledDamage;
-		private float scaledVelocity;
+		protected int scaledDamage;
+		protected float scaledVelocity;
+
+		#endregion
+
+		#region UnityMessages
+
+		private void Awake()
+		{
+			scaledDamage = damage;
+			scaledVelocity = velocity;
+		}
+
+		private void Update()
+		{
+			transform.position += transform.right * scaledVelocity * Time.deltaTime;
+		}
+
+		protected virtual void OnCollisionEnter2D(Collision2D collision)
+		{
+			if (SRUtils.IsInLayerMask(collision.collider.gameObject.layer, targetLayerMask))
+			{
+				var target = collision.collider.GetComponent<IDamageable>();
+
+				if (target == null)
+				{
+					Destroy(gameObject);
+					return;
+				}
+
+				target.ApplyDamage(scaledDamage);
+				Destroy(gameObject);
+			}
+			else if (SRUtils.IsInLayerMask(collision.gameObject.layer, destroyLayerMask))
+			{
+				Destroy(gameObject);
+			}
+		}
 
 		#endregion
 
 		#region Functions
 
-		private void Awake()
-		{
-			scaledDamage = damage;
-		}
-
-		public void InitBullet(float difficulty)
+		public virtual void InitBullet(float difficulty, float shootDistance)
 		{/*
 			scaledDamage = (int)(damage * difficulty);*/
-			scaledVelocity = velocity * difficulty;
+			scaledVelocity = Mathf.Min(maxSpeed, scaledVelocity * difficulty);
+			Destroy(gameObject, shootDistance);
 		}
 
 		public void SetVelocity(float vel)
@@ -38,21 +72,6 @@ namespace SR.Core
 		public void SetDamage(int dmg)
 		{
 			scaledDamage = dmg;
-		}
-
-		private void Update()
-		{
-			transform.position += transform.right * scaledVelocity * Time.deltaTime;
-		}
-
-		private void OnCollisionEnter2D(Collision2D collision)
-		{
-			if (SRUtils.IsInLayerMask(collision.gameObject.layer, targetLayerMask))
-			{
-				var target = collision.gameObject.GetComponent<IDamageable>();
-				target.ApplyDamage(scaledDamage);
-				Destroy(gameObject);
-			}
 		}
 
 		#endregion

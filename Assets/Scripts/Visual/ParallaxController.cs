@@ -17,13 +17,13 @@ namespace SR.Extras
 
 		#region Functions
 
-		public void SetLocation(LocationDescriptor location)
+		public void SetLocation(LocationDescriptorSO location)
 		{
 			for (int i = 0; i < backgrounds.Count; i++)
 			{
 				bool visible = i < location.backgrounds.Count;
 				if (visible)
-					backgrounds[i].SetBackground(location.backgrounds[i]);
+					backgrounds[i].SetBackground(location.backgrounds[i], location.verticalOffset);
 
 				backgrounds[i].gameObject.SetActive(visible);
 			}

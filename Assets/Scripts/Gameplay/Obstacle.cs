@@ -1,4 +1,5 @@
 using SR.Core;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,14 @@ namespace SR.Core
 	{
 		#region Variables
 
+		public static event EventHandler onObstacleDestroyed;
+
 		[SerializeField] protected float destroyVelocity;
-		[SerializeField] protected LayerMask playerLayerMask;
+		[SerializeField] protected LayerMask destroyLayerMask;
+		[SerializeField] private float aimVerticalOffset = 1f;
+		[SerializeField] private ParticleSystem destroyParticles;
+		[SerializeField] private float highSpeedDestruction = 5f;
+		protected bool bDestroyed = false;
 
 		private float scaledDestroyVelocity;
 
@@ -18,18 +25,18 @@ namespace SR.Core
 
 		#region UnityMessages
 
-		protected virtual void OnPlayerCollisionConfirmed()
-		{
-			Destroy(gameObject);
-		}
-
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
-			if (SRUtils.IsInLayerMask(collision.gameObject.layer, playerLayerMask))
+			if (SRUtils.IsInLayerMask(collision.collider.gameObject.layer, destroyLayerMask))
 			{
 				var player = collision.gameObject.GetComponent<PlayerVehicle>();
-				if (player.GetDamage() > scaledDestroyVelocity)
+				if (player && player.GetDamage() > scaledDestroyVelocity)
 				{
+					if (player.GetVelocity() > highSpeedDestruction)
+					{
+						player.BackVelocity();
+						HandleHighSpeedDestruction();
+					}
 					OnPlayerCollisionConfirmed();
 				}
 			}
@@ -38,6 +45,40 @@ namespace SR.Core
 		#endregion
 
 		#region Functions
+
+		public virtual void HandleHighSpeedDestruction()
+		{
+			if (destroyParticles == null)
+				return;
+
+			var ps = Instantiate(destroyParticles);
+			Destroy(ps.gameObject, ps.main.duration);
+			ps.gameObject.SetActive(true);
+			ps.transform.position = destroyParticles.transform.position;
+			ps.Play();
+		}
+
+		public Vector3 GetAimPosition()
+		{
+			return transform.position + Vector3.up * aimVerticalOffset;
+		}
+
+		protected virtual void OnPlayerCollisionConfirmed()
+		{
+			HandleDestroy();
+		}
+
+		public bool IsAlive()
+		{
+			return !bDestroyed;
+		}
+
+		public void HandleDestroy()
+		{
+			bDestroyed = true;
+			onObstacleDestroyed?.Invoke(this, EventArgs.Empty);
+			Destroy(gameObject);
+		}
 
 		public virtual void SetDifficulty(float difficulty)
 		{
@@ -48,14 +89,9 @@ namespace SR.Core
 
 		#region IDamageable
 
-		public void ApplyDamage(int value)
+		public virtual void ApplyDamage(int value)
 		{
-			scaledDestroyVelocity -= value;
-
-			if (scaledDestroyVelocity <= 0)
-			{
-				OnPlayerCollisionConfirmed();
-			}
+			OnPlayerCollisionConfirmed();
 		}
 
 		#endregion

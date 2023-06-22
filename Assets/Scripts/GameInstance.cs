@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Purchasing;
 using Zenject;
 
 namespace SR.Core
@@ -57,6 +58,9 @@ namespace SR.Core
 
 		#region Variables
 
+		public event EventHandler<DetailEventArgs> onDetailChanged;
+		public event EventHandler onGemsCountChanged;
+
 		[Header("Components")]
 		[SerializeField] private MenusListSO menusLibrary;
 		[SerializeField] private ShopLibrarySO shopLibrary;
@@ -72,15 +76,14 @@ namespace SR.Core
 		[SerializeField] private float distanceToGemsPow = 1.5f;
 		[SerializeField] private float distanceDemultiplier = 50f;
 
-		public event EventHandler<DetailEventArgs> onDetailChanged;
-		public event EventHandler onGemsCountChanged;
+		public SoundSystem Sounds { get { return soundSystem; } }
+
+		[Inject] private SoundSystem soundSystem;
 
 		private GameRecords records = new GameRecords() { totalDistance = 0f, maxTime = 0f };
 		private CarConfig carConfig = new CarConfig();
 		private UnlockedDetails unlockedDetails;
 		private GameSettings GameSettings = new GameSettings() { bSoundsOn = true };
-
-		[Inject] SoundSystem soundSystem;
 
 		#endregion
 
@@ -92,12 +95,31 @@ namespace SR.Core
 			LoadRecords();
 			LoadCarConfig();
 			LoadUnlockedDetails();
+			LoadGameSettings();
 			InitializeShop();
+			Obstacle.onObstacleDestroyed += Obstacle_onObstacleDestroyed;
 		}
 
 		#endregion
 
 		#region Functions
+
+		public void SetSounds(bool sounds)
+		{
+			GameSettings.bSoundsOn = sounds;
+		}
+
+		public void AddBoughtGems(int count)
+		{
+			records.gems += count;
+			onGemsCountChanged?.Invoke(this, EventArgs.Empty);
+			SaveRecords();
+		}
+
+		public int DistanceToGems(float distance)
+		{
+			return (int)Mathf.Pow(distance / distanceDemultiplier, distanceToGemsPow);
+		}
 
 		public bool IsEquipped(CarDetailSO detail)
 		{
@@ -154,17 +176,35 @@ namespace SR.Core
 		{
 			float tempDistance = records.totalDistance;
 
+			StringBuilder sb = new StringBuilder();
+
+			return GetShortStringDistance(tempDistance);
+		}
+
+		public string GetShortStringDistance(float value)
+		{
 			int val = 0;
 
-			while (tempDistance >= 1000f)
+			while (value >= 1000f)
 			{
-				tempDistance /= 1000f;
+				value /= 1000f;
 				val++;
 			}
-			StringBuilder sb = new StringBuilder();
-			sb.Append(tempDistance.ToString("0.0")).Append(distanceMarkers[val]);
 
-			return sb.ToString();
+			return $"{value: 0.0}{distanceMarkers[val]} m";
+		}
+
+		public string GetShortString(int value)
+		{
+			int val = 0;
+
+			while (value >= 1000)
+			{
+				value /= 1000;
+				val++;
+			}
+
+			return $"{value}{distanceMarkers[val]}";
 		}
 
 		public ShopLibrarySO GetShopLibrary()
@@ -334,16 +374,19 @@ namespace SR.Core
 			}
 		}
 
-		private int DistanceToGems(float distance)
-		{
-			return (int)Mathf.Pow(distance / distanceDemultiplier, distanceToGemsPow);
-		}
-
 		private void InitializeShop()
 		{
 			shopLibrary.Initialize();
 		}
 
+		#endregion
+
+		#region Callbacks
+
+		private void Obstacle_onObstacleDestroyed(object sender, EventArgs e)
+		{
+			soundSystem.PlayObstacleDestruction();
+		}
 
 		#endregion
 	}

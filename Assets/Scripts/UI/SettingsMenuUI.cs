@@ -43,12 +43,14 @@ namespace SR.UI
 
 			backButton.onClick.AddListener(() =>
 			{
+				soundSystem.PlayButton2();
 				BackToPrevious();
 				Close();
 			});
 
 			soundToggle.onClick.AddListener(() =>
 			{
+				soundSystem.PlayButton1();
 				if (soundSystem.IsSoundEnabled())
 				{
 					soundSystem.DisableSound();
@@ -59,6 +61,7 @@ namespace SR.UI
 					soundSystem.EnableSound();
 					soundImage.sprite = soundsOn;
 				}
+				gameInstance.SetSounds(soundSystem.IsSoundEnabled());
 				gameInstance.SaveGameSettings();
 			});
 		}

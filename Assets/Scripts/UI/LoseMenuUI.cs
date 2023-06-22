@@ -13,6 +13,7 @@ namespace SR.UI
 
 		[SerializeField] private TMP_Text distanceText;
 		[SerializeField] private TMP_Text timeText;
+		[SerializeField] private TMP_Text gemsText;
 
 		[Inject] GameInstance gameInstance;
 
@@ -25,6 +26,7 @@ namespace SR.UI
 			gameInstance.TryUpdateRecords(distance, time);
 			distanceText.text = Mathf.Max(0f, distance).ToString("0.0");
 			timeText.text = time.ToString("0.0");
+			gemsText.text = gameInstance.DistanceToGems(distance).ToString();
 		}
 
 		#endregion

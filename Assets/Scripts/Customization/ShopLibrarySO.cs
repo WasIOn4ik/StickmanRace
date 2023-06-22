@@ -4,11 +4,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SR/ShopLibrary")]
+[CreateAssetMenu(menuName = "SR/Shop/ShopLibrary")]
 public class ShopLibrarySO : ScriptableObject
 {
-	public int startPrice = 5;
-	public int priceMultiplier = 4;
+	#region Variables
+
+	[Header("Bumper")]
+	public int bumperStartPrice = 5;
+	public int bumperPriceMultiplier = 4;
+
+	[Header("Backdoor")]
+	public int backdoorStartPrice = 5;
+	public int backdoorPriceMultiplier = 4;
+
+	[Header("Wheels")]
+	public int wheelsStartPrice = 5;
+	public int wheelsPriceMultiplier = 4;
+
+	[Header("Weapon")]
+	public int weaponStartPrice = 5;
+	public int weaponPriceMultiplier = 2;
+
+	[Header("Stickmans")]
+	public int stickmanStartPrice = 5;
+	public int stickmanPriceMultiplier = 4;
 
 	public List<BumperSO> bumpers;
 	public List<WheelsSO> wheels;
@@ -21,6 +40,10 @@ public class ShopLibrarySO : ScriptableObject
 	public BackDoorSO startBackDoor;
 	public WeaponSO startWeapon;
 	public StickmanSO startStickman;
+
+	#endregion
+
+	#region Functions
 
 	public CarConfig GetStandartCar()
 	{
@@ -101,44 +124,46 @@ public class ShopLibrarySO : ScriptableObject
 
 	public void Initialize()
 	{
-		int price = startPrice;
+		int price = bumperStartPrice;
 
 		for (int i = 1; i < bumpers.Count; i++)
 		{
 			bumpers[i].price = price;
-			price *= priceMultiplier;
+			price *= bumperPriceMultiplier;
 		}
 
-		price = startPrice;
+		price = wheelsStartPrice;
 
 		for (int i = 1; i < wheels.Count; i++)
 		{
 			wheels[i].price = price;
-			price *= priceMultiplier;
+			price *= wheelsPriceMultiplier;
 		}
 
-		price = startPrice;
+		price = backdoorStartPrice;
 
 		for (int i = 1; i < backdoors.Count; i++)
 		{
 			backdoors[i].price = price;
-			price *= priceMultiplier;
+			price *= backdoorPriceMultiplier;
 		}
 
-		price = startPrice;
+		price = weaponStartPrice;
 
 		for (int i = 1; i < weapons.Count; i++)
 		{
 			weapons[i].price = price;
-			price *= priceMultiplier;
+			price *= weaponPriceMultiplier;
 		}
 
-		price = startPrice;
+		price = stickmanStartPrice;
 
 		for (int i = 1; i < stickmans.Count; i++)
 		{
 			stickmans[i].price = price;
-			price *= priceMultiplier;
+			price *= stickmanPriceMultiplier;
 		}
 	}
+
+	#endregion
 }

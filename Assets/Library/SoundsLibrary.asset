@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7094f37d744df2948ab866699a91ff56, type: 3}
+  m_Name: SoundsLibrary
+  m_EditorClassIdentifier: 
+  buttonSound1: {fileID: 8300000, guid: a3121fd1409f241479e955ccf368aff2, type: 3}
+  buttonSound2: {fileID: 8300000, guid: 32c3e55fc19d6bf41a643f62a0d0ab3d, type: 3}
+  CarMovement: {fileID: 8300000, guid: e455cd790b136bc40b2eb2949f95bea2, type: 3}
+  BuildingDamage: {fileID: 8300000, guid: 9b692a9d2332eb249962087402e5b3e3, type: 3}
+  HighVelocityDamage: {fileID: 8300000, guid: 6a5a45b590981dd4382ba9dc17402064, type: 3}
+  ObstacleDestruction: {fileID: 8300000, guid: e02788563341ec143bc7580d70222af0, type: 3}
+  StickmanDeath: {fileID: 8300000, guid: b0fe2d15bc6091f4491c6e15cd588f76, type: 3}

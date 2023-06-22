@@ -1,4 +1,6 @@
+using ModestTree;
 using SR.Customization;
+using SR.Extras;
 using SR.SceneManagement;
 using SR.UI;
 using System;
@@ -60,24 +62,32 @@ namespace SR.Core
 		[SerializeField] private StickmanHead head;
 		[SerializeField] private InGameCarCustomizer carCustomizer;
 		[SerializeField] private PlayerWeapon weaponController;
+		[SerializeField] private PlayerThrusterVisual thrusterVisual;
+		[SerializeField] private Transform meleeDamageStart;
 
 		[Header("Properties")]
 		[SerializeField] private CarDescriptor baseCarDescriptor;
 		[SerializeField] private float cameraUpperOffset = 3f;
 		[SerializeField] private float cameraRightOffset = 3f;
 		[SerializeField] private float cameraBlendDelta = 0.25f;
+		[SerializeField] private Vector3 headPositionOffset = new Vector3(0, 0.4f, 0);
+		[SerializeField] private float meleeDamageCheckDelay = 0.25f;
+		[SerializeField] private float meleeDamageDistance = 1f;
+		[SerializeField] private LayerMask meleeLayerMask;
 
 		private CarDescriptor fullCarDescriptor;
 
 		public event EventHandler<HealthEventArgs> onHealthChanged;
 		public event EventHandler onDeath;
 
-		[Inject] GameplayBase gameplayBase;
-		[Inject] GameInputs gameInputs;
-		[Inject] GameInstance gameInstance;
+		[Inject] private GameplayBase gameplayBase;
+		[Inject] private GameInputs gameInputs;
+		[Inject] private GameInstance gameInstance;
+		[Inject] private SoundSystem soundSystem;
 
 		private bool bFrozen;
 		private bool bAlive;
+		private float cachedVelocity;
 
 		#endregion
 
@@ -87,6 +97,8 @@ namespace SR.Core
 		{
 			Freeze();
 			gameplayBase.onGameStarted += GameplayBase_onGameStarted;
+			GameInputs.onMovementStarted += GameInputs_onMovementStarted;
+			GameInputs.onMovementEnded += GameInputs_onMovementEnded;
 		}
 
 		private void FixedUpdate()
@@ -94,11 +106,20 @@ namespace SR.Core
 			if (bFrozen || !bAlive)
 				return;
 
+			cachedVelocity = carRB.velocity.magnitude;
+
 			float input = gameInputs.GetMovement();
 			frontTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
 			backTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
 			carRB.AddTorque(input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
 			carRB.velocity = Vector2.ClampMagnitude(carRB.velocity, fullCarDescriptor.velocity);
+			soundSystem.SetMaxCarSound(GetVelocity() / 10f);
+		}
+
+		public void OnDestroy()
+		{
+			GameInputs.onMovementStarted -= GameInputs_onMovementStarted;
+			GameInputs.onMovementEnded -= GameInputs_onMovementEnded;
 		}
 
 		#endregion
@@ -107,18 +128,22 @@ namespace SR.Core
 
 		public float GetVelocity()
 		{
-			Debug.Log(carRB.velocity.magnitude);
-			return carRB.velocity.magnitude;
+			return cachedVelocity;
+		}
+
+		public void BackVelocity()
+		{
+			carRB.velocity = Vector2.right * cachedVelocity;
 		}
 
 		public float GetDamage()
 		{
-			return carRB.velocity.magnitude + fullCarDescriptor.meleeDamage;
+			return cachedVelocity / 2f + cachedVelocity / 4 * fullCarDescriptor.meleeDamage;
 		}
 
 		public Vector3 GetHeadPosition()
 		{
-			return head.transform.position;
+			return head.transform.position + headPositionOffset;
 		}
 
 		public bool IsAlive()
@@ -128,6 +153,7 @@ namespace SR.Core
 
 		public void ApplyDamage(int damage)
 		{
+			Debug.Log($"Received {damage} damage");
 			fullCarDescriptor.health -= damage;
 			if (fullCarDescriptor.health <= 0)
 			{
@@ -144,8 +170,11 @@ namespace SR.Core
 			if (!bAlive)
 				return;
 
+			soundSystem.PlayDeath();
+
 			Freeze();
 			bAlive = false;
+			weaponController.StopAim();
 			onDeath?.Invoke(this, EventArgs.Empty);
 			Debug.Log("Dead");
 		}
@@ -208,10 +237,51 @@ namespace SR.Core
 			bAlive = true;
 			UnFreeze();
 
-			weaponController.StartShooting();
+			if (weapon.weaponStats.fireRate != 0)
+			{
+				weaponController.StartShooting();
+				weaponController.StartAim();
+			}
+			thrusterVisual.InitEffect(backdoor.effects);
 
-			Debug.Log(baseCarDescriptor);
-			Debug.LogWarning(fullCarDescriptor);
+			StartCoroutine(HandleMelee());
+		}
+
+		private void GameInputs_onMovementEnded(object sender, EventArgs e)
+		{
+			soundSystem.PlayCarMovement(false);
+		}
+
+		private void GameInputs_onMovementStarted(object sender, EventArgs e)
+		{
+			soundSystem.PlayCarMovement(true);
+		}
+
+		#endregion
+
+		#region Coroutines
+
+		private IEnumerator HandleMelee()
+		{
+			while (IsAlive())
+			{
+				//var targets = Physics2D.BoxCastAll(transform.position, Vector2.one, 0, Vector2.zero, 0, meleeLayerMask);
+				Debug.DrawRay(meleeDamageStart.position, Vector2.right * meleeDamageDistance, Color.red, meleeDamageCheckDelay);
+				var targets = Physics2D.RaycastAll(meleeDamageStart.position, meleeDamageStart.TransformDirection(Vector2.right), meleeDamageDistance, meleeLayerMask);
+				foreach (var target in targets)
+				{
+					if (target.collider.isTrigger)
+						continue;
+
+					var dmgt = target.rigidbody.gameObject.GetComponent<IDamageable>();
+					if (dmgt != null)
+					{
+						dmgt.ApplyDamage((int)(fullCarDescriptor.meleeDamage));
+					}
+				}
+
+				yield return new WaitForSeconds(meleeDamageCheckDelay);
+			}
 		}
 
 		#endregion

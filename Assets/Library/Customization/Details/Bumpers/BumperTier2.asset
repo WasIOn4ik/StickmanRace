@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: BumperTier2
   m_EditorClassIdentifier: 
   identifier: BumperTier2
-  sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  color: {r: 1, g: 0.86353207, b: 0, a: 1}
+  sprite: {fileID: 21300000, guid: a30588efe3ff43e49a51a735ac9c7c25, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
   stats:
     health: 1
     velocity: 0
     acceleration: 0
-    meleeDamage: 2
+    meleeDamage: 1
   type: 1
+  animatorOverride: {fileID: 22100000, guid: 28f0814b9b503d0408cd21c4163c84b7, type: 2}

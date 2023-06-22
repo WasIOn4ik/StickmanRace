@@ -24,8 +24,11 @@ namespace SR.Core
 
 		private void Awake()
 		{
-			gameplayBase.onGameStarted += GameplayBase_onGameStarted;
 			gameInstance.onDetailChanged += GameInstance_onDetailChanged;
+		}
+
+		private void Start()
+		{
 			Init();
 		}
 
@@ -51,11 +54,6 @@ namespace SR.Core
 		#endregion
 
 		#region Callbacks
-
-		private void GameplayBase_onGameStarted(object sender, System.EventArgs e)
-		{
-
-		}
 
 		private void GameInstance_onDetailChanged(object sender, GameInstance.DetailEventArgs e)
 		{

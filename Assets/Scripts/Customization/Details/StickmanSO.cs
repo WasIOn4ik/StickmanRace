@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SR.Customization
 {
-	[CreateAssetMenu(menuName = "SR/Stickman", fileName = "Stickman")]
+	[CreateAssetMenu(menuName = "SR/Shop/Detail/Stickman", fileName = "Stickman")]
 	public class StickmanSO : CarDetailSO
 	{
 		public Sprite headSprite;
@@ -12,6 +12,11 @@ namespace SR.Customization
 		public Sprite armSprite;
 		public Sprite wristSprite;
 		public Sprite handSprite;
+		public Sprite thighSprite;
+		public Sprite calfSprite;
+		public Sprite footSprite;
+		public Sprite bodyDecorSprite;
+		public Sprite legsDecorSprite;
 
 		public StickmanSO() : base()
 		{

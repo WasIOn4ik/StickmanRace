@@ -9,14 +9,25 @@ namespace SR.Core
 	{
 		#region Variables
 
+		public event EventHandler onAttackStarted;
+		public event EventHandler onDeathStarted;
+
+		[Header("Components")]
+		[SerializeField] private Rigidbody2D rigidBody2D;
+
 		[Header("Peoperties")]
 		[SerializeField] private float attackDelay = 3f;
 		[SerializeField] private float firstAttackDelay = 0.3f;
-		[SerializeField] private Bullet bulletPrefab;
-		[SerializeField] private Transform bulletSpwnpoint;
+		[SerializeField] protected int damage = 1;
+		[SerializeField] private float minimalShootDistance = 1f;
+		[SerializeField] protected LayerMask stickmanLayerMask;
 
-		private PlayerVehicle target;
-		private float difficultyCoef;
+		[Header("MaxDIfficultySettings")]
+		[SerializeField] private float minFirstAttackDelay = 0.05f;
+		[SerializeField] private float minAttackDelay = 0.4f;
+
+		protected PlayerVehicle target;
+		protected float difficultyCoef = 1f;
 
 		#endregion
 
@@ -30,16 +41,16 @@ namespace SR.Core
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
-			if (SRUtils.IsInLayerMask(collision.gameObject.layer, playerLayerMask))
+			if (SRUtils.IsInLayerMask(collision.gameObject.layer, stickmanLayerMask))
 			{
-				target = collision.gameObject.GetComponent<PlayerVehicle>();
+				target = collision.gameObject.GetComponentInParent<PlayerVehicle>();
 				StartCoroutine(HandleAttack());
 			}
 		}
 
 		private void OnTriggerExit2D(Collider2D collision)
 		{
-			if (SRUtils.IsInLayerMask(collision.gameObject.layer, playerLayerMask))
+			if (SRUtils.IsInLayerMask(collision.gameObject.layer, destroyLayerMask))
 			{
 				target = null;
 			}
@@ -49,18 +60,14 @@ namespace SR.Core
 
 		#region Functions
 
-		private void Attack()
+		public virtual void Attack()
 		{
-			float rot_z = SRUtils.GetRotationTo(bulletSpwnpoint.position, target.GetHeadPosition());
-			var bullet = Instantiate(bulletPrefab);
-			bullet.InitBullet(difficultyCoef);
-			bullet.transform.position = bulletSpwnpoint.position;
-			bullet.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
-			Debug.DrawLine(bulletSpwnpoint.position, target.GetHeadPosition(), Color.red, 10f);
-			var bulletRot = bullet.transform.eulerAngles;
-			bulletRot.x = 0;
-			bullet.transform.eulerAngles = bulletRot;
-			Destroy(bullet, 3f);
+			throw new NotImplementedException();
+		}
+
+		private void StartAttack()
+		{
+			onAttackStarted?.Invoke(this, EventArgs.Empty);
 		}
 
 		#endregion
@@ -69,17 +76,18 @@ namespace SR.Core
 
 		private IEnumerator HandleAttack()
 		{
-			yield return new WaitForSeconds(firstAttackDelay);
+			yield return new WaitForSeconds(Mathf.Max(minFirstAttackDelay,firstAttackDelay/ difficultyCoef));
 
-			while (target != null && target.IsAlive())
+			while (IsAlive() && target != null && target.IsAlive() && (target.transform.position - transform.position).magnitude
+				> minimalShootDistance && target.transform.position.x < transform.position.x)
 			{
 
 				if (target != null)
 				{
-					Attack();
+					StartAttack();
 				}
 
-				yield return new WaitForSeconds(attackDelay);
+				yield return new WaitForSeconds(Mathf.Max(minAttackDelay,attackDelay/difficultyCoef));
 			}
 		}
 
@@ -90,13 +98,14 @@ namespace SR.Core
 		protected override void OnPlayerCollisionConfirmed()
 		{
 			onEnemyDeath?.Invoke(this, EventArgs.Empty);
-			base.OnPlayerCollisionConfirmed();
+			onDeathStarted?.Invoke(this, EventArgs.Empty);
+			rigidBody2D.simulated = false;
+			bDestroyed = true;
 		}
 
 		public override void SetDifficulty(float difficulty)
 		{
 			difficultyCoef = difficulty;
-			base.SetDifficulty(difficulty);
 		}
 
 		#endregion

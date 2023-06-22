@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SR.UI
+namespace SR.Core
 {
 	public class Outpost : MonoBehaviour
 	{
@@ -11,19 +11,22 @@ namespace SR.UI
 
 		[SerializeField] private List<Obstacle> obstacles = new List<Obstacle>();
 
+		protected float currentDifficulty;
+
 		#endregion
 
 		#region Functions
 
-		public void SetDifficulty(float difficulty)
+		public virtual void SetDifficulty(float difficulty)
 		{
+			currentDifficulty = difficulty;
 			foreach(var obstacle in obstacles)
 			{
 				obstacle.SetDifficulty(difficulty);
 			}
 		}
 
-		public void DestroyOutpost()
+		public virtual void DestroyOutpost()
 		{
 			foreach (var obstacle in obstacles)
 			{

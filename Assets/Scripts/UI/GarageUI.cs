@@ -31,12 +31,20 @@ public class GarageUI : MonoBehaviour
 		gameInstance.onGemsCountChanged += GameInstance_onGemsCountChanged;
 		playButton.onClick.AddListener(() =>
 		{
+			gameInstance.Sounds.PlayButton1();
 			gameplayBase.StartGame();
 		});
 
 		settingsButton.onClick.AddListener(() =>
 		{
+			gameInstance.Sounds.PlayButton1();
 			MenuBase.OpenMenu(MenuType.SettingsMenu, true);
+		});
+
+		shopButton.onClick.AddListener(() =>
+		{
+			gameInstance.Sounds.PlayButton1();
+			MenuBase.OpenMenu(MenuType.DonateShop, true);
 		});
 
 		UpdateDisplay();

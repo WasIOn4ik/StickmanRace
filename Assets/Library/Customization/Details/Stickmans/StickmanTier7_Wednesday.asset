@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c50b2b9779f134792bf8aecdf5c73f, type: 3}
+  m_Name: StickmanTier7_Wednesday
+  m_EditorClassIdentifier: 
+  identifier: StickmanTier7
+  sprite: {fileID: -5785137365110692542, guid: 39d82103c6335a049b47358e202c31ca, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  stats:
+    health: 0
+    velocity: 0
+    acceleration: 0
+    meleeDamage: 0
+  type: 4
+  headSprite: {fileID: -5785137365110692542, guid: 39d82103c6335a049b47358e202c31ca, type: 3}
+  bodySprite: {fileID: 5711623103308643051, guid: 39d82103c6335a049b47358e202c31ca, type: 3}
+  armSprite: {fileID: 974661008836536328, guid: 39d82103c6335a049b47358e202c31ca, type: 3}
+  armOffset: {x: 0, y: 0, z: 0}
+  wristSprite: {fileID: 2748526287502073478, guid: 39d82103c6335a049b47358e202c31ca, type: 3}
+  handSprite: {fileID: -6398945562516182052, guid: 39d82103c6335a049b47358e202c31ca, type: 3}
+  thighSprite: {fileID: 1563695934003156134, guid: 39d82103c6335a049b47358e202c31ca, type: 3}
+  calfSprite: {fileID: -4082953214548454258, guid: 39d82103c6335a049b47358e202c31ca, type: 3}
+  footSprite: {fileID: -1059170362433483467, guid: 39d82103c6335a049b47358e202c31ca, type: 3}
+  bodyDecorSprite: {fileID: 0}
+  bodyDecorOffset: {x: 0, y: 0, z: 0}
+  legsDecorSprite: {fileID: -2134767959863697215, guid: 39d82103c6335a049b47358e202c31ca, type: 3}

@@ -1,0 +1,609 @@
+fileFormatVersion: 2
+guid: 1f74b08fd704cdd41a7019a3c79970a8
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 300
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: T6_Weapons_1_RocketLauncher_Low
+      rect:
+        serializedVersion: 2
+        x: 746
+        y: 662
+        width: 289
+        height: 61
+      alignment: 9
+      pivot: {x: 0.3562339, y: 0.06273714}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfe580a1b786d0040bbb1be777e25d41
+      internalID: -200929149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T21_Weapons_1_RocketLauncher3
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 335
+        width: 318
+        height: 123
+      alignment: 9
+      pivot: {x: 0.26322487, y: 0.36226624}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95a9f16f19ebd9b4ebbc00fba3e97937
+      internalID: 1874346952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T7_Weapons_1_MachineGun1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 199
+        width: 288
+        height: 104
+      alignment: 9
+      pivot: {x: 0.32189435, y: 0.5098647}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d712f176d882ff448e3ced89a419ceb
+      internalID: 1300875642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T19_Weapons_1_RocketLauncher4
+      rect:
+        serializedVersion: 2
+        x: 634
+        y: 130
+        width: 486
+        height: 105
+      alignment: 9
+      pivot: {x: 0.5987662, y: 0.23109102}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1163b76c210f704aa3da2203af6a5e0
+      internalID: -1153753478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T18_Weapons_1_AK47
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 623
+        width: 349
+        height: 104
+      alignment: 9
+      pivot: {x: 0.30005607, y: 0.4599891}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 064568a6a50cb174f8b3af6a685167e1
+      internalID: -618128673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T12_Weapons_1_AKSU
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 631
+        width: 278
+        height: 99
+      alignment: 9
+      pivot: {x: 0.09038275, y: 0.4896382}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1d71661960770f4285cd78da6046260
+      internalID: -1252364694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T15_Weapons_1_Barret50
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 539
+        width: 363
+        height: 81
+      alignment: 9
+      pivot: {x: 0.24251409, y: 0.19966559}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6b0b8c708858fc45a0ba159ff58fc66
+      internalID: -1961335921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T17_Weapons_1_AUG
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 526
+        width: 287
+        height: 101
+      alignment: 9
+      pivot: {x: 0.4195733, y: 0.3933486}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d3ea3b35a4b9dc4098e5a2dba9ef693
+      internalID: -1666561598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T4_Weapons_1_Sniper1
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 529
+        width: 382
+        height: 91
+      alignment: 9
+      pivot: {x: 0.35229364, y: 0.22379982}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ca9a07dc57d638418f450f7336d70d2
+      internalID: -16075837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T20_Weapons_1_Heavy1
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 429
+        width: 382
+        height: 108
+      alignment: 9
+      pivot: {x: 0.3106252, y: 0.18879813}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d30e8fd3f5454f4db0771ee4f3a167b
+      internalID: 378372118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T16_Weapons_1_RocketLauncher
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 374
+        width: 311
+        height: 152
+      alignment: 9
+      pivot: {x: 0.09096417, y: 0.19290864}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd2eb9327ec943948bc70273a4eb4289
+      internalID: 1786270865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T10_Weapons_1_Sniper2
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 460
+        width: 380
+        height: 67
+      alignment: 9
+      pivot: {x: 0.26346627, y: 0.36654937}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4b15298edb2bbd4287077d2e95fde68
+      internalID: -33378463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T11_Weapons_1_RocketLauncher1
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 331
+        width: 330
+        height: 97
+      alignment: 9
+      pivot: {x: 0.22487536, y: 0.24088468}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fe9367bdf63d724da5eac1818141d84
+      internalID: -443505123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T8_Weapons_1_MP5
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 260
+        width: 207
+        height: 109
+      alignment: 9
+      pivot: {x: 0.23981111, y: 0.34941116}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74bee1f6628b24741a5b56a8b9c11461
+      internalID: -1099498444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T9_Weapons_1_MP7
+      rect:
+        serializedVersion: 2
+        x: 419
+        y: 159
+        width: 147
+        height: 92
+      alignment: 9
+      pivot: {x: 0.44068027, y: 0.41636825}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 707b974ac66276c4593434ef86735890
+      internalID: 1171995054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T5_Weapons_1_Rifle2
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 238
+        width: 350
+        height: 90
+      alignment: 9
+      pivot: {x: 0.29562935, y: 0.41633946}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a41edf610cdeb448989250f6af45298
+      internalID: -835070606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T3_Weapons_1_Thompson
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 101
+        width: 278
+        height: 92
+      alignment: 9
+      pivot: {x: 0.44464633, y: 0.46654725}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0083be8bab4939348be38fc5e3874b99
+      internalID: -1292139995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T1_Weapons_1_Beretta92FS
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 127
+        width: 89
+        height: 60
+      alignment: 9
+      pivot: {x: 0.17148513, y: 0.32046968}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 267c6719efa77f14994520cabe5b8972
+      internalID: 677972898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T2_Weapons_1_Shotgun1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 343
+        height: 101
+      alignment: 9
+      pivot: {x: 0.057342533, y: 0.24098891}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9977e1cd941df1b4fba023b9b1c8362d
+      internalID: -123047076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T14_Weapons_1_Rifle1
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 1
+        width: 332
+        height: 122
+      alignment: 9
+      pivot: {x: 0.33468372, y: 0.29398158}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 089aa9e5ed2a5244bb54b29872e61667
+      internalID: 1089787652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T13_Weapons_1_Rifle3
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 0
+        width: 383
+        height: 128
+      alignment: 9
+      pivot: {x: 0.44470885, y: 0.23896891}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 251934d1449f24b4f9be694066905e93
+      internalID: 117302419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      T10_Weapons_1_Sniper2: -33378463
+      T11_Weapons_1_RocketLauncher1: -443505123
+      T12_Weapons_1_AKSU: -1252364694
+      T13_Weapons_1_Rifle3: 117302419
+      T14_Weapons_1_Rifle1: 1089787652
+      T15_Weapons_1_Barret50: -1961335921
+      T16_Weapons_1_RocketLauncher: 1786270865
+      T17_Weapons_1_AUG: -1666561598
+      T18_Weapons_1_AK47: -618128673
+      T19_Weapons_1_RocketLauncher4: -1153753478
+      T1_Weapons_1_Beretta92FS: 677972898
+      T20_Weapons_1_Heavy1: 378372118
+      T21_Weapons_1_RocketLauncher3: 1874346952
+      T2_Weapons_1_Shotgun1: -123047076
+      T3_Weapons_1_Thompson: -1292139995
+      T4_Weapons_1_Sniper1: -16075837
+      T5_Weapons_1_Rifle2: -835070606
+      T6_Weapons_1_RocketLauncher_Low: -200929149
+      T7_Weapons_1_MachineGun1: 1300875642
+      T8_Weapons_1_MP5: -1099498444
+      T9_Weapons_1_MP7: 1171995054
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

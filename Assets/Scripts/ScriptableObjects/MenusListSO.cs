@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SR.Library
 {
-	[CreateAssetMenu(menuName = "SR/MenusList")]
+	[CreateAssetMenu(menuName = "SR/UI/MenusList")]
 	public class MenusListSO : ScriptableObject, MenusLibrary
 	{
 		public List<MenuBase> menus;

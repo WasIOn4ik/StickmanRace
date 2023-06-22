@@ -51,25 +51,14 @@ MonoBehaviour:
   unlockedDetailsSaveSlot: SR-Unlocked
   gameSettingsSaveSlot: SR-GameSettings
   distanceMarkers:
-  - m
-  - K m
-  - M m
-  - Bn m
-  - Bd m
-  - Tn m
-  - Td m
-  - Qn m
-  - Qd m
-  - QD m
-  - Sn m
-  - Sd m
-  - SN m
-  - SD m
-  - On m
-  - Od m
-  - Nn m
-  - Nd m
-  - Dn m
-  - Dd m
+  - 
+  - K
+  - M
+  - Bn
+  - Bd
+  - Tn
+  - Td
+  - Qn
+  - Qd
   distanceToGemsPow: 1.3
   distanceDemultiplier: 20

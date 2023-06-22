@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69cc24d8ebb71084ba93da53f59bdf2d, type: 3}
+  m_Name: MeleeCasualEnemies
+  m_EditorClassIdentifier: 
+  enemies:
+  - {fileID: 6832650719267596165, guid: ee6fe842fa72a6341b67830c58ac10f4, type: 3}
+  - {fileID: 2838979136488993836, guid: ec516991040ec754f8419896595f343d, type: 3}
+  - {fileID: 2838979136488993836, guid: 93e6a8b9246ed3b4a9b96fc620c46272, type: 3}
+  - {fileID: 389663324068881423, guid: ebe9718d81f6a354e95d38b0d7070a0b, type: 3}
+  - {fileID: 5217617692548769812, guid: df41b535343fde64ebb871a208b3763e, type: 3}
+  - {fileID: 8046284978287108366, guid: bfd06aae9b6dc0442b591f00c044712e, type: 3}
+  - {fileID: 6404257243674732688, guid: 36b41f21afcf3f843912c5669f314794, type: 3}

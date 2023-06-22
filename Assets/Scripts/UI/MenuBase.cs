@@ -12,7 +12,8 @@ namespace SR.UI
 		MainMenu,
 		SettingsMenu,
 		InGameMenu,
-		LoseMenu
+		LoseMenu,
+		DonateShop
 	}
 
 	public interface MenusLibrary
