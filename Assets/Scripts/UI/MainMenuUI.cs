@@ -26,7 +26,7 @@ namespace SR.UI
 		{
 			startButton.onClick.AddListener(() =>
 			{
-				soundsSystem.PlayButton2();
+				soundsSystem.PlayButton2(true);
 				SceneLoader.LoadScene(SRScene.GameScene);
 			});
 
@@ -35,6 +35,7 @@ namespace SR.UI
 				soundsSystem.PlayButton1();
 				OpenMenu(MenuType.SettingsMenu, this);
 			});
+			soundsSystem.PlayMenuMusic();
 		}
 
 		#endregion

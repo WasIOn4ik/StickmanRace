@@ -63,8 +63,14 @@ namespace SR.Core
 			return transform.position + Vector3.up * aimVerticalOffset;
 		}
 
+		protected void CallDestroySound()
+		{
+			onObstacleDestroyed?.Invoke(this, EventArgs.Empty);
+		}
+
 		protected virtual void OnPlayerCollisionConfirmed()
 		{
+			CallDestroySound();
 			HandleDestroy();
 		}
 
@@ -76,7 +82,6 @@ namespace SR.Core
 		public void HandleDestroy()
 		{
 			bDestroyed = true;
-			onObstacleDestroyed?.Invoke(this, EventArgs.Empty);
 			Destroy(gameObject);
 		}
 

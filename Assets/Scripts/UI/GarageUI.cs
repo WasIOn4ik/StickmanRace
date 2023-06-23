@@ -3,6 +3,7 @@ using SR.UI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -33,6 +34,7 @@ public class GarageUI : MonoBehaviour
 		{
 			gameInstance.Sounds.PlayButton1();
 			gameplayBase.StartGame();
+			gameInstance.Sounds.StartBackgroundMusic();
 		});
 
 		settingsButton.onClick.AddListener(() =>
@@ -48,6 +50,7 @@ public class GarageUI : MonoBehaviour
 		});
 
 		UpdateDisplay();
+		gameInstance.Sounds.PlayGarageMusic();
 	}
 
 	#endregion

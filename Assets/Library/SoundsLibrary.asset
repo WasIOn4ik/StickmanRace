@@ -14,8 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonSound1: {fileID: 8300000, guid: a3121fd1409f241479e955ccf368aff2, type: 3}
   buttonSound2: {fileID: 8300000, guid: 32c3e55fc19d6bf41a643f62a0d0ab3d, type: 3}
-  CarMovement: {fileID: 8300000, guid: e455cd790b136bc40b2eb2949f95bea2, type: 3}
+  CarMovement: {fileID: 8300000, guid: b9b65e1e689ec794dbdc280b88f34dbf, type: 3}
   BuildingDamage: {fileID: 8300000, guid: 9b692a9d2332eb249962087402e5b3e3, type: 3}
   HighVelocityDamage: {fileID: 8300000, guid: 6a5a45b590981dd4382ba9dc17402064, type: 3}
   ObstacleDestruction: {fileID: 8300000, guid: e02788563341ec143bc7580d70222af0, type: 3}
   StickmanDeath: {fileID: 8300000, guid: b0fe2d15bc6091f4491c6e15cd588f76, type: 3}
+  backgroundMusic:
+  - {fileID: 8300000, guid: a66fb76425941f2479bc05efab208295, type: 3}
+  - {fileID: 8300000, guid: 482847e3bf7664f40bc789217819eb70, type: 3}
+  - {fileID: 8300000, guid: 62c63dea1bfec3a43bfc2ea1f4106023, type: 3}
+  menuMusic: {fileID: 8300000, guid: 3a9816ae0c00e4e4bb9ef8a395e60460, type: 3}
+  garageMusic: {fileID: 8300000, guid: 74328f98ce887344d818c538b7bf4a61, type: 3}

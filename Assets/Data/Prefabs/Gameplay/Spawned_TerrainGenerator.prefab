@@ -681,11 +681,11 @@ MonoBehaviour:
   platformOnStartRightLength: 0
   platformExitSmoothness: 0
   platformLeftSideOffset: 0
-  outpostDelayPoints: 15
+  outpostDelayPoints: 10
   outpostLength: 4
   outpostStartPoint: 6
-  terainControlPointsCount: 40
-  terrainLengthMultiplier: 2
+  terainControlPointsCount: 60
+  terrainLengthMultiplier: 5
   terrainHeightMultiplier: 1.07
   terrainSmoothness: 0.5
   terrainNoiseStep: 0.5

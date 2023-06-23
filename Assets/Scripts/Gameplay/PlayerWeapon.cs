@@ -79,13 +79,14 @@ namespace SR.Core
 		{
 			float currentZ = transform.eulerAngles.z;
 
-			if (currentTarget != null)
+			if (currentTarget != null && transform.position.x < currentTarget.transform.position.x)
 			{
 				currentZ = Mathf.MoveTowardsAngle(currentZ, SRUtils.GetRotationTo(transform.position, currentTarget.GetAimPosition()), aimVelocity);
 			}
 			else
 			{
 				currentZ = Mathf.MoveTowardsAngle(currentZ, 0, aimVelocity);
+				currentTarget = null;
 			}
 
 			transform.rotation = Quaternion.Euler(0, 0, currentZ);
@@ -131,10 +132,11 @@ namespace SR.Core
 						targets.RemoveAt(i);
 						continue;
 					}
-					if (targets[i].IsAlive())
+					var targetPos = targets[i].transform.position;
+					if (targets[i].IsAlive() && transform.position.x < targetPos.x)
 					{
 
-						float currentDist = (transform.position - targets[i].transform.position).magnitude;
+						float currentDist = (transform.position - targetPos).magnitude;
 						if (currentDist < minDist)
 						{
 							minDist = currentDist;
@@ -158,8 +160,10 @@ namespace SR.Core
 			while (playerVehicle.IsAlive())
 			{
 				yield return new WaitForSeconds(60f / weaponBase.weaponStats.fireRate);
-				if (currentTarget && !currentTarget.IsAlive())
+				if (currentTarget != null && !currentTarget.IsAlive())
+				{
 					currentTarget = null;
+				}
 				Shoot();
 			}
 		}

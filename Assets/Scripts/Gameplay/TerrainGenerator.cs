@@ -217,7 +217,7 @@ namespace SR.Core
 
 		private IEnumerator SpawnEnemies()
 		{
-			int spawnDelay = Mathf.Max((int)(emptyPoints.Count / difficulty / 2), 1);
+			int spawnDelay = Mathf.Max((int)(emptyPoints.Count / difficulty / 5), 1);
 			for (int i = 2; i < emptyPoints.Count; i++)
 			{
 				if (i % spawnDelay != 0)

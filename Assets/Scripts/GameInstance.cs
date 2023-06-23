@@ -165,6 +165,7 @@ namespace SR.Core
 						break;
 				}
 				SaveUnlockedDetails();
+				SaveRecords();
 				TryUpdateCarConfig(detail);
 				onGemsCountChanged?.Invoke(this, EventArgs.Empty);
 				return true;

@@ -14,11 +14,15 @@ namespace SR.Core
 		[SerializeField] private AudioSource carAudio;
 		[SerializeField] private float carSoundChangeCoef;
 		[SerializeField, Range(0.1f, 1f)] private float volumeMultiplier;
+		[SerializeField] private float musicCoef = 0.5f;
+		[SerializeField] private float volumeChange = 0.05f;
 		private bool isSoundEnabled;
 
 		private float maxCarAudio;
 
-		Coroutine carSoundCoroutine;
+		private Coroutine carSoundCoroutine;
+		private int currentMusicIndex;
+		private Coroutine musicVolumeCoroutine;
 
 		#endregion
 
@@ -44,14 +48,59 @@ namespace SR.Core
 			isSoundEnabled = false;
 		}
 
-		public void PlayButton1()
+		public void PlayButton1(bool dontDestroyOnLoad = false)
 		{
-			PlaySound(library.buttonSound1);
+			PlaySound(library.buttonSound1, dontDestroyOnLoad);
 		}
 
-		public void PlayButton2()
+		public void PlayButton2(bool dontDestroyOnLoad = false)
 		{
-			PlaySound(library.buttonSound2);
+			PlaySound(library.buttonSound2, dontDestroyOnLoad);
+		}
+
+		public void StartBackgroundMusic()
+		{
+			currentMusicIndex = Random.Range(0, library.backgroundMusic.Count);
+			var clip = library.backgroundMusic[currentMusicIndex];
+
+			if (musicVolumeCoroutine != null)
+				StopCoroutine(musicVolumeCoroutine);
+
+			musicVolumeCoroutine = StartCoroutine(HandleMusic(clip));
+			StartCoroutine(HandleMusicChange());
+		}
+
+		private IEnumerator HandleMusic(AudioClip clip)
+		{
+			while (musicAudio.volume > 0)
+			{
+				musicAudio.volume -= 0.05f;
+				yield return null;
+			}
+
+			musicAudio.clip = clip;
+			musicAudio.Play();
+
+			while (musicAudio.volume < volumeMultiplier * musicCoef)
+			{
+				musicAudio.volume = Mathf.MoveTowards(musicAudio.volume, volumeMultiplier * musicCoef, volumeChange);
+				yield return null;
+			}
+		}
+
+		private IEnumerator HandleMusicChange()
+		{
+			while (true)
+			{
+				yield return new WaitForSeconds(musicAudio.clip.length);
+				currentMusicIndex++;
+				if (currentMusicIndex >= library.backgroundMusic.Count)
+					currentMusicIndex = 0;
+
+				var clip = library.backgroundMusic[currentMusicIndex];
+				musicAudio.clip = clip;
+				musicAudio.Play();
+			}
 		}
 
 		public void PlayCarMovement(bool active)
@@ -77,7 +126,7 @@ namespace SR.Core
 
 		private IEnumerator HandleCarSound(bool increase)
 		{
-			float target = maxCarAudio * volumeMultiplier;
+			float target = maxCarAudio * volumeMultiplier * 2;
 			if (increase)
 			{
 				while (true)
@@ -116,7 +165,23 @@ namespace SR.Core
 			PlaySound(library.HighVelocityDamage);
 		}
 
-		private void PlaySound(AudioClip clip)
+		public void PlayMenuMusic()
+		{
+			if (musicVolumeCoroutine != null)
+				StopCoroutine(musicVolumeCoroutine);
+
+			musicVolumeCoroutine = StartCoroutine(HandleMusic(library.menuMusic));
+		}
+
+		public void PlayGarageMusic()
+		{
+			if (musicVolumeCoroutine != null)
+				StopCoroutine(musicVolumeCoroutine);
+
+			musicVolumeCoroutine = StartCoroutine(HandleMusic(library.garageMusic));
+		}
+
+		private void PlaySound(AudioClip clip, bool dontDestroyOnLoad = false)
 		{
 			if (!isSoundEnabled)
 				return;
@@ -124,10 +189,12 @@ namespace SR.Core
 			AudioSource audio = (Instantiate(carAudio, transform.position, Quaternion.identity)).GetComponent<AudioSource>();
 
 			audio.clip = clip;
-			audio.volume = volumeMultiplier;
+			audio.volume = volumeMultiplier * 0.6f;
+			audio.priority = 254;
 
 			audio.Play();
-
+			if (dontDestroyOnLoad)
+				DontDestroyOnLoad(audio.gameObject);
 			Destroy(audio.gameObject, clip.length);
 		}
 

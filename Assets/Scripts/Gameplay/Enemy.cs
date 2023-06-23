@@ -76,7 +76,7 @@ namespace SR.Core
 
 		private IEnumerator HandleAttack()
 		{
-			yield return new WaitForSeconds(Mathf.Max(minFirstAttackDelay,firstAttackDelay/ difficultyCoef));
+			yield return new WaitForSeconds(Mathf.Max(minFirstAttackDelay, firstAttackDelay / difficultyCoef));
 
 			while (IsAlive() && target != null && target.IsAlive() && (target.transform.position - transform.position).magnitude
 				> minimalShootDistance && target.transform.position.x < transform.position.x)
@@ -87,7 +87,7 @@ namespace SR.Core
 					StartAttack();
 				}
 
-				yield return new WaitForSeconds(Mathf.Max(minAttackDelay,attackDelay/difficultyCoef));
+				yield return new WaitForSeconds(Mathf.Max(minAttackDelay, attackDelay / difficultyCoef));
 			}
 		}
 
@@ -97,6 +97,7 @@ namespace SR.Core
 
 		protected override void OnPlayerCollisionConfirmed()
 		{
+			CallDestroySound();
 			onEnemyDeath?.Invoke(this, EventArgs.Empty);
 			onDeathStarted?.Invoke(this, EventArgs.Empty);
 			rigidBody2D.simulated = false;

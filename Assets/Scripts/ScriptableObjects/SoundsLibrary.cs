@@ -14,5 +14,8 @@ namespace SR.Core
 		[SerializeField] public AudioClip HighVelocityDamage;
 		[SerializeField] public AudioClip ObstacleDestruction;
 		[SerializeField] public AudioClip StickmanDeath;
+		[SerializeField] public List<AudioClip> backgroundMusic;
+		[SerializeField] public AudioClip menuMusic;
+		[SerializeField] public AudioClip garageMusic;
 	}
 }

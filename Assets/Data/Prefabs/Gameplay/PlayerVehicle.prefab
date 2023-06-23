@@ -7407,9 +7407,9 @@ MonoBehaviour:
   meleeDamageStart: {fileID: 2626028150892350843}
   baseCarDescriptor:
     health: 5
-    velocity: 4
+    velocity: 8
     meleeDamage: 1
-    acceleration: 50
+    acceleration: 100
   cameraUpperOffset: 5.5
   cameraRightOffset: 5
   cameraBlendDelta: 0.1

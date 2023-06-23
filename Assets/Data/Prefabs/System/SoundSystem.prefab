@@ -51,6 +51,8 @@ MonoBehaviour:
   carAudio: {fileID: 6678781496609420903}
   carSoundChangeCoef: 0.05
   volumeMultiplier: 0.5
+  musicCoef: 0.5
+  volumeChange: 0.05
 --- !u!82 &-4656258789026184519
 AudioSource:
   m_ObjectHideFlags: 0
@@ -62,14 +64,14 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_PlayOnAwake: 0
+  m_Volume: 0
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -165,7 +167,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 255
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

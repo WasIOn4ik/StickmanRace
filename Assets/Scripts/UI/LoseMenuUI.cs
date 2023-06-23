@@ -27,6 +27,7 @@ namespace SR.UI
 			distanceText.text = Mathf.Max(0f, distance).ToString("0.0");
 			timeText.text = time.ToString("0.0");
 			gemsText.text = gameInstance.DistanceToGems(distance).ToString();
+			gameInstance.Sounds.PlayCarMovement(false);
 		}
 
 		#endregion

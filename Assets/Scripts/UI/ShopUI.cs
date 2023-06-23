@@ -36,6 +36,8 @@ namespace SR.UI
 		private void Awake()
 		{
 			gameInstance.onGemsCountChanged += GameInstance_onGemsCountChanged;
+			gameInstance.onDetailChanged += GameInstance_onDetailChanged;
+
 			wheelsTabButton.onClick.AddListener(() =>
 			{
 				gameInstance.Sounds.PlayButton1();
@@ -99,6 +101,12 @@ namespace SR.UI
 			stickmanTabButton.interactable = true;
 		}
 
+		private void OnDestroy()
+		{
+			gameInstance.onDetailChanged -= GameInstance_onDetailChanged;
+			gameInstance.onGemsCountChanged -= GameInstance_onGemsCountChanged;
+		}
+
 		#endregion
 
 		#region Functions
@@ -137,6 +145,11 @@ namespace SR.UI
 		#region Callbacks
 
 		private void GameInstance_onGemsCountChanged(object sender, System.EventArgs e)
+		{
+			SetCategory(currentCategory);
+		}
+
+		private void GameInstance_onDetailChanged(object sender, GameInstance.DetailEventArgs e)
 		{
 			SetCategory(currentCategory);
 		}
