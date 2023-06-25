@@ -19,14 +19,20 @@ namespace SR.UI
 		[SerializeField] private TMP_Text titleText;
 		[SerializeField] private Button purchaseButton;
 
+#if UNITY_ANDROID
 		public delegate void PurchaseDelegate(Product product, Action onComplete);
-		public event PurchaseDelegate onPurchase;
 
 		private Product product;
+#elif UNITY_WEBGL
+		public delegate void PurchaseDelegate(string id, Action onComplete);
+
+		private string product;
+#endif
+		public event PurchaseDelegate onPurchase;
 
 		[Inject] private SoundSystem soundsSystem;
 
-		#endregion
+#endregion
 
 		#region UnityMessages
 
@@ -48,6 +54,7 @@ namespace SR.UI
 			purchaseButton.interactable = true;
 		}
 
+#if UNITY_ANDROID
 		public void Initialize(Product product)
 		{
 			this.product = product;
@@ -56,6 +63,17 @@ namespace SR.UI
 			var tex = StoreItemProvider.GetIcon(product.definition.id);
 			icon.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one / 2f);
 		}
+#elif UNITY_WEBGL
+		public void Initialize(string id, string title, string price)
+		{
+			product = id;
+			titleText.text = title;
+			priceText.text = price;
+			var tex = StoreItemProvider.GetIcon(id);
+			icon.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one / 2f);
+		}
+
+#endif
 
 		public void Purchase()
 		{
@@ -68,7 +86,7 @@ namespace SR.UI
 			purchaseButton.interactable = true;
 		}
 
-		#endregion
+#endregion
 	}
 }
 

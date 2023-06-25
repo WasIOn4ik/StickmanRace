@@ -111,7 +111,7 @@ namespace SR.Core
 			float input = gameInputs.GetMovement();
 			frontTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
 			backTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
-			carRB.AddTorque(input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
+			//carRB.AddTorque(input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
 			carRB.velocity = Vector2.ClampMagnitude(carRB.velocity, fullCarDescriptor.velocity);
 			soundSystem.SetMaxCarSound(GetVelocity() / 10f);
 		}
@@ -125,6 +125,14 @@ namespace SR.Core
 		#endregion
 
 		#region Functions
+
+		public void Respawn(int hp)
+		{
+			fullCarDescriptor.health = hp;
+			onHealthChanged?.Invoke(this, new HealthEventArgs() { hp = hp });
+			bAlive = true;
+			UnFreeze();
+		}
 
 		public float GetVelocity()
 		{
@@ -153,6 +161,10 @@ namespace SR.Core
 
 		public void ApplyDamage(int damage)
 		{
+			if (bAlive)
+			{
+				soundSystem.PlayDeath();
+			}
 			Debug.Log($"Received {damage} damage");
 			fullCarDescriptor.health -= damage;
 			if (fullCarDescriptor.health <= 0)
@@ -170,8 +182,6 @@ namespace SR.Core
 			if (!bAlive)
 				return;
 
-			soundSystem.PlayDeath();
-
 			Freeze();
 			bAlive = false;
 			weaponController.StopAim();
@@ -186,6 +196,10 @@ namespace SR.Core
 
 		public void Freeze()
 		{
+			gameInputs.SetMovement(0);
+			gameInstance.Sounds.PlayCarMovement(false);
+			frontTireRB.angularVelocity = 0f;
+			backTireRB.angularVelocity = 0f;
 			bFrozen = true;
 		}
 
@@ -197,7 +211,7 @@ namespace SR.Core
 		public void UpdateCameraFollow(Vector3 upperLimit)
 		{
 			var tempPos = cameraFollow.position;
-			tempPos.y = Mathf.MoveTowards(tempPos.y, upperLimit.y + cameraUpperOffset, cameraBlendDelta);
+			tempPos.y = upperLimit.y + cameraUpperOffset;// Mathf.MoveTowards(tempPos.y, upperLimit.y + cameraUpperOffset, cameraBlendDelta);
 			tempPos.x = transform.position.x + cameraRightOffset;
 			cameraFollow.position = tempPos;
 		}

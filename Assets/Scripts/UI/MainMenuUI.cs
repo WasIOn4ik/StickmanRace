@@ -27,7 +27,8 @@ namespace SR.UI
 			startButton.onClick.AddListener(() =>
 			{
 				soundsSystem.PlayButton2(true);
-				SceneLoader.LoadScene(SRScene.GameScene);
+				startButton.interactable = false;
+				StartCoroutine(DelayedStart());
 			});
 
 			settingsButton.onClick.AddListener(() =>
@@ -36,6 +37,12 @@ namespace SR.UI
 				OpenMenu(MenuType.SettingsMenu, this);
 			});
 			soundsSystem.PlayMenuMusic();
+		}
+
+		private IEnumerator DelayedStart()
+		{
+			yield return new WaitForSeconds(0.5f);
+			SceneLoader.LoadScene(SRScene.GameScene);
 		}
 
 		#endregion

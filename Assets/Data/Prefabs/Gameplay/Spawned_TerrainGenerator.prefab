@@ -686,7 +686,7 @@ MonoBehaviour:
   outpostStartPoint: 6
   terainControlPointsCount: 60
   terrainLengthMultiplier: 5
-  terrainHeightMultiplier: 1.07
+  terrainHeightMultiplier: 1.4
   terrainSmoothness: 0.5
   terrainNoiseStep: 0.5
   terrainBottomHeight: 10

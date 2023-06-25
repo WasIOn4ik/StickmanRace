@@ -19,6 +19,7 @@ namespace SR.UI
 		[Header("Components")]
 		[SerializeField] private Image faderImage;
 		[SerializeField] private GarageUI garageUI;
+		[SerializeField] private HUD_UI hud;
 
 		[Header("Properties")]
 		[SerializeField] private float afterDeathTimeout = 5f;
@@ -61,6 +62,17 @@ namespace SR.UI
 			return totalDifficulty;
 		}
 
+		public void RestartGame()
+		{
+			SceneLoader.LoadScene(SRScene.GameScene);
+		}
+
+		public void ResetPlayer(int hp)
+		{
+			playerVehicle.Respawn(hp);
+			hud.gameObject.SetActive(true);
+		}
+
 		public void StartGame()
 		{
 			StartCoroutine(FadeImage(false, fadeTime, () =>
@@ -78,18 +90,13 @@ namespace SR.UI
 			playerVehicle.GetComponent<Rigidbody2D>().AddForce(Vector2.right * gameStartCarForce);
 		}
 
-		private void RestartGame()
-		{
-			SceneLoader.LoadScene(SRScene.GameScene);
-		}
-
 		#endregion
 
 		#region Callbacks
 
 		private void PlayerVehicle_onDeath(object sender, EventArgs e)
 		{
-			Invoke("RestartGame", afterDeathTimeout);
+			//Invoke("RestartGame", afterDeathTimeout);
 		}
 
 		#endregion

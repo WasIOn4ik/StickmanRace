@@ -90,6 +90,7 @@ MonoBehaviour:
   destroyParticles: {fileID: 0}
   highSpeedDestruction: 5
   rigidBody2D: {fileID: 3152496524883276227}
+  particles: {fileID: 4169625702023596925}
   attackDelay: 2
   firstAttackDelay: 0.05
   damage: 1
@@ -103,5 +104,10 @@ MonoBehaviour:
 --- !u!50 &3152496524883276227 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 3720446491217204962, guid: 1718f8ce96585c1408e49b471ed5340c, type: 3}
+  m_PrefabInstance: {fileID: 1737902081455138593}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4169625702023596925 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2432850654364904540, guid: 1718f8ce96585c1408e49b471ed5340c, type: 3}
   m_PrefabInstance: {fileID: 1737902081455138593}
   m_PrefabAsset: {fileID: 0}

@@ -108,7 +108,7 @@ namespace SR.Core
 			if (currentTarget == null)
 				bullet.gameObject.layer = LayerMask.NameToLayer(buildingDestroyBulletLayerName);
 			bullet.SetDamage(weaponBase.weaponStats.damage);
-			bullet.SetVelocity(playerVehicle.GetVelocity() + weaponBase.weaponStats.velocity);
+			bullet.SetVelocity(playerVehicle.GetVelocity() * 1.25f + weaponBase.weaponStats.velocity);
 			bullet.transform.rotation = transform.rotation;
 			bullet.transform.position = bulletSpawnPoint.position;
 			bullet.InitBullet(1f, weaponBase.weaponStats.shootDistance);

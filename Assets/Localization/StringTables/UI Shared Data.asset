@@ -51,6 +51,14 @@ MonoBehaviour:
     m_Key: LoseMenu_Gems_Label
     m_Metadata:
       m_Items: []
+  - m_Id: 4356154958237696
+    m_Key: Garage_Leaderboard_Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4356307324719104
+    m_Key: Garage_Leaderboard_Distance
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

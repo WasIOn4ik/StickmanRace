@@ -8,22 +8,33 @@ using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
 using UnityEngine.UI;
+using YG;
 using Zenject;
 
 namespace SR.UI
 {
+#if UNITY_ANDROID
 	public class DonateShopMenuUI : MenuBase, IDetailedStoreListener
+#elif UNITY_WEBGL
+	public class DonateShopMenuUI : MenuBase
+#endif
 	{
 		#region Variables
 
 		[SerializeField] private DonateItemUI itemPrefab;
 		[SerializeField] private RectTransform itemsHolder;
 		[SerializeField] private Button backButton;
+		[SerializeField] private PaymentsYG payments;
 
 		[Inject] GameInstance gameInstance;
 
+#if UNITY_ANDROID
 		private static IStoreController storeController;
 		private static IExtensionProvider extensionProvider;
+#elif UNITY_WEBGL
+		private static bool bInitialized;
+		private string currentPurchase;
+#endif
 		List<DonateItemUI> spawnedItems = new List<DonateItemUI>();
 
 		private Action onPurchaseCompleted;
@@ -36,7 +47,11 @@ namespace SR.UI
 
 		private bool IsInitialized()
 		{
+#if UNITY_ANDROID
 			return storeController != null && extensionProvider != null;
+#elif UNITY_WEBGL
+			return bInitialized;
+#endif
 		}
 
 		private async void Awake()
@@ -46,6 +61,7 @@ namespace SR.UI
 				soundsSystem.PlayButton2();
 				BackToPrevious();
 			});
+#if UNITY_ANDROID
 			if (IsInitialized())
 			{
 				StoreItemProvider_onLoadComplete();
@@ -60,8 +76,50 @@ namespace SR.UI
 			await UnityServices.InitializeAsync(options);
 			ResourceRequest request = Resources.LoadAsync<TextAsset>("IAPProductCatalog");
 			request.completed += HandleIAPPCatalog;
+			payments.gameObject.SetActive(false);
+#elif UNITY_WEBGL
+			itemsHolder.gameObject.SetActive(false);
+			YandexGame.PurchaseSuccessEvent = (id) =>
+			{
+				switch (id)
+				{
+					case "gems_1000":
+						gameInstance.AddBoughtGems(1000);
+						break;
+					case "gems_5000":
+						gameInstance.AddBoughtGems(5000);
+						break;
+					case "gems_20000":
+						gameInstance.AddBoughtGems(20000);
+						break;
+					case "gems_100000":
+						gameInstance.AddBoughtGems(100000);
+						break;
+				}
+				BackToPrevious();
+				/*foreach (var el in spawnedItems)
+				{
+					el.Activate();
+				}*/
+			};/*
+			if (!StoreItemProvider.IsInitialized())
+			{
+				StoreItemProvider.Initialize(YandexGame.PaymentsData.id);
+				//StoreItemProvider.onLoadComplete += StoreItemProvider_onLoadComplete;
+			}
+			else
+			{
+				StoreItemProvider_onLoadComplete();
+			}*/
+#endif
 		}
 
+		private void OnDestroy()
+		{
+			StoreItemProvider.onLoadComplete -= StoreItemProvider_onLoadComplete;
+		}
+
+#if UNITY_ANDROID
 		private void HandleIAPPCatalog(AsyncOperation operation)
 		{
 			var request = operation as ResourceRequest;
@@ -70,16 +128,8 @@ namespace SR.UI
 			StandardPurchasingModule.Instance().useFakeStoreUIMode = FakeStoreUIMode.StandardUser;
 			StandardPurchasingModule.Instance().useFakeStoreAlways = true;
 
-#if UNITY_ANDROID
 			ConfigurationBuilder builder = ConfigurationBuilder.Instance(
 				StandardPurchasingModule.Instance(AppStore.GooglePlay));
-#elif UNITY_WEBGL
-
-#else
-			ConfigurationBuilder builder = ConfigurationBuilder.Instance(
-				StandardPurchasingModule.Instance(AppStore.NotSpecified));
-#endif
-
 			foreach (ProductCatalogItem item in catalog.allProducts)
 			{
 				List<PayoutDefinition> pays = new List<PayoutDefinition>();
@@ -95,10 +145,12 @@ namespace SR.UI
 
 			UnityPurchasing.Initialize(this, builder);
 		}
+#endif
 
 
 		#endregion
 
+#if UNITY_ANDROID
 		#region IStoreListener
 
 		public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
@@ -147,7 +199,7 @@ namespace SR.UI
 
 		public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
 		{
-			foreach(var el in spawnedItems)
+			foreach (var el in spawnedItems)
 			{
 				el.Activate();
 			}
@@ -173,7 +225,6 @@ namespace SR.UI
 				item.Initialize(product);
 			}
 		}
-
 		private void Item_onPurchase(Product product, Action onComplete)
 		{
 			onPurchaseCompleted = onComplete;
@@ -181,5 +232,30 @@ namespace SR.UI
 		}
 
 		#endregion
+#elif UNITY_WEBGL
+
+		#region Callbacks
+
+		private void StoreItemProvider_onLoadComplete()
+		{
+			for(int i = 0; i < YandexGame.PaymentsData.title.Length;i++)
+			{
+				var item = Instantiate(itemPrefab);
+				ProjectContext.Instance.Container.Inject(item);
+				spawnedItems.Add(item);
+				item.transform.SetParent(itemsHolder, false);
+				item.onPurchase += Item_onPurchase;
+				item.Initialize(YandexGame.PaymentsData.id[i],YandexGame.PaymentsData.title[i], YandexGame.PaymentsData.priceValue[i]);
+			}
+		}
+		private void Item_onPurchase(string item, Action onComplete)
+		{
+			onPurchaseCompleted = onComplete;
+			YandexGame.BuyPayments(item);
+		}
+
+		#endregion
+
+#endif
 	}
 }

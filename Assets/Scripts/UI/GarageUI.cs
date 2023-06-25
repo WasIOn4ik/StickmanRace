@@ -2,10 +2,12 @@ using SR.Core;
 using SR.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 using Zenject;
 
 public class GarageUI : MonoBehaviour
@@ -16,12 +18,17 @@ public class GarageUI : MonoBehaviour
 	[SerializeField] private Button playButton;
 	[SerializeField] private Button shopButton;
 	[SerializeField] private Button settingsButton;
+	[SerializeField] private Button plus50Button;
 	[SerializeField] private TMP_Text distanceText;
 	[SerializeField] private TMP_Text timeText;
 	[SerializeField] private TMP_Text gemsText;
 
-	[Inject] GameplayBase gameplayBase;
-	[Inject] GameInstance gameInstance;
+	[Inject] private YandexGame YG;
+	[Inject] private GameplayBase gameplayBase;
+	[Inject] private GameInstance gameInstance;
+
+
+	private static int startsCount = 0;
 
 	#endregion
 
@@ -29,11 +36,56 @@ public class GarageUI : MonoBehaviour
 
 	private void Awake()
 	{
+#if UNITY_WEBGL
+		YandexGame.StickyAdActivity(false);
+#endif
+		LoseMenuUI.bPlus3HPUsed = false;
 		gameInstance.onGemsCountChanged += GameInstance_onGemsCountChanged;
+
+		plus50Button.onClick.AddListener(() =>
+		{
+#if UNITY_WEBGL
+			YandexGame.OpenVideoEvent = null;
+			YandexGame.CloseVideoEvent = () =>
+			{
+				gameInstance.AddBoughtGems(50);
+				YandexGame.CloseVideoEvent = null;
+			};
+			YG._RewardedShow(1);
+#endif
+		});
 		playButton.onClick.AddListener(() =>
 		{
+			startsCount++;
 			gameInstance.Sounds.PlayButton1();
-			gameplayBase.StartGame();
+			if (startsCount % 2 == 0)
+			{
+#if UNITY_WEBGL
+				YG.ResetTimerFullAd();
+				YG.ErrorFullscreenAd.AddListener(() =>
+				{
+					gameplayBase.StartGame();
+				});
+				YandexGame.OpenFullAdEvent = () =>
+				{
+					YandexGame.CloseFullAdEvent = () =>
+					{
+						YandexGame.StickyAdActivity(true);
+						gameplayBase.StartGame();
+						YandexGame.CloseFullAdEvent = null;
+					};
+					YandexGame.OpenFullAdEvent = null;
+
+				};
+				YG._FullscreenShow();
+#elif UNITY_ANDROID
+				gameplayBase.StartGame();
+#endif
+			}
+			else
+			{
+				gameplayBase.StartGame();
+			}
 			gameInstance.Sounds.StartBackgroundMusic();
 		});
 

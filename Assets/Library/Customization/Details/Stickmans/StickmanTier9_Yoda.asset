@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c50b2b9779f134792bf8aecdf5c73f, type: 3}
+  m_Name: StickmanTier9_Yoda
+  m_EditorClassIdentifier: 
+  identifier: StickmanTier9
+  sprite: {fileID: -4695309958139280892, guid: c541a5ad360e376499dadc133193ba45, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  stats:
+    health: 18
+    velocity: 0
+    acceleration: 0
+    meleeDamage: 0
+  type: 4
+  headSprite: {fileID: -4695309958139280892, guid: c541a5ad360e376499dadc133193ba45, type: 3}
+  bodySprite: {fileID: -6864305085776094352, guid: c541a5ad360e376499dadc133193ba45, type: 3}
+  armSprite: {fileID: 471082643682269013, guid: c541a5ad360e376499dadc133193ba45, type: 3}
+  wristSprite: {fileID: 2845261211513708367, guid: c541a5ad360e376499dadc133193ba45, type: 3}
+  handSprite: {fileID: -643440745502912429, guid: c541a5ad360e376499dadc133193ba45, type: 3}
+  thighSprite: {fileID: -1319814255971700459, guid: c541a5ad360e376499dadc133193ba45, type: 3}
+  calfSprite: {fileID: 3218055956718258222, guid: c541a5ad360e376499dadc133193ba45, type: 3}
+  footSprite: {fileID: -7848803505335002375, guid: c541a5ad360e376499dadc133193ba45, type: 3}
+  bodyDecorSprite: {fileID: -209954028102010141, guid: c541a5ad360e376499dadc133193ba45, type: 3}
+  legsDecorSprite: {fileID: 0}

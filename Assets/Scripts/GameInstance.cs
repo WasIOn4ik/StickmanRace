@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Purchasing;
+using YG;
 using Zenject;
 
 namespace SR.Core
@@ -91,13 +92,63 @@ namespace SR.Core
 
 		private void Awake()
 		{
-			MenuBase.menusLibrary = menusLibrary;
+#if !UNITY_WEBGL
 			LoadRecords();
 			LoadCarConfig();
 			LoadUnlockedDetails();
 			LoadGameSettings();
+#elif UNITY_WEBGL
+			Application.focusChanged += Application_focusChanged;
+#endif
+
 			InitializeShop();
+			MenuBase.menusLibrary = menusLibrary;
 			Obstacle.onObstacleDestroyed += Obstacle_onObstacleDestroyed;
+		}
+
+#if UNITY_WEBGL
+		private void Start()
+		{
+			YandexGame.GetDataEvent = OnLoad;
+		}
+
+		private void OnLoad()
+		{
+			YandexGame.StickyAdActivity(true);
+			if (YandexGame.savesData.details == null)
+			{
+				YandexGame.savesData.records = new GameRecords() { totalDistance = 0f, maxTime = 0f };
+				YandexGame.savesData.settings = new GameSettings() { bSoundsOn = true };
+				YandexGame.savesData.carConfig = shopLibrary.GetStandartCar();
+				var defaultCar = shopLibrary.GetStandartCar();
+				unlockedDetails = new UnlockedDetails();
+				unlockedDetails.unlockedWeapons.Add(defaultCar.weapon);
+				unlockedDetails.unlockedWheels.Add(defaultCar.wheels);
+				unlockedDetails.unlockedBumpers.Add(defaultCar.bumper);
+				unlockedDetails.unlockedStickmans.Add(defaultCar.stickman);
+				unlockedDetails.unlockedBackdoors.Add(defaultCar.backdoor);
+				YandexGame.savesData.details = unlockedDetails;
+				YandexGame.SaveProgress();
+			}
+			records = YandexGame.savesData.records;
+			carConfig = YandexGame.savesData.carConfig;
+			GameSettings = YandexGame.savesData.settings;
+			unlockedDetails = YandexGame.savesData.details;
+			YandexGame.NewLeaderboardScores("RoadKing", (int)YandexGame.savesData.records.totalDistance);
+			UpdateUnlockedDetails();
+			if (GameSettings.bSoundsOn)
+				soundSystem.EnableSound();
+			else
+				soundSystem.DisableSound();
+		}
+#endif
+
+		private void Application_focusChanged(bool obj)
+		{
+			if (!obj)
+				soundSystem.Mute();
+			else
+				soundSystem.Unmute();
 		}
 
 		#endregion
@@ -114,6 +165,7 @@ namespace SR.Core
 			records.gems += count;
 			onGemsCountChanged?.Invoke(this, EventArgs.Empty);
 			SaveRecords();
+			ConfirmSave();
 		}
 
 		public int DistanceToGems(float distance)
@@ -167,6 +219,7 @@ namespace SR.Core
 				SaveUnlockedDetails();
 				SaveRecords();
 				TryUpdateCarConfig(detail);
+				ConfirmSave();
 				onGemsCountChanged?.Invoke(this, EventArgs.Empty);
 				return true;
 			}
@@ -223,10 +276,10 @@ namespace SR.Core
 			return records;
 		}
 
-		public void TryUpdateRecords(float distance, float time)
+		public void TryUpdateRecords(float distance, float time, int kills)
 		{
 			records.totalDistance += distance;
-			records.gems += DistanceToGems(distance);
+			records.gems += kills;// DistanceToGems(distance);
 
 			if (time > records.maxTime)
 			{
@@ -234,6 +287,7 @@ namespace SR.Core
 			}
 
 			SaveRecords();
+			ConfirmSave();
 		}
 
 		public void TryUpdateCarConfig(CarDetailSO newDetail)
@@ -263,20 +317,52 @@ namespace SR.Core
 
 		public void SaveRecords()
 		{
+#if !UNITY_WEBGL
 			string str = JsonUtility.ToJson(records);
 			PlayerPrefs.SetString(recordSaveSlot, str);
+#else
+			YandexGame.savesData.records = records;
+#endif
 		}
 
 		public void SaveCarConfig()
 		{
+#if !UNITY_WEBGL
 			string str = JsonUtility.ToJson(carConfig);
 			PlayerPrefs.SetString(carConfigSaveSlot, str);
+#else
+			YandexGame.savesData.carConfig = carConfig;
+#endif
 		}
 
 		public void SaveGameSettings()
 		{
+#if !UNITY_WEBGL
 			string str = JsonUtility.ToJson(GameSettings);
 			PlayerPrefs.SetString(gameSettingsSaveSlot, str);
+#else
+			YandexGame.savesData.settings = GameSettings;
+#endif
+		}
+
+		public void SaveUnlockedDetails()
+		{
+#if !UNITY_WEBGL
+			string str = JsonUtility.ToJson(unlockedDetails);
+			PlayerPrefs.SetString(unlockedDetailsSaveSlot, str);
+#else
+			if (unlockedDetails == null)
+				unlockedDetails = new UnlockedDetails();
+
+			YandexGame.savesData.details = unlockedDetails;
+#endif
+		}
+
+		public void ConfirmSave()
+		{
+#if UNITY_WEBGL
+			YandexGame.SaveProgress();
+#endif
 		}
 
 		public void LoadGameSettings()
@@ -295,12 +381,6 @@ namespace SR.Core
 				soundSystem.EnableSound();
 			else
 				soundSystem.DisableSound();
-		}
-
-		public void SaveUnlockedDetails()
-		{
-			string str = JsonUtility.ToJson(unlockedDetails);
-			PlayerPrefs.SetString(unlockedDetailsSaveSlot, str);
 		}
 
 		private void LoadRecords()
@@ -348,7 +428,11 @@ namespace SR.Core
 				unlockedDetails.unlockedBackdoors.Add(defaultCar.backdoor);
 				SaveUnlockedDetails();
 			}
+			UpdateUnlockedDetails();
+		}
 
+		private void UpdateUnlockedDetails()
+		{
 			foreach (var w in unlockedDetails.unlockedWeapons)
 			{
 				shopLibrary.GetWeapon(w).bUnlocked = true;

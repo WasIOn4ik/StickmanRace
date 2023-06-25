@@ -54,6 +54,14 @@ MonoBehaviour:
     m_Localized: 'Earned:'
     m_Metadata:
       m_Items: []
+  - m_Id: 4356154958237696
+    m_Localized: King expresses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4356307324719104
+    m_Localized: Road kings
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

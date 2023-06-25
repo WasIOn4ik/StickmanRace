@@ -14,6 +14,7 @@ namespace SR.Core
 
 		[Header("Components")]
 		[SerializeField] private Rigidbody2D rigidBody2D;
+		[SerializeField] private ParticleSystem particles;
 
 		[Header("Peoperties")]
 		[SerializeField] private float attackDelay = 3f;
@@ -32,6 +33,8 @@ namespace SR.Core
 		#endregion
 
 		#region StaticVariables
+
+		public static int killsInRound = 0;
 
 		public static event EventHandler onEnemyDeath;
 
@@ -97,11 +100,21 @@ namespace SR.Core
 
 		protected override void OnPlayerCollisionConfirmed()
 		{
-			CallDestroySound();
-			onEnemyDeath?.Invoke(this, EventArgs.Empty);
+			if (IsAlive())
+			{
+				CallDestroySound();
+				rigidBody2D.freezeRotation = false;
+				onEnemyDeath?.Invoke(this, EventArgs.Empty);
+				bDestroyed = true;
+				Invoke("FinishDestroy", 2f);
+			}
+			particles.Play();
+		}
+
+		private void FinishDestroy()
+		{
 			onDeathStarted?.Invoke(this, EventArgs.Empty);
 			rigidBody2D.simulated = false;
-			bDestroyed = true;
 		}
 
 		public override void SetDifficulty(float difficulty)

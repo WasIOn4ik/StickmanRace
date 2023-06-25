@@ -44,6 +44,7 @@ namespace SR.UI
 			backButton.onClick.AddListener(() =>
 			{
 				soundSystem.PlayButton2();
+				gameInstance.ConfirmSave();
 				BackToPrevious();
 				Close();
 			});

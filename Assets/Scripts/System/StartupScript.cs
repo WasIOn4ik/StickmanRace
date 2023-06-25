@@ -8,6 +8,7 @@ namespace SR.Extras
 {
 	public class StartupScript : MonoBehaviour
 	{
+
 		#region UnityMessages
 
 		private void Start()

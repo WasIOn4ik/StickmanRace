@@ -16,11 +16,14 @@ namespace SR.Core
 
 		public override void Attack()
 		{
-			var result = Physics2D.BoxCast(transform.position, attackDistance, 0, Vector2.left, 0.1f, destroyLayerMask);
-			if (result.collider != null)
+			if(IsAlive())
 			{
-				var player = result.collider.gameObject.GetComponentInParent<PlayerVehicle>();
-				player.ApplyDamage(damage);
+				var result = Physics2D.BoxCast(transform.position, attackDistance, 0, Vector2.left, 0.1f, destroyLayerMask);
+				if (result.collider != null)
+				{
+					var player = result.collider.gameObject.GetComponentInParent<PlayerVehicle>();
+					player.ApplyDamage(damage);
+				}
 			}
 		}
 

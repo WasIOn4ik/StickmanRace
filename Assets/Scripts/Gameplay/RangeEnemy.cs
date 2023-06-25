@@ -27,15 +27,18 @@ namespace SR.Core
 
 		public override void Attack()
 		{
-			float rot_z = SRUtils.GetRotationTo(bulletSpawnpoint.position, target.GetHeadPosition());
-			var bullet = Instantiate(bulletPrefab);
-			bullet.transform.position = bulletSpawnpoint.position;
-			bullet.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
-			Debug.DrawLine(bulletSpawnpoint.position, target.GetHeadPosition(), Color.red, 10f);
-			var bulletRot = bullet.transform.eulerAngles;
-			bulletRot.x = 0;
-			bullet.transform.eulerAngles = bulletRot;
-			bullet.InitBullet(difficultyCoef, 3f);
+			if (IsAlive())
+			{
+				float rot_z = SRUtils.GetRotationTo(bulletSpawnpoint.position, target.GetHeadPosition());
+				var bullet = Instantiate(bulletPrefab);
+				bullet.transform.position = bulletSpawnpoint.position;
+				bullet.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+				Debug.DrawLine(bulletSpawnpoint.position, target.GetHeadPosition(), Color.red, 10f);
+				var bulletRot = bullet.transform.eulerAngles;
+				bulletRot.x = 0;
+				bullet.transform.eulerAngles = bulletRot;
+				bullet.InitBullet(difficultyCoef, 3f);
+			}
 		}
 
 		#endregion

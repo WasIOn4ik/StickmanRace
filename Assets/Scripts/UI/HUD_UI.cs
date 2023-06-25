@@ -32,7 +32,6 @@ namespace SR.UI
 
 		private float startTime;
 		private float maxDistance;
-		private int kills;
 
 		#endregion
 
@@ -49,7 +48,7 @@ namespace SR.UI
 			distanceText.text = "";
 			timeText.text = "";
 			maxDistance = 0;
-			kills = 0;
+			Enemy.killsInRound = 0;
 			killsText.text = "0 X";
 
 			gameObject.SetActive(false);
@@ -134,16 +133,15 @@ namespace SR.UI
 		private void PlayerVehicle_onDeath(object sender, System.EventArgs e)
 		{
 			gameObject.SetActive(false);
-			var menu = MenuBase.OpenMenu(MenuType.LoseMenu, true) as LoseMenuUI;
-			ProjectContext.Instance.Container.InjectGameObject(menu.gameObject);
+			var menu = MenuBase.OpenMenu(MenuType.LoseMenu, false) as LoseMenuUI;
 			menu.UpdateDisplay(GetDistance(), GetTime());
 		}
 
 		private void Enemy_onEnemyDeath(object sender, System.EventArgs e)
 		{
-			kills++;
+			Enemy.killsInRound++;
 
-			killsText.text = kills.ToString() + " X";
+			killsText.text = Enemy.killsInRound.ToString() + " X";
 		}
 
 		#endregion

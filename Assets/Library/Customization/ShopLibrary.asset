@@ -79,6 +79,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73fbb69234acdf44298990b57f23390d, type: 2}
   - {fileID: 11400000, guid: d51f51b51751eab43951781ff785ee87, type: 2}
   - {fileID: 11400000, guid: 6f72b11f119da694dba09169343c302f, type: 2}
+  - {fileID: 11400000, guid: 7b789026c579bf94ebf16aa8d24c0981, type: 2}
+  - {fileID: 11400000, guid: 67e40960c626e78468cdb486ed60b3ce, type: 2}
+  - {fileID: 11400000, guid: cbee11181df17f944be54d96aa3fc587, type: 2}
   startBumper: {fileID: 11400000, guid: 759fea2d8dba1564aa61306a8a4fd1c7, type: 2}
   startWheels: {fileID: 11400000, guid: 41e940ab408349c40a8c0691540fab71, type: 2}
   startBackDoor: {fileID: 11400000, guid: fc28fd12f4d620d498b14ed19257d21e, type: 2}

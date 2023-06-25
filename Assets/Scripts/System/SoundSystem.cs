@@ -23,10 +23,23 @@ namespace SR.Core
 		private Coroutine carSoundCoroutine;
 		private int currentMusicIndex;
 		private Coroutine musicVolumeCoroutine;
+		private bool muted = false;
 
 		#endregion
 
 		#region Functions
+
+		public void Mute()
+		{
+			muted = true;
+			musicAudio.volume = 0;
+		}
+
+		public void Unmute()
+		{
+			muted = false;
+			musicAudio.volume = volumeMultiplier * musicCoef;
+		}
 
 		public void SetMaxCarSound(float sound)
 		{
@@ -41,11 +54,15 @@ namespace SR.Core
 		public void EnableSound()
 		{
 			isSoundEnabled = true;
+			musicAudio.enabled = true;
+			carAudio.enabled = true;
 		}
 
 		public void DisableSound()
 		{
 			isSoundEnabled = false;
+			musicAudio.enabled = false;
+			carAudio.enabled = false;
 		}
 
 		public void PlayButton1(bool dontDestroyOnLoad = false)
@@ -77,6 +94,8 @@ namespace SR.Core
 				musicAudio.volume -= 0.05f;
 				yield return null;
 			}
+			if (!isSoundEnabled || muted)
+				yield break;
 
 			musicAudio.clip = clip;
 			musicAudio.Play();
@@ -129,7 +148,7 @@ namespace SR.Core
 			float target = maxCarAudio * volumeMultiplier * 2;
 			if (increase)
 			{
-				while (true)
+				while (carAudio.volume < target)
 				{
 					carAudio.volume = Mathf.MoveTowards(carAudio.volume, target, carSoundChangeCoef);
 					yield return null;
@@ -183,7 +202,7 @@ namespace SR.Core
 
 		private void PlaySound(AudioClip clip, bool dontDestroyOnLoad = false)
 		{
-			if (!isSoundEnabled)
+			if (!isSoundEnabled || muted)
 				return;
 
 			AudioSource audio = (Instantiate(carAudio, transform.position, Quaternion.identity)).GetComponent<AudioSource>();
