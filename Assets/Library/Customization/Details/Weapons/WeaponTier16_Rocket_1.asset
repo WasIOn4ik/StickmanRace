@@ -25,5 +25,7 @@ MonoBehaviour:
     damage: 5
     fireRate: 50
     shootDistance: 3.5
-    velocity: 4
-  bulletPrefab: {fileID: -5173679488276475268, guid: fd43149bcfd730f4d8fb2776bcf59d97, type: 3}
+    velocity: 8
+  bulletPrefab: {fileID: 8914481815421465963, guid: 469aae3abd5c0344389734c2174f2374, type: 3}
+  bulletType: 4
+  bulletValue: 0

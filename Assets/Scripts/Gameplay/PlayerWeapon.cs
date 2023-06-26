@@ -2,6 +2,7 @@ using SR.Customization;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace SR.Core
 {
@@ -14,6 +15,7 @@ namespace SR.Core
 		[SerializeField] private float aimVelocity = 3f;
 		[SerializeField] private string buildingDestroyBulletLayerName = "BuildingDestroyBullet";
 		[SerializeField] private float aimChangeTargetDelay = 0.25f;
+		[Inject] GameInstance gameInstance;
 
 		private WeaponSO weaponBase;
 
@@ -30,31 +32,6 @@ namespace SR.Core
 		private void Update()
 		{
 			HandleAim();
-			/*
-						targetIsBuilding = true;
-						while (targets.Count > 0 && targets[0] == null)
-							targets.RemoveAt(0);
-
-						if (targets.Count > 0)
-						{
-							if (targets[0].transform.position.x > transform.position.x)
-							{
-								float currentZ = transform.eulerAngles.z;
-								currentZ = Mathf.MoveTowardsAngle(currentZ, SRUtils.GetRotationTo(transform.position, targets[0].GetAimPosition()), aimVelocity);
-								transform.rotation = Quaternion.Euler(0, 0, currentZ);
-								targetIsBuilding = false;
-							}
-							else
-							{
-								targets.RemoveAt(0);
-							}
-						}
-						else
-						{
-							float currentZ = transform.eulerAngles.z;
-							currentZ = Mathf.MoveTowardsAngle(currentZ, 0, aimVelocity);
-							transform.rotation = Quaternion.Euler(0, 0, currentZ);
-						}*/
 		}
 
 		#endregion
@@ -104,14 +81,15 @@ namespace SR.Core
 
 		private void Shoot()
 		{
+			float coef = 1.5f;
 			var bullet = Instantiate(weaponBase.bulletPrefab);
 			if (currentTarget == null)
 				bullet.gameObject.layer = LayerMask.NameToLayer(buildingDestroyBulletLayerName);
 			bullet.SetDamage(weaponBase.weaponStats.damage);
-			bullet.SetVelocity(playerVehicle.GetVelocity() * 1.25f + weaponBase.weaponStats.velocity);
+			bullet.SetVelocity(playerVehicle.GetVelocity() * coef + weaponBase.weaponStats.velocity);
 			bullet.transform.rotation = transform.rotation;
 			bullet.transform.position = bulletSpawnPoint.position;
-			bullet.InitBullet(1f, weaponBase.weaponStats.shootDistance);
+			bullet.InitBullet(weaponBase.bulletType, weaponBase.bulletValue, 1f, weaponBase.weaponStats.shootDistance, gameInstance);
 		}
 
 		#endregion
@@ -164,7 +142,21 @@ namespace SR.Core
 				{
 					currentTarget = null;
 				}
-				Shoot();
+				if (weaponBase.bulletType == BulletType.Rifle)
+				{
+					float delay = 0.1f;
+					int spawned = 0;
+					while (spawned < weaponBase.bulletValue)
+					{
+						spawned++;
+						yield return new WaitForSeconds(delay);
+						Shoot();
+					}
+				}
+				else
+				{
+					Shoot();
+				}
 			}
 		}
 

@@ -22,6 +22,7 @@ namespace SR.UI
 		[Header("Properties")]
 		[SerializeField] private HoldableButton ForwardButton;
 		[SerializeField] private HoldableButton BackwardButton;
+		[SerializeField] private HoldableButton RotateButton;
 		[SerializeField] private Transform startPosition;
 
 		[Inject] GameInputs gameInputs;
@@ -48,7 +49,6 @@ namespace SR.UI
 			distanceText.text = "";
 			timeText.text = "";
 			maxDistance = 0;
-			Enemy.killsInRound = 0;
 			killsText.text = "0 X";
 
 			gameObject.SetActive(false);
@@ -85,6 +85,10 @@ namespace SR.UI
 			else
 			{
 				gameInputs.SetMovement(0f);
+			}
+			if(RotateButton.isPressed)
+			{
+				gameInputs.SetRotation(true);
 			}
 		}
 

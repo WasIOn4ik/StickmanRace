@@ -2,6 +2,7 @@ using SR.Core;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
@@ -27,6 +28,8 @@ namespace SR.UI
 		public static bool bPlus3HPUsed = false;
 
 		private int gems;
+		private float time;
+		private float distance;
 
 		#endregion
 
@@ -44,6 +47,15 @@ namespace SR.UI
 				{
 					gameInstance.AddBoughtGems(gems);
 					YandexGame.CloseVideoEvent = null;
+					if (time > YandexGame.savesData.records.maxTime && YandexGame.auth && YandexGame.playerName != "anonymous")
+					{
+						YandexGame.NewLeaderboardScores("KingExpresses", (int)YandexGame.savesData.records.maxTime);
+					}
+
+					gameInstance.TryUpdateRecords(distance, time, Enemy.killsInRound);
+
+					if (YandexGame.auth && YandexGame.playerName != "anonymous")
+						YandexGame.NewLeaderboardScores("RoadKing", (int)YandexGame.savesData.records.totalDistance);
 					gameplayBase.RestartGame();
 				};
 				YG._RewardedShow(0);
@@ -52,7 +64,6 @@ namespace SR.UI
 
 			buttonPlus3HP.onClick.AddListener(() =>
 			{
-				Enemy.killsInRound = 0;
 #if UNITY_WEBGL
 				bPlus3HPUsed = true;
 				YandexGame.OpenVideoEvent = null;
@@ -68,6 +79,16 @@ namespace SR.UI
 
 			buttonRestart.onClick.AddListener(() =>
 			{
+				if (time > YandexGame.savesData.records.maxTime && YandexGame.auth && YandexGame.playerName != "anonymous")
+				{
+					YandexGame.NewLeaderboardScores("KingExpresses", (int)YandexGame.savesData.records.maxTime);
+				}
+
+				gameInstance.TryUpdateRecords(distance, time, Enemy.killsInRound);
+
+				if (YandexGame.auth && YandexGame.playerName != "anonymous")
+					YandexGame.NewLeaderboardScores("RoadKing", (int)YandexGame.savesData.records.totalDistance);
+
 				gameplayBase.RestartGame();
 			});
 		}
@@ -78,16 +99,10 @@ namespace SR.UI
 
 		public void UpdateDisplay(float distance, float time)
 		{
-			buttonPlus3HP.interactable = !bPlus3HPUsed;
+			this.time = time;
+			this.distance = distance;
 
-			if(time > YandexGame.savesData.records.maxTime)
-			{
-				YandexGame.NewLeaderboardScores("KingExpresses", (int)YandexGame.savesData.records.maxTime);
-			}
-
-			gameInstance.TryUpdateRecords(distance, time, Enemy.killsInRound);
-
-			YandexGame.NewLeaderboardScores("RoadKing", (int)YandexGame.savesData.records.totalDistance);/*
+			buttonPlus3HP.interactable = !bPlus3HPUsed;/*
 
 			if (time >= YandexGame.savesData.records.maxTime)
 			{

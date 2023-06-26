@@ -17,5 +17,9 @@ namespace SR.Core
 		[SerializeField] public List<AudioClip> backgroundMusic;
 		[SerializeField] public AudioClip menuMusic;
 		[SerializeField] public AudioClip garageMusic;
+		[SerializeField] public AudioClip rocketLaucherSound;
+		[SerializeField] public AudioClip weaponSingleSound;
+		[SerializeField] public AudioClip weaponMultipleSound;
+		[SerializeField] public AudioClip enemyShootSound;
 	}
 }

@@ -111,7 +111,10 @@ namespace SR.Core
 			float input = gameInputs.GetMovement();
 			frontTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
 			backTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
-			//carRB.AddTorque(input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
+			if (gameInputs.GetRotation())
+			{
+				carRB.AddTorque(-1f * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
+			}
 			carRB.velocity = Vector2.ClampMagnitude(carRB.velocity, fullCarDescriptor.velocity);
 			soundSystem.SetMaxCarSound(GetVelocity() / 10f);
 		}
@@ -128,9 +131,13 @@ namespace SR.Core
 
 		public void Respawn(int hp)
 		{
+			transform.rotation = Quaternion.identity;
+			transform.position = transform.position + Vector3.up * 2f;
 			fullCarDescriptor.health = hp;
 			onHealthChanged?.Invoke(this, new HealthEventArgs() { hp = hp });
 			bAlive = true;
+			weaponController.StartShooting();
+			weaponController.StartAim();
 			UnFreeze();
 		}
 

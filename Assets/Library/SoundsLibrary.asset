@@ -25,3 +25,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 62c63dea1bfec3a43bfc2ea1f4106023, type: 3}
   menuMusic: {fileID: 8300000, guid: 3a9816ae0c00e4e4bb9ef8a395e60460, type: 3}
   garageMusic: {fileID: 8300000, guid: 74328f98ce887344d818c538b7bf4a61, type: 3}
+  rocketLaucherSound: {fileID: 8300000, guid: d29d36e5f4f732f44b8ce089df284b23, type: 3}
+  weaponSingleSound: {fileID: 8300000, guid: 8b4f9235708c7fd448500ba86e0ea5c0, type: 3}
+  weaponMultipleSound: {fileID: 8300000, guid: 62194f054a4eac94f8fec8282fd1b767, type: 3}
+  enemyShootSound: {fileID: 8300000, guid: 10e4b091da448dd4685ce61acc5f44f4, type: 3}

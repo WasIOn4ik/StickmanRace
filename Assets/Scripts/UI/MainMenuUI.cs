@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 using Zenject;
 
 namespace SR.UI
@@ -27,8 +28,16 @@ namespace SR.UI
 			startButton.onClick.AddListener(() =>
 			{
 				soundsSystem.PlayButton2(true);
+#if UNITY_WEBGL
+				YandexGame.Instance.ResetTimerFullAd();
+				YandexGame.Instance.CloseFullscreenAd.AddListener(HandleStartGameYandex);
+				YandexGame.Instance.ErrorFullscreenAd.AddListener(HandleFullAdError);
+				YandexGame.FullscreenShow();
+
+#elif UNITY_ANDROID
 				startButton.interactable = false;
 				StartCoroutine(DelayedStart());
+#endif
 			});
 
 			settingsButton.onClick.AddListener(() =>
@@ -37,6 +46,18 @@ namespace SR.UI
 				OpenMenu(MenuType.SettingsMenu, this);
 			});
 			soundsSystem.PlayMenuMusic();
+		}
+
+		private void HandleFullAdError()
+		{
+			YandexGame.Instance.CloseFullscreenAd.RemoveListener(HandleStartGameYandex);
+			YandexGame.Instance.ErrorFullscreenAd.RemoveListener(HandleFullAdError);
+			SceneLoader.LoadScene(SRScene.GameScene);
+		}
+		private void HandleStartGameYandex()
+		{
+			YandexGame.Instance.CloseFullscreenAd.RemoveListener(HandleStartGameYandex);
+			SceneLoader.LoadScene(SRScene.GameScene);
 		}
 
 		private IEnumerator DelayedStart()

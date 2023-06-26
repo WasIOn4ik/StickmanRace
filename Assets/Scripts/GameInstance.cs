@@ -100,7 +100,7 @@ namespace SR.Core
 #elif UNITY_WEBGL
 			Application.focusChanged += Application_focusChanged;
 #endif
-
+			RangeEnemy.onAnyEnemyShoot += RangeEnemy_onAnyEnemyShoot;
 			InitializeShop();
 			MenuBase.menusLibrary = menusLibrary;
 			Obstacle.onObstacleDestroyed += Obstacle_onObstacleDestroyed;
@@ -112,7 +112,7 @@ namespace SR.Core
 			YandexGame.GetDataEvent = OnLoad;
 		}
 
-		private void OnLoad()
+		public void OnLoad()
 		{
 			YandexGame.StickyAdActivity(true);
 			if (YandexGame.savesData.details == null)
@@ -467,6 +467,11 @@ namespace SR.Core
 		#endregion
 
 		#region Callbacks
+
+		private void RangeEnemy_onAnyEnemyShoot(object sender, EventArgs e)
+		{
+			soundSystem.PlayEnemyShoot();
+		}
 
 		private void Obstacle_onObstacleDestroyed(object sender, EventArgs e)
 		{

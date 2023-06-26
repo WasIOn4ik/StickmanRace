@@ -32,6 +32,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5ed46a6821b8ab74e81cb7c19bc0faca, type: 2}
   wheels:
   - {fileID: 11400000, guid: 41e940ab408349c40a8c0691540fab71, type: 2}
+  - {fileID: 11400000, guid: f1c9ff152251ae041b4b4c9ebceb303a, type: 2}
   - {fileID: 11400000, guid: 4e2d9644d121ef74eae989bc2b68cd94, type: 2}
   - {fileID: 11400000, guid: c70e11641571007438d2f6ac473dc272, type: 2}
   - {fileID: 11400000, guid: a8c16e0c382283a42836f08daa5eaa21, type: 2}

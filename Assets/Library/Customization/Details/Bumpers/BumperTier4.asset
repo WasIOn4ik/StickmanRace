@@ -16,9 +16,9 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 6a7b7baebe513564e958dc7ae2c7fbe9, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   stats:
-    health: 1
+    health: 0
     velocity: 0
     acceleration: 0
     meleeDamage: 3
   type: 1
-  animatorOverride: {fileID: 0}
+  animatorOverride: {fileID: 22100000, guid: 8d36e37dc04698e4ba4dd691f82e13a7, type: 2}

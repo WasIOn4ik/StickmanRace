@@ -14,6 +14,7 @@ namespace SR.Core
 		public static event EventHandler onMovementEnded;
 
 		private float movementInput;
+		private bool rotationInput;
 
 		private float previousMovementInput;
 
@@ -26,6 +27,16 @@ namespace SR.Core
 			return movementInput;
 		}
 
+		public bool GetRotation()
+		{
+			return rotationInput;
+		}
+
+		public void SetRotation(bool val)
+		{
+			rotationInput = val;
+		}
+
 		public void SetMovement(float movement)
 		{
 			previousMovementInput = movementInput;
@@ -34,7 +45,7 @@ namespace SR.Core
 			if (previousMovementInput < 0.05f && movementInput > 0.05f)
 				onMovementStarted?.Invoke(this, EventArgs.Empty);
 
-			if(previousMovementInput > 0.05f && movementInput < 0.05f)
+			if (previousMovementInput > 0.05f && movementInput < 0.05f)
 				onMovementEnded?.Invoke(this, EventArgs.Empty);
 		}
 

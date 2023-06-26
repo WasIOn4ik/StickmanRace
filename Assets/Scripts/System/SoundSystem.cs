@@ -65,6 +65,38 @@ namespace SR.Core
 			carAudio.enabled = false;
 		}
 
+		public void PlayEnemyShoot()
+		{
+			PlaySound(library.enemyShootSound);
+		}
+
+		public void PlayWeapon(int bullets)
+		{
+			if(bullets > 1)
+			{
+				if (!isSoundEnabled || muted)
+					return;
+
+				AudioSource audio = (Instantiate(carAudio, transform.position, Quaternion.identity)).GetComponent<AudioSource>();
+
+				audio.clip = library.weaponMultipleSound;
+				audio.volume = volumeMultiplier * 0.6f;
+				audio.priority = 254;
+
+				audio.Play();
+				Destroy(audio.gameObject, 0.1f * bullets);
+			}
+			else
+			{
+				PlaySound(library.weaponSingleSound);
+			}
+		}
+
+		public void PlayRocketLauncher()
+		{
+			PlaySound(library.rocketLaucherSound);
+		}
+
 		public void PlayButton1(bool dontDestroyOnLoad = false)
 		{
 			PlaySound(library.buttonSound1, dontDestroyOnLoad);
@@ -111,7 +143,8 @@ namespace SR.Core
 		{
 			while (true)
 			{
-				yield return new WaitForSeconds(musicAudio.clip.length);
+				if (musicAudio.clip != null)
+					yield return new WaitForSeconds(musicAudio.clip.length);
 				currentMusicIndex++;
 				if (currentMusicIndex >= library.backgroundMusic.Count)
 					currentMusicIndex = 0;

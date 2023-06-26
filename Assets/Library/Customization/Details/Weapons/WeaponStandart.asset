@@ -26,4 +26,6 @@ MonoBehaviour:
     fireRate: 0
     shootDistance: 0
     velocity: 0
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 8914481815421465963, guid: 469aae3abd5c0344389734c2174f2374, type: 3}
+  bulletType: 0
+  bulletValue: 0

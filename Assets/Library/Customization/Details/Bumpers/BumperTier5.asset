@@ -16,7 +16,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 1e97664bfaac8c24e83cd6304bf4e2b7, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   stats:
-    health: 2
+    health: 0
     velocity: 0
     acceleration: 0
     meleeDamage: 3

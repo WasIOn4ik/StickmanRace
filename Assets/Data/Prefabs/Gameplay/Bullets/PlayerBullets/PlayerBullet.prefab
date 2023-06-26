@@ -140,7 +140,8 @@ MonoBehaviour:
   destroyLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  maxSpeed: 50
+  maxSpeed: 60
+  objectToSpawnOnDestroy: {fileID: 9066900841580650356, guid: 46520a2f8332b6547ae7e5043cd91438, type: 3}
 --- !u!61 &6814018243268714863
 BoxCollider2D:
   m_ObjectHideFlags: 0

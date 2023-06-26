@@ -36,6 +36,7 @@ public class GarageUI : MonoBehaviour
 
 	private void Awake()
 	{
+		Enemy.killsInRound = 0;
 #if UNITY_WEBGL
 		YandexGame.StickyAdActivity(false);
 #endif
