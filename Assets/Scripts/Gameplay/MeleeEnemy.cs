@@ -21,7 +21,7 @@ namespace SR.Core
 				var result = Physics2D.BoxCast(transform.position, attackDistance, 0, Vector2.left, 0.1f, destroyLayerMask);
 				if (result.collider != null)
 				{
-					var player = result.collider.gameObject.GetComponentInParent<PlayerVehicle>();
+					var player = result.collider.gameObject.GetComponent<PlayerVehicle>();
 					player.ApplyDamage(damage);
 				}
 			}

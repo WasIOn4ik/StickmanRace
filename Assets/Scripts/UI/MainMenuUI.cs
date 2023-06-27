@@ -29,10 +29,18 @@ namespace SR.UI
 			{
 				soundsSystem.PlayButton2(true);
 #if UNITY_WEBGL
-				YandexGame.Instance.ResetTimerFullAd();
-				YandexGame.Instance.CloseFullscreenAd.AddListener(HandleStartGameYandex);
-				YandexGame.Instance.ErrorFullscreenAd.AddListener(HandleFullAdError);
-				YandexGame.FullscreenShow();
+				if(YandexGame.savesData.noAdsBought)
+				{
+					StartCoroutine(DelayedStart());
+				}
+				else
+				{
+					YandexGame.Instance.ResetTimerFullAd();
+					YandexGame.Instance.CloseFullscreenAd.AddListener(HandleStartGameYandex);
+					YandexGame.Instance.ErrorFullscreenAd.AddListener(HandleFullAdError);
+					soundsSystem.Mute();
+					YandexGame.FullscreenShow();
+				}
 
 #elif UNITY_ANDROID
 				startButton.interactable = false;
@@ -56,6 +64,7 @@ namespace SR.UI
 		}
 		private void HandleStartGameYandex()
 		{
+			soundsSystem.Unmute();
 			YandexGame.Instance.CloseFullscreenAd.RemoveListener(HandleStartGameYandex);
 			SceneLoader.LoadScene(SRScene.GameScene);
 		}

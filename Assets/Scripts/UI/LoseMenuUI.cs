@@ -47,16 +47,7 @@ namespace SR.UI
 				{
 					gameInstance.AddBoughtGems(gems);
 					YandexGame.CloseVideoEvent = null;
-					if (time > YandexGame.savesData.records.maxTime && YandexGame.auth && YandexGame.playerName != "anonymous")
-					{
-						YandexGame.NewLeaderboardScores("KingExpresses", (int)YandexGame.savesData.records.maxTime);
-					}
-
-					gameInstance.TryUpdateRecords(distance, time, Enemy.killsInRound);
-
-					if (YandexGame.auth && YandexGame.playerName != "anonymous")
-						YandexGame.NewLeaderboardScores("RoadKing", (int)YandexGame.savesData.records.totalDistance);
-					gameplayBase.RestartGame();
+					HandleEndgame();
 				};
 				YG._RewardedShow(0);
 #endif
@@ -79,23 +70,41 @@ namespace SR.UI
 
 			buttonRestart.onClick.AddListener(() =>
 			{
-				if (time > YandexGame.savesData.records.maxTime && YandexGame.auth && YandexGame.playerName != "anonymous")
-				{
-					YandexGame.NewLeaderboardScores("KingExpresses", (int)YandexGame.savesData.records.maxTime);
-				}
-
-				gameInstance.TryUpdateRecords(distance, time, Enemy.killsInRound);
-
-				if (YandexGame.auth && YandexGame.playerName != "anonymous")
-					YandexGame.NewLeaderboardScores("RoadKing", (int)YandexGame.savesData.records.totalDistance);
-
-				gameplayBase.RestartGame();
+				HandleEndgame();
 			});
 		}
 
 		#endregion
 
 		#region Functions
+
+		private void HandleEndgame()
+		{
+			Debug.Log($"player {YandexGame.playerName} finished race");
+
+			if (time > YandexGame.savesData.records.maxTime && YandexGame.auth && YandexGame.playerName != "anonymous")
+			{
+				Debug.Log("Updating KingExpresses");
+				YandexGame.NewLeaderboardScores("KingExpresses", (int)YandexGame.savesData.records.maxTime);
+			}
+			else
+			{
+				Debug.Log("Rejected update KingExpresses without login");
+			}
+
+			gameInstance.TryUpdateRecords(distance, time, Enemy.killsInRound);
+
+			if (YandexGame.auth && YandexGame.playerName != "anonymous")
+			{
+				Debug.Log("Updating RoadKing");
+				YandexGame.NewLeaderboardScores("RoadKing", (int)YandexGame.savesData.records.totalDistance);
+			}
+			else
+			{
+				Debug.Log("Rejected update RoadKing without login");
+			}
+			gameplayBase.RestartGame();
+		}
 
 		public void UpdateDisplay(float distance, float time)
 		{

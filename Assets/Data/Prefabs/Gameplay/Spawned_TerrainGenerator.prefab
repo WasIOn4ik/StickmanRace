@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1271138085927956370}
   - component: {fileID: 1271138085927956373}
-  - component: {fileID: 1271138085927956372}
   - component: {fileID: 1271138085927956375}
+  - component: {fileID: 1271138085927956372}
   - component: {fileID: 1271138085927956371}
   m_Layer: 7
   m_Name: Spawned_TerrainGenerator
@@ -43,8 +43,8 @@ SpriteShapeRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271138085927956374}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -93,6 +93,39 @@ SpriteShapeRenderer:
   m_LocalAABB:
     m_Center: {x: 76.50001, y: -4.438423, z: 0}
     m_Extent: {x: 76.50001, y: 5.5615788, z: 0}
+--- !u!114 &1271138085927956375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271138085927956374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7518010b96a713e4ca9adede08ccaf7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteShapeController: {fileID: 1271138085927956372}
+  spriteRenderer: {fileID: 1271138085927956373}
+  platformOnStartRightLength: 0
+  platformExitSmoothness: 0
+  platformLeftSideOffset: 0
+  outpostDelayPoints: 10
+  outpostLength: 4
+  outpostStartPoint: 6
+  creationType: 0
+  terainControlPointsCount: 50
+  terrainLengthMultiplier: 6
+  terrainHeightMultiplier: 1.4
+  terrainSmoothness: 0.5
+  terrainNoiseStep: 0.5
+  terrainBottomHeight: 10
+  pixelObstacles:
+  - {fileID: 1196501516297951612, guid: 44c2971ea83e70f4190bf82e8a727c88, type: 3}
+  - {fileID: 1196501516297951612, guid: 215debe696b27894db2dc76fcc9e6f05, type: 3}
+  casualObstacles:
+  - {fileID: 2384063184458935421, guid: 19b3d107f910ee940a6f6d062075c69d, type: 3}
+  - {fileID: 2384063184458935421, guid: 5460ef955388aa94d9264191c6347d3b, type: 3}
 --- !u!114 &1271138085927956372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,7 +684,7 @@ MonoBehaviour:
   m_SpriteShape: {fileID: 11400000, guid: 9aeb6959903735047bddd2cb81e7e91f, type: 2}
   m_FillPixelPerUnit: 256
   m_StretchTiling: 1
-  m_SplineDetail: 8
+  m_SplineDetail: 16
   m_AdaptiveUV: 1
   m_StretchUV: 0
   m_WorldSpaceUV: 0
@@ -664,38 +697,6 @@ MonoBehaviour:
   m_EnableTangents: 0
   m_GeometryCached: 0
   m_UTess2D: 0
---- !u!114 &1271138085927956375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1271138085927956374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7518010b96a713e4ca9adede08ccaf7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteShapeController: {fileID: 1271138085927956372}
-  spriteRenderer: {fileID: 1271138085927956373}
-  platformOnStartRightLength: 0
-  platformExitSmoothness: 0
-  platformLeftSideOffset: 0
-  outpostDelayPoints: 10
-  outpostLength: 4
-  outpostStartPoint: 6
-  terainControlPointsCount: 60
-  terrainLengthMultiplier: 5
-  terrainHeightMultiplier: 1.4
-  terrainSmoothness: 0.5
-  terrainNoiseStep: 0.5
-  terrainBottomHeight: 10
-  pixelObstacles:
-  - {fileID: 1196501516297951612, guid: 44c2971ea83e70f4190bf82e8a727c88, type: 3}
-  - {fileID: 1196501516297951612, guid: 215debe696b27894db2dc76fcc9e6f05, type: 3}
-  casualObstacles:
-  - {fileID: 2384063184458935421, guid: 19b3d107f910ee940a6f6d062075c69d, type: 3}
-  - {fileID: 2384063184458935421, guid: 5460ef955388aa94d9264191c6347d3b, type: 3}
 --- !u!68 &1271138085927956371
 EdgeCollider2D:
   m_ObjectHideFlags: 0

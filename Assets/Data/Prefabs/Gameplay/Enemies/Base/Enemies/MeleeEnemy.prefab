@@ -98,6 +98,7 @@ MonoBehaviour:
   stickmanLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  dissapearTimer: 0.75
   minFirstAttackDelay: 0.025
   minAttackDelay: 0.4
   attackDistance: {x: 5, y: 1}

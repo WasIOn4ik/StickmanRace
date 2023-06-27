@@ -51,7 +51,6 @@ namespace SR.Core
 		public void ApplyDamage(int value)
 		{
 			currentHP -= value;
-			Debug.Log($"BUilding reached {value} when hp is {currentHP}");
 			if (currentHP > 0)
 			{
 				soundSystem.PlayBuildingDamage();
@@ -92,7 +91,10 @@ namespace SR.Core
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
-			var player = collision.gameObject.GetComponentInParent<PlayerVehicle>();
+			if (bSpawning)
+				return;
+
+			var player = collision.gameObject.GetComponent<PlayerVehicle>();
 			if (player)
 			{
 				bSpawning = true;

@@ -144,13 +144,25 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
+      propertyPath: spawners.Array.data[0].enemiesToSpawn
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f20f98c14b14024f9fd4aad62095b0c, type: 2}
+    - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
       propertyPath: spawners.Array.data[0].spawnTransform
       value: 
       objectReference: {fileID: 654739461293525203}
     - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
+      propertyPath: spawners.Array.data[1].enemiesToSpawn
+      value: 
+      objectReference: {fileID: 11400000, guid: 008f33f588a87114680d23a9a5c14ede, type: 2}
+    - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
       propertyPath: spawners.Array.data[1].spawnTransform
       value: 
       objectReference: {fileID: 1668121941616840471}
+    - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
+      propertyPath: spawners.Array.data[2].enemiesToSpawn
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f20f98c14b14024f9fd4aad62095b0c, type: 2}
     - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
       propertyPath: spawners.Array.data[2].spawnTransform
       value: 

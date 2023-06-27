@@ -151,10 +151,13 @@ MonoBehaviour:
   stickmanLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  dissapearTimer: 0.75
   minFirstAttackDelay: 0.03
   minAttackDelay: 0.4
   bulletPrefab: {fileID: 8914481815421465963, guid: 7492530c0b3ded141b79b0f7350addd1, type: 3}
   bulletSpawnpoint: {fileID: 6362219901883523860}
+  bulletType: 0
+  bulletValue: 4
 --- !u!4 &2536870231740593066 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 392786309088838750, guid: 1718f8ce96585c1408e49b471ed5340c, type: 3}

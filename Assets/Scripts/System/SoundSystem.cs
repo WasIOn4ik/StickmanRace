@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace SR.Core
 {
@@ -17,6 +18,15 @@ namespace SR.Core
 		[SerializeField] private float musicCoef = 0.5f;
 		[SerializeField] private float volumeChange = 0.05f;
 		private bool isSoundEnabled;
+
+		[Header("Volumes")]
+		[SerializeField] private float enemyShootVolume = 1f;
+		[SerializeField] private float weaponShootVolume = 1f;
+		[SerializeField] private float buttonsVolume = 0.8f;
+		[SerializeField] private float carSoundMultiplier = 1.5f;
+		[SerializeField] private float deathVolume = 1f;
+		[SerializeField] private float obstacleDamage = 0.5f;
+		[SerializeField] private float buildingDamage = 0.5f;
 
 		private float maxCarAudio;
 
@@ -67,12 +77,12 @@ namespace SR.Core
 
 		public void PlayEnemyShoot()
 		{
-			PlaySound(library.enemyShootSound);
+			PlaySound(library.enemyShootSound, 50, enemyShootVolume);
 		}
 
 		public void PlayWeapon(int bullets)
 		{
-			if(bullets > 1)
+			if (bullets > 1)
 			{
 				if (!isSoundEnabled || muted)
 					return;
@@ -80,31 +90,31 @@ namespace SR.Core
 				AudioSource audio = (Instantiate(carAudio, transform.position, Quaternion.identity)).GetComponent<AudioSource>();
 
 				audio.clip = library.weaponMultipleSound;
-				audio.volume = volumeMultiplier * 0.6f;
-				audio.priority = 254;
+				audio.volume = weaponShootVolume;
+				audio.priority = 30;
 
 				audio.Play();
 				Destroy(audio.gameObject, 0.1f * bullets);
 			}
 			else
 			{
-				PlaySound(library.weaponSingleSound);
+				PlaySound(library.weaponSingleSound, 30, weaponShootVolume);
 			}
 		}
 
 		public void PlayRocketLauncher()
 		{
-			PlaySound(library.rocketLaucherSound);
+			PlaySound(library.rocketLaucherSound, 30, weaponShootVolume);
 		}
 
 		public void PlayButton1(bool dontDestroyOnLoad = false)
 		{
-			PlaySound(library.buttonSound1, dontDestroyOnLoad);
+			PlaySound(library.buttonSound1, 1, buttonsVolume, dontDestroyOnLoad);
 		}
 
 		public void PlayButton2(bool dontDestroyOnLoad = false)
 		{
-			PlaySound(library.buttonSound2, dontDestroyOnLoad);
+			PlaySound(library.buttonSound2, 1, buttonsVolume, dontDestroyOnLoad);
 		}
 
 		public void StartBackgroundMusic()
@@ -121,19 +131,34 @@ namespace SR.Core
 
 		private IEnumerator HandleMusic(AudioClip clip)
 		{
+			if (!isSoundEnabled || muted)
+			{
+				musicAudio.volume = 0;
+				yield break;
+			}
+
 			while (musicAudio.volume > 0)
 			{
 				musicAudio.volume -= 0.05f;
 				yield return null;
 			}
+
 			if (!isSoundEnabled || muted)
+			{
+				musicAudio.volume = 0;
 				yield break;
+			}
 
 			musicAudio.clip = clip;
 			musicAudio.Play();
 
 			while (musicAudio.volume < volumeMultiplier * musicCoef)
 			{
+				if (!isSoundEnabled || muted)
+				{
+					musicAudio.volume = 0;
+					yield break;
+				}
 				musicAudio.volume = Mathf.MoveTowards(musicAudio.volume, volumeMultiplier * musicCoef, volumeChange);
 				yield return null;
 			}
@@ -178,7 +203,7 @@ namespace SR.Core
 
 		private IEnumerator HandleCarSound(bool increase)
 		{
-			float target = maxCarAudio * volumeMultiplier * 2;
+			float target = maxCarAudio * volumeMultiplier * carSoundMultiplier;
 			if (increase)
 			{
 				while (carAudio.volume < target)
@@ -199,22 +224,22 @@ namespace SR.Core
 
 		public void PlayDeath()
 		{
-			PlaySound(library.StickmanDeath);
+			PlaySound(library.StickmanDeath, 1, deathVolume);
 		}
 
 		public void PlayBuildingDamage()
 		{
-			PlaySound(library.BuildingDamage);
+			PlaySound(library.BuildingDamage, 254, buildingDamage);
 		}
 
 		public void PlayObstacleDestruction()
 		{
-			PlaySound(library.ObstacleDestruction);
+			PlaySound(library.ObstacleDestruction, 200, obstacleDamage);
 		}
 
 		public void PlayHighVelocityDamage()
 		{
-			PlaySound(library.HighVelocityDamage);
+			PlaySound(library.HighVelocityDamage, 253, buildingDamage);
 		}
 
 		public void PlayMenuMusic()
@@ -233,7 +258,7 @@ namespace SR.Core
 			musicVolumeCoroutine = StartCoroutine(HandleMusic(library.garageMusic));
 		}
 
-		private void PlaySound(AudioClip clip, bool dontDestroyOnLoad = false)
+		private void PlaySound(AudioClip clip, int priority, float volumeCoef = 1f, bool dontDestroyOnLoad = false)
 		{
 			if (!isSoundEnabled || muted)
 				return;
@@ -241,8 +266,8 @@ namespace SR.Core
 			AudioSource audio = (Instantiate(carAudio, transform.position, Quaternion.identity)).GetComponent<AudioSource>();
 
 			audio.clip = clip;
-			audio.volume = volumeMultiplier * 0.6f;
-			audio.priority = 254;
+			audio.volume = volumeMultiplier * 0.6f * volumeCoef;
+			audio.priority = priority;
 
 			audio.Play();
 			if (dontDestroyOnLoad)

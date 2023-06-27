@@ -22,6 +22,7 @@ namespace SR.Core
 		[SerializeField] protected int damage = 1;
 		[SerializeField] private float minimalShootDistance = 1f;
 		[SerializeField] protected LayerMask stickmanLayerMask;
+		[SerializeField] private float dissapearTimer = 1.25f;
 
 		[Header("MaxDIfficultySettings")]
 		[SerializeField] private float minFirstAttackDelay = 0.05f;
@@ -44,9 +45,10 @@ namespace SR.Core
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
-			if (SRUtils.IsInLayerMask(collision.gameObject.layer, stickmanLayerMask))
+			if (target == null)
 			{
-				target = collision.gameObject.GetComponentInParent<PlayerVehicle>();
+				target = collision.gameObject.GetComponent<PlayerVehicle>();
+
 				StartCoroutine(HandleAttack());
 			}
 		}
@@ -106,7 +108,7 @@ namespace SR.Core
 				rigidBody2D.freezeRotation = false;
 				onEnemyDeath?.Invoke(this, EventArgs.Empty);
 				bDestroyed = true;
-				Invoke("FinishDestroy", 2f);
+				Invoke("FinishDestroy", dissapearTimer);
 			}
 			particles.Play();
 		}

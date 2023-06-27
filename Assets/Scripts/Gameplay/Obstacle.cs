@@ -27,18 +27,15 @@ namespace SR.Core
 
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
-			if (SRUtils.IsInLayerMask(collision.collider.gameObject.layer, destroyLayerMask))
+			var player = collision.gameObject.GetComponent<PlayerVehicle>();
+			if (player && player.GetDamage() > scaledDestroyVelocity)
 			{
-				var player = collision.gameObject.GetComponent<PlayerVehicle>();
-				if (player && player.GetDamage() > scaledDestroyVelocity)
+				if (player.GetVelocity() > highSpeedDestruction)
 				{
-					if (player.GetVelocity() > highSpeedDestruction)
-					{
-						player.BackVelocity();
-						HandleHighSpeedDestruction();
-					}
-					OnPlayerCollisionConfirmed();
+					player.BackVelocity();
+					HandleHighSpeedDestruction();
 				}
+				OnPlayerCollisionConfirmed();
 			}
 		}
 

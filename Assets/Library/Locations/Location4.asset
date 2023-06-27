@@ -16,7 +16,7 @@ MonoBehaviour:
   bUseDefault: 1
   verticalOffset: 0.5
   availableOutposts: {fileID: 11400000, guid: fb61c908113bb5d41b6cc35af8937e29, type: 2}
-  availableEnemies: {fileID: 11400000, guid: ade45bb77358f594cafb97796e19b2f0, type: 2}
+  availableEnemies: {fileID: 11400000, guid: 4e0a165f501affd4aa63215b1fd0ea2f, type: 2}
   backgrounds:
   - {fileID: 21300000, guid: ea671622c4afcd14392248098681049c, type: 3}
   - {fileID: 21300000, guid: 8fe708a43572d014489996db42005ad9, type: 3}

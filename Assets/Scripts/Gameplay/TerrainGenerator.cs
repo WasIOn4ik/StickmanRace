@@ -10,6 +10,13 @@ using Zenject;
 
 namespace SR.Core
 {
+	public enum TerrainCreationType
+	{
+		All,
+		OnlyTerrain,
+		OnlyTerrainAndOutposts,
+		OnlyTerrainAndSeparated
+	}
 	public class TerrainGenerator : MonoBehaviour
 	{
 		#region Variables
@@ -27,6 +34,7 @@ namespace SR.Core
 		[SerializeField] private int outpostLength = 1;
 		[SerializeField] private int outpostStartPoint = 10;
 		[Header("Terain")]
+		[SerializeField] private TerrainCreationType creationType;
 		[SerializeField] private int terainControlPointsCount = 50;
 		[SerializeField] private float terrainLengthMultiplier = 2f;
 		[SerializeField] private float terrainHeightMultiplier = 2f;
@@ -64,6 +72,16 @@ namespace SR.Core
 		#endregion
 
 		#region Functions
+
+		public void Deactivate()
+		{
+			gameObject.SetActive(false);
+		}
+
+		public void Activate()
+		{
+			gameObject.SetActive(true);
+		}
 
 		public void AddToEnemies(Enemy enemy)
 		{
@@ -138,13 +156,19 @@ namespace SR.Core
 			UpdateVisual(location);
 			yield return null;
 
-			yield return SpawnAllOutposts(difficulty, location);
-			yield return null;
+			if (creationType == TerrainCreationType.All || creationType == TerrainCreationType.OnlyTerrainAndOutposts)
+			{
+				yield return SpawnAllOutposts(difficulty, location);
+				yield return null;
+			}
 
-			yield return SpawnEnemies();
-			yield return null;
+			if (creationType == TerrainCreationType.All || creationType == TerrainCreationType.OnlyTerrainAndSeparated)
+			{
+				yield return SpawnEnemies();
+				yield return null;
 
-			yield return SpawnObstacles();
+				yield return SpawnObstacles();
+			}
 		}
 
 		private void GenerateTerrain()

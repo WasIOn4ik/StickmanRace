@@ -50,9 +50,16 @@ MonoBehaviour:
   musicAudio: {fileID: -4656258789026184519}
   carAudio: {fileID: 6678781496609420903}
   carSoundChangeCoef: 0.05
-  volumeMultiplier: 0.5
-  musicCoef: 0.5
+  volumeMultiplier: 0.25
+  musicCoef: 0.4
   volumeChange: 0.05
+  enemyShootVolume: 1
+  weaponShootVolume: 0.15
+  buttonsVolume: 0.8
+  carSoundMultiplier: 1
+  deathVolume: 1
+  obstacleDamage: 0.7
+  buildingDamage: 0.35
 --- !u!82 &-4656258789026184519
 AudioSource:
   m_ObjectHideFlags: 0

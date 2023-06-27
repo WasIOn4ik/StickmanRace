@@ -83,6 +83,9 @@ namespace SR.UI
 			{
 				switch (id)
 				{
+					case "gems_100":
+						gameInstance.AddBoughtGems(100);
+						break;
 					case "gems_1000":
 						gameInstance.AddBoughtGems(1000);
 						break;
@@ -94,6 +97,10 @@ namespace SR.UI
 						break;
 					case "gems_100000":
 						gameInstance.AddBoughtGems(100000);
+						break;
+					case "no_ads":
+						YandexGame.savesData.noAdsBought = true;
+						YandexGame.SaveProgress();
 						break;
 				}
 				BackToPrevious();
@@ -238,14 +245,14 @@ namespace SR.UI
 
 		private void StoreItemProvider_onLoadComplete()
 		{
-			for(int i = 0; i < YandexGame.PaymentsData.title.Length;i++)
+			for (int i = 0; i < YandexGame.PaymentsData.title.Length; i++)
 			{
 				var item = Instantiate(itemPrefab);
 				ProjectContext.Instance.Container.Inject(item);
 				spawnedItems.Add(item);
 				item.transform.SetParent(itemsHolder, false);
 				item.onPurchase += Item_onPurchase;
-				item.Initialize(YandexGame.PaymentsData.id[i],YandexGame.PaymentsData.title[i], YandexGame.PaymentsData.priceValue[i]);
+				item.Initialize(YandexGame.PaymentsData.id[i], YandexGame.PaymentsData.title[i], YandexGame.PaymentsData.priceValue[i]);
 			}
 		}
 		private void Item_onPurchase(string item, Action onComplete)

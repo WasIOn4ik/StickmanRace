@@ -52,7 +52,6 @@ namespace SR.UI
 
 		public void StartSlowMotion()
 		{
-			Debug.Log("Slowmotion");
 			Time.timeScale = slowMotionMultiplier;
 			StartCoroutine(HandleSlowMotion());
 		}

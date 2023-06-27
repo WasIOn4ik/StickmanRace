@@ -130,7 +130,8 @@ namespace YG
 			if (instantiate)
 				copy = Instantiate(copy, copy.parent);
 
-			if (!multiplePurchase && YandexGame.PaymentsData.purchased[num] > 0)
+			if ((!multiplePurchase && YandexGame.PaymentsData.purchased[num] > 0) || 
+				(YandexGame.PaymentsData.id[num] == "no_ads" && YandexGame.PaymentsData.purchased[num] > 0))
 				copy.Find("BuyButton").gameObject.SetActive(false);
 
 			copy.GetComponentInChildren<ImageLoadYG>().Load(YandexGame.PaymentsData.imageURI[num]);

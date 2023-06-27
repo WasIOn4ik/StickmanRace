@@ -114,7 +114,6 @@ namespace SR.Core
 
 		public void OnLoad()
 		{
-			YandexGame.StickyAdActivity(true);
 			if (YandexGame.savesData.details == null)
 			{
 				YandexGame.savesData.records = new GameRecords() { totalDistance = 0f, maxTime = 0f };
@@ -134,7 +133,14 @@ namespace SR.Core
 			carConfig = YandexGame.savesData.carConfig;
 			GameSettings = YandexGame.savesData.settings;
 			unlockedDetails = YandexGame.savesData.details;
-			YandexGame.NewLeaderboardScores("RoadKing", (int)YandexGame.savesData.records.totalDistance);
+
+			YandexGame.StickyAdActivity(!YandexGame.savesData.noAdsBought);
+
+			if (YandexGame.auth && YandexGame.playerName != "anonymous")
+			{
+				Debug.Log("Updating RoadKing");
+				YandexGame.NewLeaderboardScores("RoadKing", (int)YandexGame.savesData.records.totalDistance);
+			}
 			UpdateUnlockedDetails();
 			if (GameSettings.bSoundsOn)
 				soundSystem.EnableSound();

@@ -113,7 +113,7 @@ namespace SR.Core
 			backTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
 			if (gameInputs.GetRotation())
 			{
-				carRB.AddTorque(-1f * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
+				carRB.AddTorque(6f * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
 			}
 			carRB.velocity = Vector2.ClampMagnitude(carRB.velocity, fullCarDescriptor.velocity);
 			soundSystem.SetMaxCarSound(GetVelocity() / 10f);
@@ -172,7 +172,6 @@ namespace SR.Core
 			{
 				soundSystem.PlayDeath();
 			}
-			Debug.Log($"Received {damage} damage");
 			fullCarDescriptor.health -= damage;
 			if (fullCarDescriptor.health <= 0)
 			{
@@ -203,6 +202,9 @@ namespace SR.Core
 
 		public void Freeze()
 		{
+			carRB.bodyType = RigidbodyType2D.Kinematic;
+			carRB.velocity = Vector2.zero;
+			carRB.angularVelocity = 0f;
 			gameInputs.SetMovement(0);
 			gameInstance.Sounds.PlayCarMovement(false);
 			frontTireRB.angularVelocity = 0f;
@@ -212,6 +214,7 @@ namespace SR.Core
 
 		public void UnFreeze()
 		{
+			carRB.bodyType = RigidbodyType2D.Dynamic;
 			bFrozen = false;
 		}
 

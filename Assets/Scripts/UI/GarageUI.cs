@@ -37,20 +37,28 @@ public class GarageUI : MonoBehaviour
 	private void Awake()
 	{
 		Enemy.killsInRound = 0;
+		LoseMenuUI.bPlus3HPUsed = false;
+		gameInstance.onGemsCountChanged += GameInstance_onGemsCountChanged;
 #if UNITY_WEBGL
 		YandexGame.StickyAdActivity(false);
 #endif
-		LoseMenuUI.bPlus3HPUsed = false;
-		gameInstance.onGemsCountChanged += GameInstance_onGemsCountChanged;
-
 		plus50Button.onClick.AddListener(() =>
 		{
 #if UNITY_WEBGL
+			gameInstance.Sounds.Mute();
 			YandexGame.OpenVideoEvent = null;
+			YandexGame.ErrorFullAdEvent = () =>
+			{
+				YandexGame.CloseFullAdEvent = null;
+				YandexGame.ErrorFullAdEvent = null;
+				gameInstance.Sounds.Unmute();
+			};
 			YandexGame.CloseVideoEvent = () =>
 			{
 				gameInstance.AddBoughtGems(50);
-				YandexGame.CloseVideoEvent = null;
+				YandexGame.CloseFullAdEvent = null;
+				YandexGame.ErrorFullAdEvent = null;
+				gameInstance.Sounds.Unmute();
 			};
 			YG._RewardedShow(1);
 #endif
@@ -62,22 +70,38 @@ public class GarageUI : MonoBehaviour
 			if (startsCount % 2 == 0)
 			{
 #if UNITY_WEBGL
-				YG.ResetTimerFullAd();
-				YG.ErrorFullscreenAd.AddListener(() =>
+				if (YandexGame.savesData.noAdsBought)
 				{
 					gameplayBase.StartGame();
-				});
-				YandexGame.OpenFullAdEvent = () =>
+				}
+				else
 				{
-					YandexGame.CloseFullAdEvent = () =>
+					gameInstance.Sounds.Mute();
+					YG.ResetTimerFullAd();
+					YG.ErrorFullscreenAd.AddListener(() =>
 					{
-						YandexGame.StickyAdActivity(true);
 						gameplayBase.StartGame();
-						YandexGame.CloseFullAdEvent = null;
-					};
-					YandexGame.OpenFullAdEvent = null;
+					});
+					YandexGame.OpenFullAdEvent = () =>
+					{
+						YandexGame.ErrorFullAdEvent = () =>
+						{
+							YandexGame.CloseFullAdEvent = null;
+							YandexGame.ErrorFullAdEvent = null;
+							gameInstance.Sounds.Unmute();
+						};
+						YandexGame.CloseFullAdEvent = () =>
+						{
+							gameInstance.Sounds.Unmute();
+							YandexGame.StickyAdActivity(!YandexGame.savesData.noAdsBought);
+							gameplayBase.StartGame();
+							YandexGame.CloseFullAdEvent = null;
+							YandexGame.ErrorFullAdEvent = null;
+						};
+						YandexGame.OpenFullAdEvent = null;
 
-				};
+					};
+				}
 				YG._FullscreenShow();
 #elif UNITY_ANDROID
 				gameplayBase.StartGame();

@@ -58,7 +58,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4762407634722194134}
   - component: {fileID: 1472969112024192470}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: LegsDecor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4279205551734122973}
   - component: {fileID: 8154111359067404648}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Part5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1233032690349796451}
   - component: {fileID: 5679211738531711521}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Part4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 1652505175033964042}
   - component: {fileID: 1188625506195956890}
   - component: {fileID: 8529829042905009530}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Part1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +529,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3217739530948175995}
   - component: {fileID: 7391515494797283846}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Part2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -612,7 +612,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5109278071814966106}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RightHandEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 6682447900645285099}
   - component: {fileID: 5880328661830355656}
   - component: {fileID: 63925716748008426}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Smoke_PS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5573,7 +5573,7 @@ GameObject:
   - component: {fileID: 6628929534240871621}
   - component: {fileID: 5656512811867587038}
   - component: {fileID: 3292969477588291869}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Fire_FX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5678,7 +5678,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7843826701596034841}
   - component: {fileID: 6714257588601899128}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Thruster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5725,7 +5725,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8516209027165312687}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: CameraFollow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5758,7 +5758,7 @@ GameObject:
   - component: {fileID: 5725679677062161662}
   - component: {fileID: 5502580063548710666}
   - component: {fileID: 4214957139150296678}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Bumper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6095,7 +6095,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5292401772842638309}
   - component: {fileID: 5292401772855152941}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Right Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6180,7 +6180,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5292401772842700533}
   - component: {fileID: 5292401772855112099}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Right Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6372,7 +6372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5292401772842592527}
   - component: {fileID: 8310109747199613129}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Stickman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6426,7 +6426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5292401772842686713}
   - component: {fileID: 5292401772855134077}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Right Wrist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6595,7 +6595,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8358216374773764915}
   - component: {fileID: 701455206712648309}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: StaticBumper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6764,7 +6764,7 @@ GameObject:
   m_Component:
   - component: {fileID: 441519011442560587}
   - component: {fileID: 3497908353709080450}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: BackDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6848,7 +6848,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1468501043387697675}
   - component: {fileID: 212580386767094465}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Part3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6963,9 +6963,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8590736198287706503}
   - component: {fileID: 8590736198287706502}
-  - component: {fileID: 8590736198287706501}
   - component: {fileID: 8886181421655778822}
-  m_Layer: 14
+  m_Layer: 11
   m_Name: VehicleBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7044,52 +7043,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &8590736198287706501
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8590736198287706496}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 52a5b425f53cbc5498a90c44fa29a7ae, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.4133334, y: 1.7066667}
-    newSize: {x: 5.12, y: 2.56}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 1.8979504, y: -0.8100258}
-      - {x: 1.510119, y: -0.1791037}
-      - {x: 1.3334181, y: 0.102707624}
-      - {x: 1.1850387, y: 0.14953402}
-      - {x: 0.80815816, y: 0.21838033}
-      - {x: -0.48539308, y: 0.1876967}
-      - {x: -0.84270537, y: 0.5157889}
-      - {x: -1.1338999, y: 0.21189335}
-      - {x: -1.4876616, y: 0.08183658}
-      - {x: -1.5654358, y: -0.25391695}
-      - {x: -1.4113579, y: -0.4711079}
-      - {x: -1.2299325, y: -0.47571725}
-      - {x: -1.0318142, y: -0.081147134}
-      - {x: -0.57639194, y: -0.081727505}
-      - {x: -0.38651264, y: -0.4975507}
-      - {x: -0.32722098, y: -0.50292385}
-      - {x: 0.07817507, y: -0.6457264}
-      - {x: 0.66564333, y: -0.64202857}
-      - {x: 0.82481027, y: -0.20429227}
-      - {x: 1.3368278, y: -0.25656167}
-      - {x: 1.5129244, y: -0.58451575}
 --- !u!114 &8886181421655778822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7377,7 +7330,8 @@ GameObject:
   - component: {fileID: 8590736198988412036}
   - component: {fileID: 8590736198988412037}
   - component: {fileID: 8590736198988412038}
-  m_Layer: 11
+  - component: {fileID: 3884943883715299593}
+  m_Layer: 14
   m_Name: PlayerVehicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7507,6 +7461,41 @@ WheelJoint2D:
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
+--- !u!60 &3884943883715299593
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8590736198988412032}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.7962283, y: 0.61359483}
+      - {x: -1.5072458, y: 0.13337842}
+      - {x: -1.4893025, y: -0.33188942}
+      - {x: -1.1756556, y: -0.46541417}
+      - {x: -0.8225137, y: -0.22570008}
+      - {x: 0.056223094, y: -0.6392331}
+      - {x: 0.5994946, y: -0.639233}
+      - {x: 1.0842774, y: -0.21106824}
+      - {x: 1.9346433, y: -0.75140387}
+      - {x: 1.1325498, y: 0.34414476}
 --- !u!1 &8616206324564203218
 GameObject:
   m_ObjectHideFlags: 0
@@ -7517,7 +7506,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2631260595814333664}
   - component: {fileID: 4926041434553743306}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: BodyDecor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

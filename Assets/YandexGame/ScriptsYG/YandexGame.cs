@@ -1328,36 +1328,47 @@ namespace YG
             PaymentsData = JsonUtility.FromJson<JsonPayments>(data);
 #endif
 #else
-            PaymentsData.id = new string[4];
-            PaymentsData.id[0] = "gems_1000";
-            PaymentsData.id[1] = "gems_5000";
-            PaymentsData.id[2] = "gems_20000";
-            PaymentsData.id[3] = "gems_100000";
+            PaymentsData.id = new string[6];
+            PaymentsData.id[0] = "gems_100";
+            PaymentsData.id[1] = "gems_1000";
+            PaymentsData.id[2] = "gems_5000";
+            PaymentsData.id[3] = "gems_20000";
+            PaymentsData.id[4] = "gems_100000";
+            PaymentsData.id[5] = "no_ads";
 
-            PaymentsData.title = new string[4];
-            PaymentsData.title[0] = "1K gems";
-            PaymentsData.title[1] = "5K gems";
-            PaymentsData.title[2] = "20K gems";
-            PaymentsData.title[3] = "100K gems";
+            PaymentsData.title = new string[6];
+            PaymentsData.title[0] = "100 gems";
+            PaymentsData.title[1] = "1K gems";
+            PaymentsData.title[2] = "5K gems";
+            PaymentsData.title[3] = "20K gems";
+            PaymentsData.title[4] = "100K gems";
+            PaymentsData.title[5] = "No ADs";
 
-            PaymentsData.description = new string[4];
+            PaymentsData.description = new string[6];
             PaymentsData.description[0] = " ";
             PaymentsData.description[1] = " ";
             PaymentsData.description[2] = " ";
+			PaymentsData.description[3] = " ";
+			PaymentsData.description[4] = " ";
+			PaymentsData.description[5] = " ";
 
-            PaymentsData.imageURI = new string[4];
+			PaymentsData.imageURI = new string[6];
             PaymentsData.imageURI[0] = " ";
             PaymentsData.imageURI[1] = " ";
             PaymentsData.imageURI[2] = " ";
 			PaymentsData.imageURI[3] = " ";
+			PaymentsData.imageURI[4] = " ";
+			PaymentsData.imageURI[5] = " ";
 
-			PaymentsData.priceValue = new string[4];
+			PaymentsData.priceValue = new string[6];
             PaymentsData.priceValue[0] = "99";
             PaymentsData.priceValue[1] = "399";
             PaymentsData.priceValue[2] = "1699";
 			PaymentsData.priceValue[3] = "5999";
+			PaymentsData.priceValue[4] = "12999";
+			PaymentsData.priceValue[5] = "1999";
 
-			PaymentsData.purchased = new int[4];
+			PaymentsData.purchased = new int[6];
 #endif
             GetPaymentsEvent?.Invoke();
         }
