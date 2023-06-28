@@ -33,6 +33,7 @@ namespace SR.Core
 		[SerializeField] private int outpostDelayPoints = 3;
 		[SerializeField] private int outpostLength = 1;
 		[SerializeField] private int outpostStartPoint = 10;
+		[SerializeField] private DestructibleOutpost destructibleOutpostPrefab;
 		[Header("Terain")]
 		[SerializeField] private TerrainCreationType creationType;
 		[SerializeField] private int terainControlPointsCount = 50;
@@ -42,21 +43,14 @@ namespace SR.Core
 		[SerializeField] private float terrainNoiseStep = 0.5f;
 		[SerializeField] private float terrainBottomHeight = 10f;
 
-		public List<Obstacle> pixelObstacles = new List<Obstacle>();
-		public List<Obstacle> casualObstacles = new List<Obstacle>();
-
 		private Vector3 lastPosition;
 
 		private List<int> outpostPoints = new List<int>();
 		private List<int> emptyPoints = new List<int>();
-		private List<Outpost> spawnedOutposts = new List<Outpost>();
 
 		private LocationDescriptorSO location;
 
 		private float difficulty = 1f;
-
-		private List<Enemy> spawnedEnemies = new List<Enemy>();
-		private List<Obstacle> spawnedObstacles = new List<Obstacle>();
 
 		#endregion
 
@@ -81,11 +75,6 @@ namespace SR.Core
 		public void Activate()
 		{
 			gameObject.SetActive(true);
-		}
-
-		public void AddToEnemies(Enemy enemy)
-		{
-			spawnedEnemies.Add(enemy);
 		}
 
 		public LocationDescriptorSO GetLocation()
@@ -117,25 +106,9 @@ namespace SR.Core
 		{
 			spriteShapeController.spline.Clear();
 			outpostPoints.Clear();
-			foreach (var outpost in spawnedOutposts)
-			{
-				outpost.DestroyOutpost();
-			}
-			foreach (var enemy in spawnedEnemies)
-			{
-				if (enemy)
-					Destroy(enemy.gameObject);
-			}
-			foreach (var obs in spawnedObstacles)
-			{
-				if (obs)
-					Destroy(obs.gameObject);
-			}
-			spawnedObstacles.Clear();
 			outpostPoints.Clear();
 			emptyPoints.Clear();
-			spawnedEnemies.Clear();
-			spawnedOutposts.Clear();
+			transform.Clear();
 		}
 
 		private void UpdateVisual(LocationDescriptorSO location)
@@ -234,7 +207,7 @@ namespace SR.Core
 			int count = outpostPoints.Count;
 			for (int i = 0; i < count; i++)
 			{
-				spawnedOutposts.Add(SpawnOutpost(transform.TransformPoint(spriteShapeController.spline.GetPosition(outpostPoints[i])), difficulty, location));
+				SpawnOutpost(transform.TransformPoint(spriteShapeController.spline.GetPosition(outpostPoints[i])), difficulty, location);
 				yield return null;
 			}
 		}
@@ -247,27 +220,37 @@ namespace SR.Core
 				if (i % spawnDelay != 0)
 					continue;
 
-				var enemy = Instantiate(location.availableEnemies.GetRandomEnemy(), transform.TransformPoint
-					(spriteShapeController.spline.GetPosition(emptyPoints[i])), Quaternion.identity, transform);
-				enemy.SetDifficulty(difficulty);
-				spawnedEnemies.Add(enemy);
-				if (i % 5 == 0)
-					yield return null;
+				bool bDestructibleOutpost = Random.Range(0, 4) < 2;
+
+				if (bDestructibleOutpost)
+				{
+					i++;
+					if(i < emptyPoints.Count)
+					{
+						var dOutpost = Instantiate(destructibleOutpostPrefab, transform.TransformPoint(spriteShapeController.spline.GetPosition(emptyPoints[i])), Quaternion.identity, transform);
+						dOutpost.Init(location);
+					}
+					i++;
+				}
+				else
+				{
+					var enemy = Instantiate(location.availableEnemies.GetRandomEnemy(), transform.TransformPoint
+						(spriteShapeController.spline.GetPosition(emptyPoints[i])), Quaternion.identity, transform);
+					enemy.SetDifficulty(difficulty);
+					if (i % 5 == 0)
+						yield return null;
+				}
 			}
 		}
 
 		private IEnumerator SpawnObstacles()
 		{
-			var list = location.bPixel ? pixelObstacles : casualObstacles;
-
 			for (int i = 0; i < 10; i++)
 			{
 				int rand = Random.Range(0, 1);
 				Vector3 offset = Vector3.left * 0.5f + Vector3.right * rand;
-				int index = Random.Range(0, list.Count);
 				int randomPoint = Random.Range(1, spriteShapeController.spline.GetPointCount() - 2);
-				var obstacle = Instantiate(list[index], transform.TransformPoint(spriteShapeController.spline.GetPosition(randomPoint) + Vector3.up + offset), Quaternion.identity, transform);
-				spawnedObstacles.Add(obstacle);
+				var obstacle = Instantiate(location.availableObstacles.GetRandomObstacle(), transform.TransformPoint(spriteShapeController.spline.GetPosition(randomPoint) + Vector3.up + offset), Quaternion.identity, transform);
 				if (i % 5 == 0)
 					yield return null;
 			}

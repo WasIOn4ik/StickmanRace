@@ -40,7 +40,6 @@ namespace SR.Core
 				var bullet = Instantiate(bulletPrefab);
 				bullet.transform.position = bulletSpawnpoint.position;
 				bullet.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
-				Debug.DrawLine(bulletSpawnpoint.position, target.GetHeadPosition(), Color.red, 10f);
 				var bulletRot = bullet.transform.eulerAngles;
 				bulletRot.x = 0;
 				bullet.transform.eulerAngles = bulletRot;

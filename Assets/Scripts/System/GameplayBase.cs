@@ -22,7 +22,6 @@ namespace SR.UI
 		[SerializeField] private HUD_UI hud;
 
 		[Header("Properties")]
-		[SerializeField] private float afterDeathTimeout = 5f;
 		[SerializeField] private float startDifficulty = 1f;
 		[SerializeField] private float difficultiMultiplierPerSecond = 1.02f;
 		[SerializeField] private float fadeTime = 1f;

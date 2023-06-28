@@ -29,3 +29,5 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8914481815421465963, guid: 469aae3abd5c0344389734c2174f2374, type: 3}
   bulletType: 2
   bulletValue: 2
+  barrelOffset: {x: 0.568, y: 0.06}
+  bulletSprite: {fileID: 296864795, guid: d45b64ef51fa26b4284a2058ed2bc086, type: 3}

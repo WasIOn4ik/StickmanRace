@@ -72,6 +72,7 @@ public class GarageUI : MonoBehaviour
 #if UNITY_WEBGL
 				if (YandexGame.savesData.noAdsBought)
 				{
+					gameInstance.Sounds.StartBackgroundMusic();
 					gameplayBase.StartGame();
 				}
 				else
@@ -80,38 +81,42 @@ public class GarageUI : MonoBehaviour
 					YG.ResetTimerFullAd();
 					YG.ErrorFullscreenAd.AddListener(() =>
 					{
+						gameInstance.Sounds.StartBackgroundMusic();
 						gameplayBase.StartGame();
 					});
 					YandexGame.OpenFullAdEvent = () =>
 					{
 						YandexGame.ErrorFullAdEvent = () =>
 						{
+							gameInstance.Sounds.Unmute();
+							YandexGame.StickyAdActivity(!YandexGame.savesData.noAdsBought);
+							gameInstance.Sounds.StartBackgroundMusic();
+							gameplayBase.StartGame();
 							YandexGame.CloseFullAdEvent = null;
 							YandexGame.ErrorFullAdEvent = null;
-							gameInstance.Sounds.Unmute();
 						};
 						YandexGame.CloseFullAdEvent = () =>
 						{
 							gameInstance.Sounds.Unmute();
 							YandexGame.StickyAdActivity(!YandexGame.savesData.noAdsBought);
+							gameInstance.Sounds.StartBackgroundMusic();
 							gameplayBase.StartGame();
 							YandexGame.CloseFullAdEvent = null;
 							YandexGame.ErrorFullAdEvent = null;
 						};
 						YandexGame.OpenFullAdEvent = null;
-
 					};
+					YandexGame.FullscreenShow();
 				}
-				YG._FullscreenShow();
 #elif UNITY_ANDROID
 				gameplayBase.StartGame();
 #endif
 			}
 			else
 			{
+				gameInstance.Sounds.StartBackgroundMusic();
 				gameplayBase.StartGame();
 			}
-			gameInstance.Sounds.StartBackgroundMusic();
 		});
 
 		settingsButton.onClick.AddListener(() =>

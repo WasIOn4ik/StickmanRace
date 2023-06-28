@@ -17,6 +17,7 @@ MonoBehaviour:
   verticalOffset: -1.5
   availableOutposts: {fileID: 11400000, guid: a4c452e5a73bbad40942d61ba1fe7c0b, type: 2}
   availableEnemies: {fileID: 11400000, guid: 939c4b904b73b854faddd73a34a7fb97, type: 2}
+  availableObstacles: {fileID: 11400000, guid: d094807e3b1dabb48a34ae521f476cae, type: 2}
   backgrounds:
   - {fileID: 21300000, guid: 5680c1a9719b046e0bc08d861902f606, type: 3}
   - {fileID: 21300000, guid: c1aee3cdbbfa876449254701d730784a, type: 3}

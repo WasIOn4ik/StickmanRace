@@ -95,7 +95,7 @@ ScriptedImporter:
   rigSpriteImportData:
   - name: Hand
     originalName: 
-    pivot: {x: 0.3175715, y: 0.7613888}
+    pivot: {x: 0.70918393, y: 0.80814826}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -161,13 +161,13 @@ ScriptedImporter:
     spritePosition: {x: 45, y: 286}
   - name: Head
     originalName: 
-    pivot: {x: 0.4927751, y: 0.07852804}
+    pivot: {x: 0.49277508, y: 0.0090149185}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 248
+      y: 249
       width: 101
       height: 116
     spriteID: 2d7a79fd7ef9f7c45b73ba5151f92450
@@ -183,7 +183,7 @@ ScriptedImporter:
     spritePosition: {x: 96, y: 357}
   - name: Body
     originalName: 
-    pivot: {x: 0.521621, y: 0.15060401}
+    pivot: {x: 0.5, y: 0.2}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -227,7 +227,7 @@ ScriptedImporter:
     spritePosition: {x: 73, y: 53}
   - name: Calf
     originalName: 
-    pivot: {x: 0.49999985, y: 0.90441823}
+    pivot: {x: 0.5, y: 0.68}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -249,7 +249,7 @@ ScriptedImporter:
     spritePosition: {x: 77, y: 61}
   - name: Thigh
     originalName: 
-    pivot: {x: 0.5, y: 0.8735424}
+    pivot: {x: 0.5090384, y: 0.9933014}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -282,7 +282,62 @@ ScriptedImporter:
     dimension: {x: 0, y: 0}
     characterGroups: []
     boneReadOnly: 0
-  platformSettings: []
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Server
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Android
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: WebGL
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
   mosaicLayers: 1
   characterMode: 1
   documentPivot: {x: 0, y: 0}

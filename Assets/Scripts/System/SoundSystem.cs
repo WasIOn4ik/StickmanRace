@@ -41,12 +41,14 @@ namespace SR.Core
 
 		public void Mute()
 		{
+			Debug.Log("Muted");
 			muted = true;
 			musicAudio.volume = 0;
 		}
 
 		public void Unmute()
 		{
+			Debug.Log("Unmuted");
 			muted = false;
 			musicAudio.volume = volumeMultiplier * musicCoef;
 		}
@@ -100,6 +102,11 @@ namespace SR.Core
 			{
 				PlaySound(library.weaponSingleSound, 30, weaponShootVolume);
 			}
+		}
+
+		public void PlayShotgun()
+		{
+			PlaySound(library.shotgunSound, 30, weaponShootVolume);
 		}
 
 		public void PlayRocketLauncher()
@@ -222,9 +229,9 @@ namespace SR.Core
 			}
 		}
 
-		public void PlayDeath()
+		public void PlayDeath(AudioClip clip)
 		{
-			PlaySound(library.StickmanDeath, 1, deathVolume);
+			PlaySound(clip, 1, deathVolume);
 		}
 
 		public void PlayBuildingDamage()
@@ -252,6 +259,7 @@ namespace SR.Core
 
 		public void PlayGarageMusic()
 		{
+			StopAllCoroutines();
 			if (musicVolumeCoroutine != null)
 				StopCoroutine(musicVolumeCoroutine);
 

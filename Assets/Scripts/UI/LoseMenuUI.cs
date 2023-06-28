@@ -42,11 +42,22 @@ namespace SR.UI
 			buttonX2.onClick.AddListener(() =>
 			{
 #if UNITY_WEBGL
+				gameInstance.Sounds.Mute();
+				YandexGame.ErrorVideoEvent = () =>
+				{
+					gameInstance.Sounds.Unmute();
+					YandexGame.ErrorVideoEvent = null;
+					YandexGame.CloseFullAdEvent = null;
+					YandexGame.OpenVideoEvent = null;
+				};
 				YandexGame.OpenVideoEvent = null;
 				YandexGame.CloseVideoEvent = () =>
 				{
+					gameInstance.Sounds.Unmute();
 					gameInstance.AddBoughtGems(gems);
-					YandexGame.CloseVideoEvent = null;
+					YandexGame.ErrorVideoEvent = null;
+					YandexGame.CloseFullAdEvent = null;
+					YandexGame.OpenVideoEvent = null;
 					HandleEndgame();
 				};
 				YG._RewardedShow(0);
@@ -56,11 +67,22 @@ namespace SR.UI
 			buttonPlus3HP.onClick.AddListener(() =>
 			{
 #if UNITY_WEBGL
+				gameInstance.Sounds.Mute();
 				bPlus3HPUsed = true;
+				YandexGame.ErrorVideoEvent = () =>
+				{
+					gameInstance.Sounds.Unmute();
+					YandexGame.ErrorVideoEvent = null;
+					YandexGame.CloseFullAdEvent = null;
+					YandexGame.OpenVideoEvent = null;
+				};
 				YandexGame.OpenVideoEvent = null;
 				YandexGame.CloseVideoEvent = () =>
 				{
-					YandexGame.CloseVideoEvent = null;
+					gameInstance.Sounds.Unmute();
+					YandexGame.ErrorVideoEvent = null;
+					YandexGame.CloseFullAdEvent = null;
+					YandexGame.OpenVideoEvent = null;
 					gameplayBase.ResetPlayer(3);
 					BackToPrevious();
 				};

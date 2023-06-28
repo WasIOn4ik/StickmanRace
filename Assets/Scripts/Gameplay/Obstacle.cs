@@ -12,8 +12,8 @@ namespace SR.Core
 
 		public static event EventHandler onObstacleDestroyed;
 
+		[Header("Obstacle")]
 		[SerializeField] protected float destroyVelocity;
-		[SerializeField] protected LayerMask destroyLayerMask;
 		[SerializeField] private float aimVerticalOffset = 1f;
 		[SerializeField] private ParticleSystem destroyParticles;
 		[SerializeField] private float highSpeedDestruction = 5f;
@@ -25,14 +25,13 @@ namespace SR.Core
 
 		#region UnityMessages
 
-		private void OnCollisionEnter2D(Collision2D collision)
+		protected virtual void OnCollisionEnter2D(Collision2D collision)
 		{
 			var player = collision.gameObject.GetComponent<PlayerVehicle>();
 			if (player && player.GetDamage() > scaledDestroyVelocity)
 			{
 				if (player.GetVelocity() > highSpeedDestruction)
 				{
-					player.BackVelocity();
 					HandleHighSpeedDestruction();
 				}
 				OnPlayerCollisionConfirmed();

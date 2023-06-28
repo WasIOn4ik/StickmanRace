@@ -47,7 +47,7 @@ public class MapGenerator : MonoBehaviour
 			if (activeTerrain != null)
 				activeTerrain.Invoke("Deactivate", deativationTimer);
 			activeTerrain = value;
-			Debug.Log($"Terrain changed to {activeTerrain.name}");
+
 			terrainsCache.Peek().Activate();
 			onTerrainChanged?.Invoke(this, new TerrainChangedEventArgs() { location = activeTerrain.GetLocation() });
 		}

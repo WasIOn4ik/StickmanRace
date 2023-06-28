@@ -17,6 +17,7 @@ namespace SR.Customization
 		public Sprite footSprite;
 		public Sprite bodyDecorSprite;
 		public Sprite legsDecorSprite;
+		public AudioClip deathSound;
 
 		public StickmanSO() : base()
 		{

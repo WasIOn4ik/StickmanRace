@@ -31,3 +31,4 @@ MonoBehaviour:
   footSprite: {fileID: -1059170362433483467, guid: 39d82103c6335a049b47358e202c31ca, type: 3}
   bodyDecorSprite: {fileID: 0}
   legsDecorSprite: {fileID: -2134767959863697215, guid: 39d82103c6335a049b47358e202c31ca, type: 3}
+  deathSound: {fileID: 8300000, guid: ca9b7bc9129650049975a6c934ab6ada, type: 3}

@@ -21,7 +21,6 @@ namespace SR.Extras
 			{
 				localTImer = 0;
 				Vector3 pos = transform.position + Vector3.left * leftOffset;
-				Debug.DrawRay(pos, Vector2.right * length, Color.cyan, 0.1f);
 				var targets = Physics2D.RaycastAll(pos, Vector2.right, length, layerMask);
 
 				foreach (var target in targets)

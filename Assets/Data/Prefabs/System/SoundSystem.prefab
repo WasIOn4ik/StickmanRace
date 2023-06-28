@@ -54,11 +54,11 @@ MonoBehaviour:
   musicCoef: 0.4
   volumeChange: 0.05
   enemyShootVolume: 1
-  weaponShootVolume: 0.15
+  weaponShootVolume: 0.9
   buttonsVolume: 0.8
   carSoundMultiplier: 1
   deathVolume: 1
-  obstacleDamage: 0.7
+  obstacleDamage: 0.6
   buildingDamage: 0.35
 --- !u!82 &-4656258789026184519
 AudioSource:

@@ -9,6 +9,7 @@ namespace SR.Core
 		#region Variables
 
 		[SerializeField] private Vector2 attackDistance = new Vector2(3f, 1f);
+		[SerializeField] private LayerMask vehicleLayerMask;
 
 		#endregion
 
@@ -18,7 +19,7 @@ namespace SR.Core
 		{
 			if(IsAlive())
 			{
-				var result = Physics2D.BoxCast(transform.position, attackDistance, 0, Vector2.left, 0.1f, destroyLayerMask);
+				var result = Physics2D.BoxCast(transform.position, attackDistance, 0, Vector2.left, 0.1f, vehicleLayerMask);
 				if (result.collider != null)
 				{
 					var player = result.collider.gameObject.GetComponent<PlayerVehicle>();

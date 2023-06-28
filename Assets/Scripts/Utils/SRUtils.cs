@@ -19,4 +19,15 @@ namespace SR.Core
 			return Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
 		}
 	}
+	public static class TransformEx
+	{
+		public static Transform Clear(this Transform transform)
+		{
+			foreach (Transform child in transform)
+			{
+				GameObject.Destroy(child.gameObject);
+			}
+			return transform;
+		}
+	}
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace SR.Core
@@ -16,6 +17,7 @@ namespace SR.Core
 	{
 		#region Variables
 
+		[SerializeField] private SpriteRenderer spriteRenderer;
 		[SerializeField] private int damage = 1;
 		[SerializeField] private float velocity = 3f;
 		[SerializeField] protected LayerMask targetLayerMask;
@@ -79,7 +81,6 @@ namespace SR.Core
 					Destroy(gameObject);
 					return;
 				}
-
 				target.ApplyDamage(scaledDamage);
 				Destroy(gameObject);
 			}
@@ -89,12 +90,18 @@ namespace SR.Core
 
 		#region Functions
 
+		public void SetSprite(Sprite sprite)
+		{
+			if (sprite != null)
+				spriteRenderer.sprite = sprite;
+		}
+
 		public void InitBullet(BulletType type, int bulletValue, float difficulty, float shootDistance, GameInstance gameInstance = null)
 		{
 			this.bulletType = type;
 			this.bulletValue = bulletValue;
 
-			if(gameInstance != null)
+			if (gameInstance != null)
 			{
 				if (bulletType == BulletType.Explosion)
 				{
@@ -106,9 +113,9 @@ namespace SR.Core
 				}
 				else if (bulletType == BulletType.Shotgun && bulletValue != 0)
 				{
-					gameInstance.Sounds.PlayWeapon(1);
+					gameInstance.Sounds.PlayShotgun();
 				}
-				else
+				else if (bulletType == BulletType.Standart || bulletType == BulletType.Sniper)
 				{
 					gameInstance.Sounds.PlayWeapon(1);
 				}

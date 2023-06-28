@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Purchasing;
+using UnityEngine.Scripting;
 using YG;
 using Zenject;
 
@@ -129,12 +130,11 @@ namespace SR.Core
 				YandexGame.savesData.details = unlockedDetails;
 				YandexGame.SaveProgress();
 			}
+
 			records = YandexGame.savesData.records;
 			carConfig = YandexGame.savesData.carConfig;
 			GameSettings = YandexGame.savesData.settings;
 			unlockedDetails = YandexGame.savesData.details;
-
-			YandexGame.StickyAdActivity(!YandexGame.savesData.noAdsBought);
 
 			if (YandexGame.auth && YandexGame.playerName != "anonymous")
 			{
@@ -146,6 +146,28 @@ namespace SR.Core
 				soundSystem.EnableSound();
 			else
 				soundSystem.DisableSound();
+
+			if (!YandexGame.savesData.noAdsBought)
+			{
+				for (int i = 0; i < YandexGame.PaymentsData.id.Length; i++)
+				{
+					if (YandexGame.PaymentsData.id[i] == "no_ads" && YandexGame.PaymentsData.purchased[i] > 0)
+					{
+						Debug.Log("No-ADs reovered");
+						YandexGame.savesData.noAdsBought = true;
+						YandexGame.SaveProgress();
+					}
+				}
+			}
+			else
+			{
+				Debug.Log("No-ADs active");
+			}
+			if (!YandexGame.savesData.noAdsBought)
+			{
+				Debug.Log("No-ADs not active");
+			}
+			YandexGame.StickyAdActivity(!YandexGame.savesData.noAdsBought);
 		}
 #endif
 
@@ -153,7 +175,7 @@ namespace SR.Core
 		{
 			if (!obj)
 				soundSystem.Mute();
-			else
+			else if (!YandexGame.nowVideoAd && !YandexGame.nowFullAd)
 				soundSystem.Unmute();
 		}
 

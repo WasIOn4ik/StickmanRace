@@ -63,6 +63,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CasualObstacle2
       objectReference: {fileID: 0}
+    - target: {fileID: 7282907619604972470, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+      propertyPath: rigidbody2DRef
+      value: 
+      objectReference: {fileID: 8562830854624566900}
     - target: {fileID: 9169188272350861176, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
       propertyPath: m_Size.x
       value: 0.8
@@ -77,3 +81,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+--- !u!50 &8562830854624566900 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 3662192282757394879, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+  m_PrefabInstance: {fileID: 4902151912193306571}
+  m_PrefabAsset: {fileID: 0}
