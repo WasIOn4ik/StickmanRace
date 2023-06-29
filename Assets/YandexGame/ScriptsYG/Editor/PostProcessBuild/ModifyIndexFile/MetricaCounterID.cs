@@ -4,8 +4,9 @@ using System;
 
 namespace YG.Insides.BuildModify
 {
-    public static partial class ModifyIndexFile
-    {
+	public static partial class ModifyIndexFile
+	{
+#if UNITY_WEBGL
         static void SetMetricaCounterID(ref string fileText)
         {
             InfoYG infoYG = ConfigYG.GetInfoYG();
@@ -25,5 +26,6 @@ namespace YG.Insides.BuildModify
                 fileText = fileText.Replace(replaceCode, string.Empty);
             }
         }
-    }
+#endif
+	}
 }

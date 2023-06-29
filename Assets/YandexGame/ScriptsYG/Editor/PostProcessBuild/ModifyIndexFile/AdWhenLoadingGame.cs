@@ -1,8 +1,9 @@
 
 namespace YG.Insides.BuildModify
 {
-    public static partial class ModifyIndexFile
-    {
+	public static partial class ModifyIndexFile
+	{
+#if UNITY_WEBGL
         static void SetAdWhenLoadGameValue(ref string fileText)
         {
             InfoYG infoYG = ConfigYG.GetInfoYG();
@@ -12,5 +13,6 @@ namespace YG.Insides.BuildModify
                 fileText = fileText.Replace("let firstAd = true;", "let firstAd = false;");
             }
         }
-    }
+#endif
+	}
 }

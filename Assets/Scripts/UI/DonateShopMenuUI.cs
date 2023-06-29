@@ -6,7 +6,6 @@ using Unity.Services.Core;
 using Unity.Services.Core.Environments;
 using UnityEngine;
 using UnityEngine.Purchasing;
-using UnityEngine.Purchasing.Extension;
 using UnityEngine.UI;
 using YG;
 using Zenject;
@@ -14,7 +13,7 @@ using Zenject;
 namespace SR.UI
 {
 #if UNITY_ANDROID
-	public class DonateShopMenuUI : MenuBase, IDetailedStoreListener
+	public class DonateShopMenuUI : MenuBase
 #elif UNITY_WEBGL
 	public class DonateShopMenuUI : MenuBase
 #endif
@@ -28,16 +27,11 @@ namespace SR.UI
 
 		[Inject] GameInstance gameInstance;
 
-#if UNITY_ANDROID
-		private static IStoreController storeController;
-		private static IExtensionProvider extensionProvider;
-#elif UNITY_WEBGL
+#if UNITY_WEBGL
 		private static bool bInitialized;
 		private string currentPurchase;
 #endif
 		List<DonateItemUI> spawnedItems = new List<DonateItemUI>();
-
-		private Action onPurchaseCompleted;
 
 		[Inject] private SoundSystem soundsSystem;
 
@@ -45,14 +39,12 @@ namespace SR.UI
 
 		#region Functions
 
+#if UNITY_WEBGL
 		private bool IsInitialized()
 		{
-#if UNITY_ANDROID
-			return storeController != null && extensionProvider != null;
-#elif UNITY_WEBGL
 			return bInitialized;
-#endif
 		}
+#endif
 
 		private async void Awake()
 		{
@@ -62,11 +54,8 @@ namespace SR.UI
 				BackToPrevious();
 			});
 #if UNITY_ANDROID
-			if (IsInitialized())
-			{
-				StoreItemProvider_onLoadComplete();
-				return;
-			}
+			Debug.Log("Donate shop awake");
+			StoreItemProvider_onLoadComplete();
 			InitializationOptions options = new InitializationOptions()
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
 				.SetEnvironmentName("test");
@@ -74,8 +63,6 @@ namespace SR.UI
 				.SetEnvironmentName("production");
 #endif
 			await UnityServices.InitializeAsync(options);
-			ResourceRequest request = Resources.LoadAsync<TextAsset>("IAPProductCatalog");
-			request.completed += HandleIAPPCatalog;
 			payments.gameObject.SetActive(false);
 #elif UNITY_WEBGL
 			itemsHolder.gameObject.SetActive(false);
@@ -126,101 +113,16 @@ namespace SR.UI
 			StoreItemProvider.onLoadComplete -= StoreItemProvider_onLoadComplete;
 		}
 
-#if UNITY_ANDROID
-		private void HandleIAPPCatalog(AsyncOperation operation)
-		{
-			var request = operation as ResourceRequest;
-			ProductCatalog catalog = JsonUtility.FromJson<ProductCatalog>((request.asset as TextAsset).text);
-
-			StandardPurchasingModule.Instance().useFakeStoreUIMode = FakeStoreUIMode.StandardUser;
-			StandardPurchasingModule.Instance().useFakeStoreAlways = true;
-
-			ConfigurationBuilder builder = ConfigurationBuilder.Instance(
-				StandardPurchasingModule.Instance(AppStore.GooglePlay));
-			foreach (ProductCatalogItem item in catalog.allProducts)
-			{
-				List<PayoutDefinition> pays = new List<PayoutDefinition>();
-
-				foreach (var pd in item.Payouts)
-				{
-					var pay = new PayoutDefinition(pd.subtype, pd.quantity, pd.data);
-					pays.Add(pay);
-				}
-
-				builder.AddProduct(item.id, item.type, null, pays);
-			}
-
-			UnityPurchasing.Initialize(this, builder);
-		}
-#endif
-
-
 		#endregion
 
 #if UNITY_ANDROID
-		#region IStoreListener
-
-		public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
-		{
-			storeController = controller;
-			extensionProvider = extensions;
-			if (!StoreItemProvider.IsInitialized())
-				StoreItemProvider.Initialize(storeController.products);
-			StoreItemProvider.onLoadComplete += StoreItemProvider_onLoadComplete;
-		}
-
-		public void OnInitializeFailed(InitializationFailureReason error)
-		{
-			Debug.LogError(error.ToString());
-		}
-
-		public void OnInitializeFailed(InitializationFailureReason error, string message)
-		{
-			Debug.LogError(error.ToString() + " " + message);
-		}
-
-		public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
-		{
-			Debug.LogError("Failed to purchase product: " + failureReason.ToString());
-		}
-
-		public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
-		{
-			onPurchaseCompleted?.Invoke();
-			onPurchaseCompleted = null;
-
-			Debug.Log("Purchase!");
-
-			var def = purchaseEvent.purchasedProduct.definition;
-			foreach (var pay in def.payouts)
-			{
-				Debug.Log($"Payouts: {pay.subtype} x {pay.quantity}");
-				if (pay.subtype == "Gems")
-				{
-					gameInstance.AddBoughtGems((int)pay.quantity);
-				}
-			}
-
-			return PurchaseProcessingResult.Complete;
-		}
-
-		public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
-		{
-			foreach (var el in spawnedItems)
-			{
-				el.Activate();
-			}
-			onPurchaseCompleted?.Invoke();
-			onPurchaseCompleted = null;
-		}
-
-		#endregion
 
 		#region Callbacks
 
 		private void StoreItemProvider_onLoadComplete()
 		{
-			List<Product> sortedProducts = storeController.products.all.OrderBy(item => item.metadata.localizedPrice).ToList();
+			Debug.Log("Shop initialized, creating purchases");
+			List<Product> sortedProducts = GameInstance.storeController.products.all.OrderBy(item => item.definition.id).ToList();
 
 			foreach (var product in sortedProducts)
 			{
@@ -234,8 +136,16 @@ namespace SR.UI
 		}
 		private void Item_onPurchase(Product product, Action onComplete)
 		{
-			onPurchaseCompleted = onComplete;
-			storeController.InitiatePurchase(product);
+			//gameInstance.onPurchaseCompleted = onComplete;
+			gameInstance.onPurchaseCompleted = OnPurchaseSuccess;
+			GameInstance.storeController.InitiatePurchase(product);
+		}
+		private void OnPurchaseSuccess()
+		{
+			foreach (var item in spawnedItems)
+			{
+				item.Activate();
+			}
 		}
 
 		#endregion

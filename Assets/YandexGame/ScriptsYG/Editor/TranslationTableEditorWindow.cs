@@ -5,8 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace YG.Insides
 {
-    public class TranslationTableEditorWindow : EditorWindow
-    {
+	public class TranslationTableEditorWindow : EditorWindow
+	{
+#if UNITY_WEBGL
         public static void ShowWindow()
         {
             GetWindow<TranslationTableEditorWindow>("Translation Table");
@@ -86,5 +87,6 @@ namespace YG.Insides
             }
             GUILayout.EndHorizontal();
         }
-    }
+#endif
+	}
 }

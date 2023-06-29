@@ -3,10 +3,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityToolbag;
 
-namespace YG 
+namespace YG
 {
-    public class BannerYG : MonoBehaviour
-    {
+	public class BannerYG : MonoBehaviour
+	{
+#if UNITY_WEBGL
         public enum RTBNumber { One, Two };
         [Tooltip("Всего доступно два баннера. Выберите номер данного баннера.")]
         public RTBNumber RTB_Number;
@@ -307,5 +308,6 @@ namespace YG
                 return true;
             else return false;
         }
-    }
+#endif
+	}
 }

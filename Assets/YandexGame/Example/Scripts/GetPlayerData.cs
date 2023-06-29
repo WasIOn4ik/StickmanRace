@@ -3,8 +3,9 @@ using UnityEngine.UI;
 
 namespace YG.Example
 {
-    public class GetPlayerData : MonoBehaviour
-    {
+	public class GetPlayerData : MonoBehaviour
+	{
+#if UNITY_WEBGL
         [SerializeField] ImageLoadYG imageLoad;
         [SerializeField] Text textPlayerData;
         [SerializeField] Text textEnvirData;
@@ -49,5 +50,6 @@ namespace YG.Example
                 "\npromptCanShow - " + YandexGame.EnvironmentData.promptCanShow +
                 "\nreviewCanShow - " + YandexGame.EnvironmentData.reviewCanShow;
         }
-    }
+#endif
+	}
 }

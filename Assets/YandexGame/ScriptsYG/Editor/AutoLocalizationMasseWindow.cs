@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 namespace YG.Insides
 {
-    public class AutoLocalizationMasse : EditorWindow
-    {
+	public class AutoLocalizationMasse : EditorWindow
+	{
+#if UNITY_WEBGL
         [MenuItem("Tools/PluginYG/Localization/Auto Localization Masse")]
         public static void ShowWindow()
         {
@@ -134,6 +135,7 @@ namespace YG.Insides
                 GUILayout.Label("Select Auto Location Inspector in the plugin settings\nInfoYG -> Translate Metod -> AutoLocalization", GUILayout.ExpandWidth(true));
             }
         }
-    }
+#endif
+	}
 }
 

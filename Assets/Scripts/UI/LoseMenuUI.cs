@@ -61,6 +61,8 @@ namespace SR.UI
 					HandleEndgame();
 				};
 				YG._RewardedShow(0);
+#elif UNITY_ANDROID
+				gameInstance.ShowRewarded(HandleX2);
 #endif
 			});
 
@@ -87,6 +89,8 @@ namespace SR.UI
 					BackToPrevious();
 				};
 				YG._RewardedShow(0);
+#elif UNITY_ANDROID
+				gameInstance.ShowRewarded(HandleRespawn3HP);
 #endif
 			});
 
@@ -100,8 +104,22 @@ namespace SR.UI
 
 		#region Functions
 
+		private void HandleRespawn3HP()
+		{
+			bPlus3HPUsed = true;
+			gameplayBase.ResetPlayer(3);
+			BackToPrevious();
+		}
+
+		private void HandleX2()
+		{
+			gameInstance.AddBoughtGems(gems);
+			HandleEndgame();
+		}
+
 		private void HandleEndgame()
 		{
+#if UNITY_WEBGL
 			Debug.Log($"player {YandexGame.playerName} finished race");
 
 			if (time > YandexGame.savesData.records.maxTime && YandexGame.auth && YandexGame.playerName != "anonymous")
@@ -125,6 +143,7 @@ namespace SR.UI
 			{
 				Debug.Log("Rejected update RoadKing without login");
 			}
+#endif
 			gameplayBase.RestartGame();
 		}
 
@@ -151,15 +170,17 @@ namespace SR.UI
 
 		#endregion
 
-		#region Coroutines
+#region Coroutines
 
+#if UNITY_WEBGL
 		private IEnumerator UpdateSecondLeaderBoard(string techTitle, int value)
 		{
 			yield return new WaitForSeconds(2f);
 			YandexGame.NewLeaderboardScores(techTitle, value);
 			//buttonRestart.interactable = true;
 		}
+#endif
 
-		#endregion
+#endregion
 	}
 }

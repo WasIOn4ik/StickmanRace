@@ -2,8 +2,9 @@ using System.IO;
 
 namespace YG.Insides.BuildModify
 {
-    public static partial class ModifyIndexFile
-    {
+	public static partial class ModifyIndexFile
+	{
+#if UNITY_WEBGL
         private static string BUILD_PATCH;
 
         public static void ModifyIndex(string buildPatch)
@@ -20,5 +21,6 @@ namespace YG.Insides.BuildModify
 
             File.WriteAllText(filePath, fileText);
         }
-    }
+#endif
+	}
 }

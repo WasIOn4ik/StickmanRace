@@ -4,9 +4,10 @@ using UnityToolbag;
 
 namespace YG
 {
-    [CreateAssetMenu(fileName = "YandexGameData", menuName = "InfoYG")]
-    public class InfoYG : ScriptableObject
-    {
+	[CreateAssetMenu(fileName = "YandexGameData", menuName = "InfoYG")]
+	public class InfoYG : ScriptableObject
+	{
+#if UNITY_WEBGL
         [Header("Basic Settings")]
 
         [Tooltip("При инициализации объекта Player авторизованному игроку будет показано диалоговое окно с запросом на предоставление доступа к персональным данным. Запрашивается доступ только к аватару и имени, идентификатор пользователя всегда передается автоматически. Примерное содержание: Игра запрашивает доступ к вашему аватару и имени пользователя на сервисах Яндекса.\nЕсли вам достаточно знать идентификатор, а имя и аватар пользователя не нужны, используйте опциональный параметр scopes: false. В этом случае диалоговое окно не будет показано.")]
@@ -98,7 +99,7 @@ namespace YG
         [Tooltip("Настройки для метода локализации с помощью CSV файла. Это подразоумивает перевод по ключам всех текстов игры в таблице Excel или Google Sheets.")]
         public CSVTranslate CSVFileTranslate;
 
-        #region LanguagesEnumeration
+		#region LanguagesEnumeration
         [System.Serializable]
         public class Languages
         {
@@ -207,7 +208,7 @@ namespace YG
         [ConditionallyVisible(nameof(LocalizationEnable))]
         [Tooltip("Вы можете скорректировать размер шрифта для каждого языка. Допустим, для Японского языка вы можете указать -3. В таком случае, если бы базовый размер был бы, например, 10, то для японского языка он бы стал равен 7.")]
         public FontsSizeCorrect fontsSizeCorrect;
-        #endregion LanguagesEnumeration
+		#endregion LanguagesEnumeration
 
         [Header("Other")]
 
@@ -578,5 +579,6 @@ namespace YG
             }
             return name;
         }
-    }
+#endif
+	}
 }

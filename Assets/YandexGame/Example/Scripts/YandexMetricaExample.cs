@@ -6,6 +6,7 @@ namespace YG.Example
 {
     public class YandexMetricaExample : MonoBehaviour
     {
+#if UNITY_WEBGL
         public void TestSend1(string someEvent)
         {
             YandexMetrica.Send(someEvent);
@@ -66,5 +67,6 @@ namespace YG.Example
             // Отправится как просто евент без параметров
             YandexMetrica.Send("SomeEvent5", eventParams3);
         }
+#endif
     }
 }

@@ -5,6 +5,7 @@ namespace YG.Example
 {
 	public class LanguageExample : MonoBehaviour
 	{
+#if UNITY_WEBGL
 		[SerializeField] string ru;
 		[SerializeField] string en;
 		[SerializeField] string tr;
@@ -35,5 +36,6 @@ namespace YG.Example
 					break;
 			}
 		}
+#endif
 	}
 }

@@ -1,3 +1,4 @@
+using CAS.AdObject;
 using SR.Core;
 using SR.UI;
 using System.Collections;
@@ -41,6 +42,8 @@ public class GarageUI : MonoBehaviour
 		gameInstance.onGemsCountChanged += GameInstance_onGemsCountChanged;
 #if UNITY_WEBGL
 		YandexGame.StickyAdActivity(false);
+#elif UNITY_ANDROID
+		gameInstance.SetBannerActivity(false);
 #endif
 		plus50Button.onClick.AddListener(() =>
 		{
@@ -61,6 +64,8 @@ public class GarageUI : MonoBehaviour
 				gameInstance.Sounds.Unmute();
 			};
 			YG._RewardedShow(1);
+#elif UNITY_ANDROID
+			gameInstance.ShowRewarded(OnPlus50Reward);
 #endif
 		});
 		playButton.onClick.AddListener(() =>
@@ -109,7 +114,7 @@ public class GarageUI : MonoBehaviour
 					YandexGame.FullscreenShow();
 				}
 #elif UNITY_ANDROID
-				gameplayBase.StartGame();
+				gameInstance.ShowInterstitial(OnGameStart);
 #endif
 			}
 			else
@@ -138,6 +143,18 @@ public class GarageUI : MonoBehaviour
 	#endregion
 
 	#region Functions
+
+	private void OnGameStart()
+	{
+		gameInstance.SetBannerActivity(true);
+		gameplayBase.StartGame();
+	}
+
+	private void OnPlus50Reward()
+	{
+		gameInstance.AddBoughtGems(50);
+		gameInstance.Sounds.Unmute();
+	}
 
 	public void DestroyGarage()
 	{

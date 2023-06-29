@@ -4,8 +4,9 @@ using UnityEngine.Events;
 
 namespace YG
 {
-    public class ForVisualScriptYG : MonoBehaviour
-    {
+	public class ForVisualScriptYG : MonoBehaviour
+	{
+#if UNITY_WEBGL
         public YandexGame yandexGame;
         public UnityEvent GetDataEvent;
 
@@ -74,5 +75,6 @@ namespace YG
 
             GetDataEvent.Invoke();
         }
-    }
+#endif
+	}
 }

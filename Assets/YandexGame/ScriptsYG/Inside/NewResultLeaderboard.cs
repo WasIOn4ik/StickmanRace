@@ -3,8 +3,9 @@ using UnityEngine.UI;
 
 namespace YG.Example
 {
-    public class NewResultLeaderboard : MonoBehaviour
-    {
+	public class NewResultLeaderboard : MonoBehaviour
+	{
+#if UNITY_WEBGL
         [SerializeField] LeaderboardYG leaderboardYG;
         [SerializeField] InputField nameLbInputField;
         [SerializeField] InputField scoreLbInputField;
@@ -33,5 +34,6 @@ namespace YG.Example
             // Метод добавление нового рекорда обращением к компоненту LeaderboardYG
             // leaderboardYG.NewScoreTimeConvert(float.Parse(scoreLbInputField.text));
         }
-    }
+#endif
+	}
 }

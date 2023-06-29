@@ -5,6 +5,7 @@ namespace YG
 {
     public class PromptYG : MonoBehaviour
     {
+#if UNITY_WEBGL
         [Header("Buttons serialize")]
         [Tooltip("ќбъект (отключЄнна€ кнопка или текст), который будет сообщать о том, что €рлык не поддерживаетс€. ƒанный объект можно не указывать, тогда, если €рлык не будет поддерживатьс€ - ничего не будет отображатьс€.")]
         public GameObject notSupported;
@@ -77,5 +78,6 @@ namespace YG
             onPromptFail?.Invoke();
             UpdateData();
         }
+#endif
     }
 }

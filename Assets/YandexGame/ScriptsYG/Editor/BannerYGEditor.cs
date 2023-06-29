@@ -6,7 +6,8 @@ namespace YG.Insides
 {
     [CustomEditor(typeof(BannerYG))]
     public class BannerYGEditor : Editor
-    {
+	{
+#if UNITY_WEBGL
         BannerYG scr;
         CanvasScaler scaler;
 
@@ -42,5 +43,6 @@ namespace YG.Insides
                     scaler.matchWidthOrHeight = 1;
             }
         }
-    }
+#endif
+	}
 }

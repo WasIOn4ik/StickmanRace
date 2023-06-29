@@ -1,8 +1,9 @@
 
 namespace YG.Insides.BuildModify
 {
-    public static partial class ModifyIndexFile
-    {
+	public static partial class ModifyIndexFile
+	{
+#if UNITY_WEBGL
         static void SetPixelRatioMobile(ref string fileText)
         {
             InfoYG infoYG = ConfigYG.GetInfoYG();
@@ -19,5 +20,6 @@ namespace YG.Insides.BuildModify
                 fileText = fileText.Replace("config.devicePixelRatio = 1;", string.Empty);
             }
         }
-    }
+#endif
+	}
 }

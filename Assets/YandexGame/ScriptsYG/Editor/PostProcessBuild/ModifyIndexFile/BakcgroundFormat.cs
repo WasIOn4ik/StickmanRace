@@ -3,8 +3,9 @@ using UnityEngine;
 
 namespace YG.Insides.BuildModify
 {
-    public static partial class ModifyIndexFile
-    {
+	public static partial class ModifyIndexFile
+	{
+#if UNITY_WEBGL
         static void SetBakcgroundFormat(ref string fileText)
         {
             string searchCode = @"canvas.style.background = ""url('background.png') center / cover"";";
@@ -64,6 +65,6 @@ namespace YG.Insides.BuildModify
                 }
             }
         }
-
-    }
+#endif
+	}
 }

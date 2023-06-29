@@ -7,8 +7,8 @@ namespace SR.Core
 	public class ExplosionBullet : Bullet
 	{
 		#region Variables
-
-		[SerializeField] private Explosion objectToSpawnOnDestroy;
+/*
+		[SerializeField] private Explosion objectToSpawnOnDestroy;*/
 		[SerializeField] private float explosionScale;
 
 		#endregion

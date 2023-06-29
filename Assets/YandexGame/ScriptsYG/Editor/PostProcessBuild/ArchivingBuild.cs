@@ -3,8 +3,9 @@ using System.IO.Compression;
 
 namespace YG.Insides.BuildModify
 {
-    public static class ArchivingBuild
-    {
+	public static class ArchivingBuild
+	{
+#if UNITY_WEBGL
         public static void Archiving(string pathToBuiltProject)
         {
             InfoYG infoYG = ConfigYG.GetInfoYG();
@@ -36,7 +37,8 @@ namespace YG.Insides.BuildModify
                 }
             }
         }
-    }
+#endif
+	}
 }
 
 

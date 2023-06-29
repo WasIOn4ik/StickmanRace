@@ -5,6 +5,7 @@ namespace YG
 {
     public class ReviewYG : MonoBehaviour
     {
+#if UNITY_WEBGL
         [Tooltip("Открывать окно авторизации, если пользователь не авторизован.")]
         public bool authDialog;
         [Tooltip("Активировать оценку игры на мобильных устройствах? На мобильных устройствах открытие окна для оценки может вызывать зависание игры!")]
@@ -59,5 +60,6 @@ namespace YG
         }
 
         public void ReviewShow() => YandexGame.ReviewShow(authDialog);
-    }
+#endif
+	}
 }

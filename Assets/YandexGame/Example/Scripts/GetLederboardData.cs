@@ -2,8 +2,9 @@ using UnityEngine;
 
 namespace YG.Example
 {
-    public class GetLederboardData : MonoBehaviour
-    {
+	public class GetLederboardData : MonoBehaviour
+	{
+#if UNITY_WEBGL
         public LeaderboardYG leaderboardYG;
 
         public void DebugLederboardData()
@@ -18,5 +19,6 @@ namespace YG.Example
 
             Debug.Log(debugData);
         }
-    }
+#endif
+	}
 }

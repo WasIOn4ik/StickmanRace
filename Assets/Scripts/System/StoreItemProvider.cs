@@ -80,5 +80,6 @@ public class StoreItemProvider
 				onLoadComplete?.Invoke();
 			}
 		}
+		Debug.Log("Shop icons loaded");
 	}
 }

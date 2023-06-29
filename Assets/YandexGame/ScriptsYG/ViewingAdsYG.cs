@@ -5,8 +5,9 @@ using UnityToolbag;
 
 namespace YG
 {
-    public class ViewingAdsYG : MonoBehaviour
-    {
+	public class ViewingAdsYG : MonoBehaviour
+	{
+#if UNITY_WEBGL
         public enum CursorVisible
         {
             [InspectorName("Show Cursor")] Show,
@@ -173,5 +174,6 @@ namespace YG
             if (pause) customEvents.OpenAd.Invoke();
             else customEvents.CloseAd.Invoke();
         }
-    }
+#endif
+	}
 }

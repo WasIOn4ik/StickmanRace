@@ -59,6 +59,10 @@ MonoBehaviour:
     m_Key: Garage_Leaderboard_Distance
     m_Metadata:
       m_Items: []
+  - m_Id: 6229594568871936
+    m_Key: App_Title
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

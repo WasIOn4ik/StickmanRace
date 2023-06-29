@@ -5,8 +5,9 @@ using System;
 
 namespace YG
 {
-    public class GraphicSettingsYG : MonoBehaviour
-    {
+	public class GraphicSettingsYG : MonoBehaviour
+	{
+#if UNITY_WEBGL
         [SerializeField] InfoYG infoYG;
         [SerializeField] Dropdown dropdown;
         [SerializeField] Text labelText;
@@ -305,5 +306,6 @@ namespace YG
                 itemText.fontSize += fontSizeArray[fontNumber];
             }
         }
-    }
+#endif
+	}
 }

@@ -8,6 +8,7 @@ namespace YG
 {
     public static class YandexMetrica
     {
+#if UNITY_WEBGL
         public static void Send(string eventName)
         {
 #if UNITY_EDITOR
@@ -68,5 +69,6 @@ namespace YG
                 YandexMetricaSendInternal(eventName, eventData);
             }
         }
+#endif
     }
 }

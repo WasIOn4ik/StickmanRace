@@ -4,8 +4,9 @@ using System.Collections;
 
 namespace YG.Insides
 {
-    public class CallingAnEvent : MonoBehaviour
-    {
+	public class CallingAnEvent : MonoBehaviour
+	{
+#if UNITY_WEBGL
         public IEnumerator CallingAd(float duration)
         {
             yield return new WaitForSecondsRealtime(duration);
@@ -20,6 +21,7 @@ namespace YG.Insides
             YandexGame.Instance.RewardVideo(id);
             Destroy(gameObject);
         }
-    }
+#endif
+	}
 }
 #endif

@@ -3,8 +3,9 @@ using UnityEngine.UI;
 
 namespace YG.Example
 {
-    public class RewardedAd : MonoBehaviour
-    {
+	public class RewardedAd : MonoBehaviour
+	{
+#if UNITY_WEBGL
         [SerializeField] int AdID;
         [SerializeField] Text textMoney;
 
@@ -29,5 +30,6 @@ namespace YG.Example
             moneyCount += count;
             textMoney.text = "" + moneyCount;
         }
-    }
+#endif
+	}
 }

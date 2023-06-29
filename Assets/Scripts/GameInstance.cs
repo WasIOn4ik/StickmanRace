@@ -1,12 +1,16 @@
+using CAS.AdObject;
 using SR.Customization;
 using SR.Library;
 using SR.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.Purchasing;
+using UnityEngine.Purchasing.Extension;
 using UnityEngine.Scripting;
 using YG;
 using Zenject;
@@ -47,7 +51,11 @@ namespace SR.Core
 		public bool bSoundsOn;
 	}
 
+#if UNITY_ANDROID
+	public class GameInstance : MonoBehaviour, IDetailedStoreListener
+#elif UNITY_WEBGL
 	public class GameInstance : MonoBehaviour
+#endif
 	{
 		#region HelperClasses
 
@@ -62,6 +70,216 @@ namespace SR.Core
 
 		public event EventHandler<DetailEventArgs> onDetailChanged;
 		public event EventHandler onGemsCountChanged;
+
+#if UNITY_ANDROID
+
+		public const string NO_ADS_ID = "com.no_ads";
+		public const string NO_ADS_SUBTYPE = "no_ads";
+
+		public Action onPurchaseCompleted;
+
+		#region IStoreListener
+
+		public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+		{
+			Debug.Log("Android IAP initialized");
+			storeController = controller;
+			List<Product> sortedProducts = storeController.products.all.OrderBy(item => item.definition.id).ToList();
+			foreach (var p in sortedProducts)
+			{
+				if (p.definition.id == NO_ADS_ID)
+				{
+					Debug.Log($"Handling NO-AD {p.hasReceipt}");
+					bNoAdsBought = p.hasReceipt;
+					if (banner)
+						SetBannerActivity(false);
+				}
+			}
+
+			extensionProvider = extensions;
+			if (!StoreItemProvider.IsInitialized())
+			{
+				StoreItemProvider.Initialize(storeController.products);
+			}
+		}
+
+		public void OnInitializeFailed(InitializationFailureReason error)
+		{
+			Debug.LogError(error.ToString());
+		}
+
+		public void OnInitializeFailed(InitializationFailureReason error, string message)
+		{
+			Debug.LogError(error.ToString() + " " + message);
+		}
+
+		public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
+		{
+			Debug.LogError("Failed to purchase product: " + failureReason.ToString());
+		}
+
+		public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
+		{
+			Debug.Log("Purchase!");
+
+			var def = purchaseEvent.purchasedProduct.definition;
+			foreach (var pay in def.payouts)
+			{
+				Debug.Log($"Payouts: {pay.subtype} x {pay.quantity}");
+				if (pay.subtype == "Gems")
+				{
+					AddBoughtGems((int)pay.quantity);
+				}
+				else if (pay.subtype == NO_ADS_SUBTYPE)
+				{
+					bNoAdsBought = true;
+					Debug.Log("No ads bought");
+				}
+			}
+
+			onPurchaseCompleted?.Invoke();
+			onPurchaseCompleted = null;
+
+			return PurchaseProcessingResult.Complete;
+		}
+
+		public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
+		{
+			onPurchaseCompleted?.Invoke();
+			onPurchaseCompleted = null;
+		}
+
+		#endregion
+		public static IStoreController storeController;
+		public static IExtensionProvider extensionProvider;
+		private void HandleIAPPCatalog(AsyncOperation operation)
+		{
+			Debug.Log("Handling IAP catalog");
+			var request = operation as ResourceRequest;
+			ProductCatalog catalog = JsonUtility.FromJson<ProductCatalog>((request.asset as TextAsset).text);
+
+#if UNITY_EDITOR
+			StandardPurchasingModule.Instance().useFakeStoreUIMode = FakeStoreUIMode.StandardUser;
+			StandardPurchasingModule.Instance().useFakeStoreAlways = true;
+#endif
+
+			ConfigurationBuilder builder = ConfigurationBuilder.Instance(
+				StandardPurchasingModule.Instance(AppStore.GooglePlay));
+			foreach (ProductCatalogItem item in catalog.allProducts)
+			{
+				List<PayoutDefinition> pays = new List<PayoutDefinition>();
+
+				foreach (var pd in item.Payouts)
+				{
+					var pay = new PayoutDefinition(pd.subtype, pd.quantity, pd.data);
+					pays.Add(pay);
+				}
+
+				builder.AddProduct(item.id, item.type, null, pays);
+			}
+
+			UnityPurchasing.Initialize(this, builder);
+		}
+
+		public bool bNoAdsBought;
+		public BannerAdObject banner;
+		public void ClearBannerCallbacks()
+		{
+			banner.OnAdFailedToLoad.RemoveAllListeners();
+			banner.OnAdClicked.RemoveAllListeners();
+			banner.OnAdHidden.RemoveAllListeners();
+			banner.OnAdImpression.RemoveAllListeners();
+			banner.OnAdLoaded.RemoveAllListeners();
+			banner.OnAdShown.RemoveAllListeners();
+		}
+		public void SetBannerActivity(bool active)
+		{
+			banner.gameObject.SetActive(active && !bNoAdsBought);
+		}
+		public InterstitialAdObject interstitial;
+		public void ClearInterstitialCallbacks()
+		{
+			interstitial.OnAdFailedToLoad.RemoveAllListeners();
+			interstitial.OnAdFailedToShow.RemoveAllListeners();
+			interstitial.OnAdClicked.RemoveAllListeners();
+			interstitial.OnAdClosed.RemoveAllListeners();
+			interstitial.OnAdImpression.RemoveAllListeners();
+			interstitial.OnAdLoaded.RemoveAllListeners();
+			interstitial.OnAdShown.RemoveAllListeners();
+		}
+		public void ShowInterstitial(Action onSuccess)
+		{
+			if (bNoAdsBought)
+			{
+				onSuccess?.Invoke();
+				return;
+			}
+			interstitial.OnAdClosed.AddListener(() =>
+			{
+				soundSystem.Unmute();
+				ClearInterstitialCallbacks();
+				onSuccess?.Invoke();
+			});
+			interstitial.OnAdFailedToLoad.AddListener(reason =>
+			{
+				Debug.Log($"Failed to load interstitial {reason}");
+				soundSystem.Unmute();
+				ClearInterstitialCallbacks();
+				onSuccess?.Invoke();
+
+			});
+			interstitial.OnAdFailedToShow.AddListener(reason =>
+			{
+				Debug.Log($"Failed to show interstitial {reason}");
+				soundSystem.Unmute();
+				ClearInterstitialCallbacks();
+				onSuccess?.Invoke();
+			});
+			soundSystem.Mute();
+			interstitial.Present();
+		}
+		public RewardedAdObject rewarded;
+		public void ClearRewardedCallbacks()
+		{
+			rewarded.OnAdClicked.RemoveAllListeners();
+			rewarded.OnAdClosed.RemoveAllListeners();
+			rewarded.OnAdFailedToLoad.RemoveAllListeners();
+			rewarded.OnAdFailedToShow.RemoveAllListeners();
+			rewarded.OnAdImpression.RemoveAllListeners();
+			rewarded.OnAdLoaded.RemoveAllListeners();
+			rewarded.OnAdShown.RemoveAllListeners();
+			rewarded.OnReward.RemoveAllListeners();
+		}
+		public void ShowRewarded(Action onSuccess)
+		{
+			rewarded.OnReward.AddListener(() =>
+			{
+				ClearRewardedCallbacks();
+				soundSystem.Unmute();
+				onSuccess?.Invoke();
+			});
+			rewarded.OnAdClosed.AddListener(() =>
+			{
+				ClearRewardedCallbacks();
+				soundSystem.Unmute();
+			});
+			rewarded.OnAdFailedToLoad.AddListener(reason =>
+			{
+				Debug.Log($"Rewarded ad failed to load {reason}");
+				ClearRewardedCallbacks();
+				soundSystem.Unmute();
+			});
+			rewarded.OnAdFailedToShow.AddListener(reason =>
+			{
+				Debug.Log($"Rewarded ad failed to show {reason}");
+				ClearRewardedCallbacks();
+				soundSystem.Unmute();
+
+			});
+			soundSystem.Mute();
+			rewarded.Present();
+		}
+#endif
 
 		[Header("Components")]
 		[SerializeField] private MenusListSO menusLibrary;
@@ -91,14 +309,19 @@ namespace SR.Core
 
 		#region UnityMessages
 
-		private void Awake()
+#if UNITY_ANDROID
+		private async void Awake()
 		{
-#if !UNITY_WEBGL
 			LoadRecords();
 			LoadCarConfig();
 			LoadUnlockedDetails();
 			LoadGameSettings();
+			await UnityServices.InitializeAsync();
+			ResourceRequest request = Resources.LoadAsync<TextAsset>("IAPProductCatalog");
+			request.completed += HandleIAPPCatalog;
 #elif UNITY_WEBGL
+		private void Awake()
+		{
 			Application.focusChanged += Application_focusChanged;
 #endif
 			RangeEnemy.onAnyEnemyShoot += RangeEnemy_onAnyEnemyShoot;
@@ -169,7 +392,6 @@ namespace SR.Core
 			}
 			YandexGame.StickyAdActivity(!YandexGame.savesData.noAdsBought);
 		}
-#endif
 
 		private void Application_focusChanged(bool obj)
 		{
@@ -178,6 +400,7 @@ namespace SR.Core
 			else if (!YandexGame.nowVideoAd && !YandexGame.nowFullAd)
 				soundSystem.Unmute();
 		}
+#endif
 
 		#endregion
 

@@ -11,8 +11,9 @@ using System.Net;
 
 namespace YG
 {
-    public class LanguageYG : MonoBehaviour
-    {
+	public class LanguageYG : MonoBehaviour
+	{
+#if UNITY_WEBGL
         public Text textUIComponent;
         public TextMesh textMeshComponent;
         public InfoYG infoYG;
@@ -304,5 +305,6 @@ namespace YG
             processTranslateLabel = countLang + "/" + countLangAvailable + " completed";
         }
 #endif
-    }
+#endif
+	}
 }

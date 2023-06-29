@@ -6,8 +6,9 @@ using UnityToolbag;
 
 namespace YG
 {
-    public class LeaderboardYG : MonoBehaviour
-    {
+	public class LeaderboardYG : MonoBehaviour
+	{
+#if UNITY_WEBGL
         [Tooltip("Техническое название соревновательной таблицы")]
         public string nameLB;
         [Tooltip("Максимальное кол-во получаемых игроков")]
@@ -225,6 +226,7 @@ namespace YG
         {
             return TimeTypeConvertStatic(score, decimalSize);
         }
-    }
+#endif
+	}
 }
 

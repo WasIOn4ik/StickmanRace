@@ -3,8 +3,9 @@ using UnityEngine.UI;
 
 namespace YG
 {
-    public class GetPlayerYG : MonoBehaviour
-    {
+	public class GetPlayerYG : MonoBehaviour
+	{
+#if UNITY_WEBGL
         public Text textPlayerName;
         public ImageLoadYG imageLoadPlayerPhoto;
 
@@ -56,5 +57,6 @@ namespace YG
                 else textPlayerName.text = YandexGame.playerName;
             }
         }
-    }
+#endif
+	}
 }

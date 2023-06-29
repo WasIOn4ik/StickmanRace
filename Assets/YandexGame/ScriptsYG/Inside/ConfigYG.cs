@@ -3,8 +3,9 @@ using UnityEngine;
 
 namespace YG.Insides
 {
-    public class ConfigYG : MonoBehaviour
-    {
+	public class ConfigYG : MonoBehaviour
+	{
+#if UNITY_WEBGL
 #if UNITY_EDITOR
         public static string patchYGPrefab = "Assets/YandexGame/Prefabs/YandexGame.prefab";
 
@@ -34,5 +35,6 @@ namespace YG.Insides
             return infoYG;
         }
 #endif
-    }
+#endif
+	}
 }

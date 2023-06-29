@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 namespace YG.Insides
 {
-    public class CSVFileEditorWindow : EditorWindow
-    {
+	public class CSVFileEditorWindow : EditorWindow
+	{
+#if UNITY_WEBGL
         [MenuItem("Tools/PluginYG/Localization/Import\\Export Language Translations")]
         public static void ShowWindow()
         {
@@ -199,5 +200,6 @@ namespace YG.Insides
             if (objectsTranlate.Count > 10 && position.height < objectsTranlate.Count * 20.6f + 150)
                 GUILayout.EndScrollView();
         }
-    }
+#endif
+	}
 }

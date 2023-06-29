@@ -32,7 +32,7 @@ namespace SR.UI
 
 		[Inject] private SoundSystem soundsSystem;
 
-#endregion
+		#endregion
 
 		#region UnityMessages
 
@@ -51,7 +51,15 @@ namespace SR.UI
 
 		public void Activate()
 		{
-			purchaseButton.interactable = true;
+			if (product.definition.id == GameInstance.NO_ADS_ID)
+			{
+				Debug.Log($"Handling NO-ADs item {product.hasReceipt}");
+				purchaseButton.interactable = !product.hasReceipt;
+			}
+			else
+			{
+				purchaseButton.interactable = true;
+			}
 		}
 
 #if UNITY_ANDROID
@@ -62,6 +70,7 @@ namespace SR.UI
 			priceText.text = $"{product.metadata.localizedPriceString} {product.metadata.isoCurrencyCode}";
 			var tex = StoreItemProvider.GetIcon(product.definition.id);
 			icon.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one / 2f);
+			Activate();
 		}
 #elif UNITY_WEBGL
 		public void Initialize(string id, string title, string price)
@@ -86,7 +95,7 @@ namespace SR.UI
 			purchaseButton.interactable = true;
 		}
 
-#endregion
+		#endregion
 	}
 }
 

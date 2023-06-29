@@ -2,11 +2,13 @@
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Networking;
+using Unity.VisualScripting;
 
 namespace YG
 {
     public class ImageLoadYG : MonoBehaviour
     {
+#if UNITY_WEBGL
         public bool startLoad = true;
         public RawImage rawImage;
         public Image spriteImage;
@@ -96,5 +98,6 @@ namespace YG
             if (loadAnimObj) loadAnimObj.SetActive(false);
 #endif
         }
-    }
+#endif
+	}
 }

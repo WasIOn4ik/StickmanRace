@@ -4,8 +4,9 @@ using System.IO;
 
 namespace YG.Insides
 {
-    public class CSVManager
-    {
+	public class CSVManager
+	{
+#if UNITY_WEBGL
         public static readonly string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
 
         // Чтение CSV файла. Поиск переводов по ключу
@@ -312,5 +313,6 @@ namespace YG.Insides
 
             return s;
         }
-    }
+#endif
+	}
 }

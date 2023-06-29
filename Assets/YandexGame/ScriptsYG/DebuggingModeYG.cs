@@ -7,6 +7,7 @@ namespace YG
 {
     public class DebuggingModeYG : MonoBehaviour
     {
+#if UNITY_WEBGL
         [Tooltip("Это значение, которое Вы будете передавать с помощью Deep Linking. Можете написать слово, например, debug и добавить свой пароль, например, 123. Получится debug123.")]
         public string payloadPassword = "debug123";
         [Tooltip("Отображение панели управления в Unity Editor")]
@@ -179,5 +180,6 @@ namespace YG
         {
             SceneManager.LoadScene(index);
         }
+#endif
     }
 }

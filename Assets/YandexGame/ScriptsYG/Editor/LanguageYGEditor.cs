@@ -8,6 +8,7 @@ namespace YG.Insides
     [CustomEditor(typeof(LanguageYG))]
     public class LanguageYGEditor : Editor
     {
+#if UNITY_WEBGL
         LanguageYG scr;
 
         GUIStyle red;
@@ -378,5 +379,6 @@ namespace YG.Insides
             EditorUtility.SetDirty(obj);
             EditorSceneManager.MarkSceneDirty(obj.scene);
         }
+#endif
     }
 }

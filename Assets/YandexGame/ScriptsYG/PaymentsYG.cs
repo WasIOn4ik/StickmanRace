@@ -7,6 +7,7 @@ namespace YG
 {
 	public class PaymentsYG : MonoBehaviour
 	{
+#if UNITY_WEBGL
 		[Tooltip("¬озможность купить один товар много раз.")]
 		public bool multiplePurchase;
 
@@ -164,5 +165,6 @@ namespace YG
 		{
 			YandexGame.BuyPayments(IDPurchase);
 		}
+#endif
 	}
 }

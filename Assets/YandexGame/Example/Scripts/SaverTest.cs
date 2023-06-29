@@ -3,8 +3,9 @@ using UnityEngine.UI;
 
 namespace YG.Example
 {
-    public class SaverTest : MonoBehaviour
-    {
+	public class SaverTest : MonoBehaviour
+	{
+#if UNITY_WEBGL
         [SerializeField] InputField integerText;
         [SerializeField] InputField stringifyText;
         [SerializeField] Text systemSavesText;
@@ -47,5 +48,6 @@ namespace YG.Example
             $"First Session - {YandexGame.savesData.isFirstSession}\n" +
             $"Prompt Done - {YandexGame.savesData.promptDone}\n";
         }
-    }
+#endif
+	}
 }

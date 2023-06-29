@@ -17,6 +17,7 @@ namespace SR.UI
 		[SerializeField] private Button startButton;
 		[SerializeField] private Button settingsButton;
 
+		[Inject] private GameInstance gameInstance;
 		[Inject] private SoundSystem soundsSystem;
 
 		#endregion
@@ -43,8 +44,7 @@ namespace SR.UI
 				}
 
 #elif UNITY_ANDROID
-				startButton.interactable = false;
-				StartCoroutine(DelayedStart());
+				gameInstance.ShowInterstitial(GoToGarage);
 #endif
 			});
 
@@ -56,6 +56,7 @@ namespace SR.UI
 			soundsSystem.PlayMenuMusic();
 		}
 
+#if UNITY_WEBGL
 		private void HandleFullAdError()
 		{
 			YandexGame.Instance.CloseFullscreenAd.RemoveListener(HandleStartGameYandex);
@@ -68,6 +69,12 @@ namespace SR.UI
 			YandexGame.Instance.CloseFullscreenAd.RemoveListener(HandleStartGameYandex);
 			SceneLoader.LoadScene(SRScene.GameScene);
 		}
+#endif
+
+		private void GoToGarage()
+		{
+			SceneLoader.LoadScene(SRScene.GameScene);
+		}
 
 		private IEnumerator DelayedStart()
 		{
@@ -75,6 +82,6 @@ namespace SR.UI
 			SceneLoader.LoadScene(SRScene.GameScene);
 		}
 
-		#endregion
+#endregion
 	}
 }
