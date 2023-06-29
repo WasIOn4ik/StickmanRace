@@ -24,6 +24,7 @@ namespace SR.Core
 		[Header("Components")]
 		[SerializeField] private SpriteShapeController spriteShapeController;
 		[SerializeField] private Renderer spriteRenderer;
+		[SerializeField] private Transform rampPrefab;
 
 		[Header("Spawn area")]
 		[SerializeField] private float platformOnStartRightLength = 5f;
@@ -144,6 +145,11 @@ namespace SR.Core
 			}
 		}
 
+		private float GetLength()
+		{
+			return terainControlPointsCount * terrainLengthMultiplier;
+		}
+
 		private void GenerateTerrain()
 		{
 			Clear();
@@ -214,20 +220,31 @@ namespace SR.Core
 
 		private IEnumerator SpawnEnemies()
 		{
-			int spawnDelay = Mathf.Max((int)(emptyPoints.Count / difficulty / 10), 1);
+			int numOfSegment = (int)(transform.position.x / GetLength());
+			int rampPos = Random.Range(2, emptyPoints.Count);
+			int spawnDelay = Mathf.Max((int)(emptyPoints.Count / difficulty / 8), 1);
 			for (int i = 2; i < emptyPoints.Count; i++)
 			{
-				if (i % spawnDelay != 0)
+				if (numOfSegment % 2 == 1 && rampPos == i)
+				{
+					Instantiate(rampPrefab, transform.TransformPoint(
+						spriteShapeController.spline.GetPosition(emptyPoints[i])), Quaternion.identity, transform);
 					continue;
+				}
+				if (i % spawnDelay != 0)
+				{
+					continue;
+				}
 
 				bool bDestructibleOutpost = Random.Range(0, 4) < 2;
 
 				if (bDestructibleOutpost)
 				{
 					i++;
-					if(i < emptyPoints.Count)
+					if (i < emptyPoints.Count)
 					{
-						var dOutpost = Instantiate(destructibleOutpostPrefab, transform.TransformPoint(spriteShapeController.spline.GetPosition(emptyPoints[i])), Quaternion.identity, transform);
+						var dOutpost = Instantiate(destructibleOutpostPrefab,
+							transform.TransformPoint(spriteShapeController.spline.GetPosition(emptyPoints[i])), Quaternion.identity, transform);
 						dOutpost.Init(location);
 					}
 					i++;

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -74,21 +75,43 @@ namespace SR.UI
 
 		private void UpdateInputs()
 		{
-			if (ForwardButton.isPressed)
+			bool move = Input.GetKey(KeyCode.D);
+			bool rot = Input.GetKey(KeyCode.A);
+
+			if (!move)
 			{
-				gameInputs.SetMovement(1f);
-			}
-			else if (BackwardButton.isPressed)
-			{
-				gameInputs.SetMovement(-1f);
+				if (ForwardButton.isPressed)
+				{
+					gameInputs.SetMovement(1f);
+				}
+				else if (BackwardButton.isPressed)
+				{
+					gameInputs.SetMovement(-1f);
+				}
+				else
+				{
+					gameInputs.SetMovement(0f);
+				}
 			}
 			else
 			{
-				gameInputs.SetMovement(0f);
+				gameInputs.SetMovement(move ? 1f : 0);
 			}
-			if(RotateButton.isPressed)
+
+			if (!rot)
 			{
-				gameInputs.SetRotation(true);
+				if (RotateButton.isPressed)
+				{
+					gameInputs.SetRotation(true);
+				}
+				else
+				{
+					gameInputs.SetRotation(false);
+				}
+			}
+			else
+			{
+				gameInputs.SetRotation(rot);
 			}
 		}
 

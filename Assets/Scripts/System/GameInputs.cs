@@ -20,15 +20,6 @@ namespace SR.Core
 
 		#endregion
 
-		#region UnityMessages
-
-		private void Update()
-		{
-			SetRotation(Input.GetKey(KeyCode.A));
-		}
-
-		#endregion
-
 		#region Functions
 
 		public float GetMovement()

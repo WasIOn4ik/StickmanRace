@@ -51,6 +51,7 @@ namespace SR.Core
 			Debug.Log("Unmuted");
 			muted = false;
 			musicAudio.volume = volumeMultiplier * musicCoef;
+			musicAudio.Play();
 		}
 
 		public void SetMaxCarSound(float sound)
@@ -251,6 +252,7 @@ namespace SR.Core
 
 		public void PlayMenuMusic()
 		{
+			Debug.Log("Menu music");
 			if (musicVolumeCoroutine != null)
 				StopCoroutine(musicVolumeCoroutine);
 

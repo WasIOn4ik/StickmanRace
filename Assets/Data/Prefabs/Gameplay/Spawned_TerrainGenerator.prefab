@@ -107,6 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteShapeController: {fileID: 1271138085927956372}
   spriteRenderer: {fileID: 1271138085927956373}
+  rampPrefab: {fileID: 8831126399792259591, guid: 901268ceda51a8c43a72184c9d819044, type: 3}
   platformOnStartRightLength: 0
   platformExitSmoothness: 0
   platformLeftSideOffset: 0
