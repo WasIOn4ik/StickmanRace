@@ -12,7 +12,10 @@ public class AndroidLeaderboard : MonoBehaviour
 	public static void PostLEaderboardResult(string leaderboardName, int score)
 	{
 		if (Social.localUser.authenticated)
+		{
+			Debug.Log($"GPGS_ANDROID: Trying to update {leaderboardName} WITH SCORE {score}");
 			Social.ReportScore(score, leaderboardName, HandlePostResults);
+		}
 		else
 			Debug.Log("Can't update leaderboard while not authenticated");
 	}

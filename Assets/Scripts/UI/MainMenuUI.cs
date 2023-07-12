@@ -3,6 +3,7 @@ using SR.SceneManagement;
 using SR.UI;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
@@ -16,6 +17,7 @@ namespace SR.UI
 		[Header("Main")]
 		[SerializeField] private Button startButton;
 		[SerializeField] private Button settingsButton;
+		[SerializeField] private TextMeshProUGUI MessageAboutLogin;
 
 		[Inject] private GameInstance gameInstance;
 		[Inject] private SoundSystem soundsSystem;
@@ -44,7 +46,15 @@ namespace SR.UI
 				}
 
 #elif UNITY_ANDROID
-				gameInstance.ShowInterstitial(GoToGarage);
+				if (Social.localUser.authenticated)
+				{
+					gameInstance.ShowInterstitial(GoToGarage);
+				}
+				else
+				{
+					gameInstance.TryLogin(() => { gameInstance.ShowInterstitial(GoToGarage); });
+					MessageAboutLogin.color = Color.green;
+				}
 #endif
 			});
 
@@ -70,6 +80,13 @@ namespace SR.UI
 			SceneLoader.LoadScene(SRScene.GameScene);
 		}
 #endif
+		private void Update()
+		{
+			var col = MessageAboutLogin.color;
+			col.a -= Time.deltaTime * 0.75f;
+			col.a = Mathf.Max(col.a, 0);
+			MessageAboutLogin.color = col;
+		}
 
 		private void GoToGarage()
 		{
@@ -82,6 +99,6 @@ namespace SR.UI
 			SceneLoader.LoadScene(SRScene.GameScene);
 		}
 
-#endregion
+		#endregion
 	}
 }

@@ -112,7 +112,7 @@ namespace SR.UI
 			AndroidLeaderboard.PostLEaderboardResult(GPGSIds.leaderboard_roads, (int)gameInstance.GetRecords().totalDistance);
 #endif
 			//Каждую третью гонку, в которой игрок не смотрел рекламу
-			if(racesCount % 3 == 2)
+			if (racesCount % 3 == 2)
 			{
 				gameInstance.ShowInterstitial(gameplayBase.RestartGame);
 			}

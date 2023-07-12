@@ -5,9 +5,25 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
+using Zenject;
+
+#if UNITY_WEBGL
 using YG;
 using YG.Example;
-using Zenject;
+#endif
+
+#if UNITY_ANDROID
+using GooglePlayGames;
+using UnityEngine.Purchasing;
+using UnityEngine.Purchasing.Extension;
+using GooglePlayGames.BasicApi;
+using GooglePlayGames.BasicApi.SavedGame;
+using System.Linq;
+using Unity.Services.Core;
+using CAS.AdObject;
+using GooglePlayGames.OurUtils;
+using System.Collections;
+#endif
 
 namespace SR.Core
 {
@@ -68,6 +84,9 @@ namespace SR.Core
 #if UNITY_ANDROID
 
 		#region Variables
+
+		public static bool isInterstitialActive = false;
+		public static bool isRewardedActive = false;
 
 		public const string NO_ADS_ID = "com.no_ads";
 		public const string NO_ADS_SUBTYPE = "no_ads";
@@ -176,6 +195,7 @@ namespace SR.Core
 				StandardPurchasingModule.Instance(AppStore.GooglePlay));
 			foreach (ProductCatalogItem item in catalog.allProducts)
 			{
+				Debug.Log($"Handling product: {item.id}, {item.type} ");
 				List<PayoutDefinition> pays = new List<PayoutDefinition>();
 
 				foreach (var pd in item.Payouts)
@@ -183,10 +203,11 @@ namespace SR.Core
 					var pay = new PayoutDefinition(pd.subtype, pd.quantity, pd.data);
 					pays.Add(pay);
 				}
-
+				Debug.Log($"Payouts: {pays.Count}");
 				builder.AddProduct(item.id, item.type, null, pays);
 			}
 
+			Debug.Log(builder.products.Count);
 			UnityPurchasing.Initialize(this, builder);
 		}
 
@@ -378,25 +399,79 @@ namespace SR.Core
 
 #if UNITY_ANDROID
 
+		public void TryLogin(Action onSuccess = null)
+		{
+			if (PlayGamesPlatform.Instance.IsAuthenticated())
+			{
+				Debug.Log("Already logged in");
+				onSuccess?.Invoke();
+				return;
+			}
+			PlayGamesPlatform.Instance.ManuallyAuthenticate(code =>
+			{
+				if (code == SignInStatus.Success)
+				{
+					Debug.Log("Manual TRY Auth success");
+					OpenSave(false);
+					onSuccess?.Invoke();
+				}
+				else
+				{
+					Debug.LogError($"Error while manual TRY auth: {code}");
+				}
+			});
+		}
+
 		private async void Awake()
 		{
 			CreateInitialData();
 			UpdateUnlockedDetails();
-			if (!Social.localUser.authenticated)
+			PlayGamesPlatform.Activate();
+
+			if (!PlayGamesPlatform.Instance.IsAuthenticated())
 			{
-				PlayGamesPlatform.Activate();
-				PlayGamesPlatform.Instance.ManuallyAuthenticate(code =>
+				PlayGamesPlatform.Instance.Authenticate(code =>
 				{
 					if (code == SignInStatus.Success)
 					{
-						Debug.Log("Auth success");
+						Debug.Log("Simple Auth success");
 						OpenSave(false);
 					}
-					else
-					{
-						Debug.LogError($"Error while auth {code}");
-					}
 				});
+
+
+				//Social.Active.localUser.Authenticate(TryAuthenticate);
+				/*
+				#if !UNITY_EDITOR
+								PlayGamesPlatform.Instance.Authenticate(code =>
+								{
+									if (code == SignInStatus.Success)
+									{
+										Debug.Log("Simple Auth success");
+										OpenSave(false);
+									}
+									else
+									{
+										while (!PlayGamesPlatform.Instance.IsAuthenticated())
+										{
+											Debug.LogError($"Error while simple auth {code}");
+											PlayGamesPlatform.Instance.ManuallyAuthenticate(code =>
+											{
+												if (code == SignInStatus.Success)
+												{
+													Debug.Log("Manual Auth success");
+													OpenSave(false);
+												}
+												else
+												{
+													Debug.LogError($"Error while manual auth {code}");
+												}
+											});
+										}
+									}
+								});
+				#endif*/
+
 			}
 			await UnityServices.InitializeAsync();
 			ResourceRequest request = Resources.LoadAsync<TextAsset>("IAPProductCatalog");
@@ -415,19 +490,27 @@ namespace SR.Core
 		public void ShowInterstitial(Action onSuccess)
 		{
 #if UNITY_ANDROID
+			if (isInterstitialActive || isRewardedActive)
+				return;
 			if (bNoAdsBought)
 			{
 				onSuccess?.Invoke();
 				return;
 			}
+			interstitial.OnAdShown.AddListener(() =>
+			{
+				isInterstitialActive = true;
+			});
 			interstitial.OnAdClosed.AddListener(() =>
 			{
+				isInterstitialActive = false;
 				soundSystem.Unmute();
 				ClearInterstitialCallbacks();
 				onSuccess?.Invoke();
 			});
 			interstitial.OnAdFailedToLoad.AddListener(reason =>
 			{
+				isInterstitialActive = false;
 				Debug.Log($"Failed to load interstitial {reason}");
 				soundSystem.Unmute();
 				ClearInterstitialCallbacks();
@@ -436,6 +519,7 @@ namespace SR.Core
 			});
 			interstitial.OnAdFailedToShow.AddListener(reason =>
 			{
+				isInterstitialActive = false;
 				Debug.Log($"Failed to show interstitial {reason}");
 				soundSystem.Unmute();
 				ClearInterstitialCallbacks();
@@ -480,25 +564,35 @@ namespace SR.Core
 		public void ShowRewarded(Action onSuccess)
 		{
 #if UNITY_ANDROID
+			if (isInterstitialActive || isRewardedActive)
+				return;
+			rewarded.OnAdShown.AddListener(() =>
+			{
+				isRewardedActive = true;
+			});
 			rewarded.OnReward.AddListener(() =>
 			{
+				isRewardedActive = false;
 				ClearRewardedCallbacks();
 				soundSystem.Unmute();
 				onSuccess?.Invoke();
 			});
 			rewarded.OnAdClosed.AddListener(() =>
 			{
+				isRewardedActive = false;
 				ClearRewardedCallbacks();
 				soundSystem.Unmute();
 			});
 			rewarded.OnAdFailedToLoad.AddListener(reason =>
 			{
+				isRewardedActive = false;
 				Debug.Log($"Rewarded ad failed to load {reason}");
 				ClearRewardedCallbacks();
 				soundSystem.Unmute();
 			});
 			rewarded.OnAdFailedToShow.AddListener(reason =>
 			{
+				isRewardedActive = false;
 				Debug.Log($"Rewarded ad failed to show {reason}");
 				ClearRewardedCallbacks();
 				soundSystem.Unmute();

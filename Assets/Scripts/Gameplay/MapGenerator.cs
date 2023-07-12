@@ -1,3 +1,4 @@
+using CAS.AdObject;
 using SR.Core;
 using SR.Extras;
 using SR.UI;
@@ -126,6 +127,15 @@ public class MapGenerator : MonoBehaviour
 
 	#region Functions
 
+	private bool IsPlayerNotAliveOrADsActive()
+	{
+#if UNITY_ANDROID
+		return GameInstance.isInterstitialActive || GameInstance.isRewardedActive || !playerVehicle.IsAlive();
+#elif UNITY_WEBGL
+		return YandexGame.nowFullAd || YandexGame.nowVideoAd || !playerVehicle.IsAlive();
+#endif
+	}
+
 	private LocationDescriptorSO GetRandomLocation()
 	{
 
@@ -142,7 +152,7 @@ public class MapGenerator : MonoBehaviour
 		return location;
 	}
 
-	#endregion
+#endregion
 
 	#region Coroutines
 
@@ -154,7 +164,7 @@ public class MapGenerator : MonoBehaviour
 
 		while (true)
 		{
-			if (YandexGame.nowFullAd || YandexGame.nowVideoAd)
+			if(IsPlayerNotAliveOrADsActive())
 			{
 				idleTimer = 0;
 				yield return null;
@@ -171,7 +181,7 @@ public class MapGenerator : MonoBehaviour
 			{
 				while (playerVehicle.GetVelocity() < velocityThreshold)
 				{
-					if (YandexGame.nowFullAd || YandexGame.nowVideoAd || !playerVehicle.IsAlive())
+					if (IsPlayerNotAliveOrADsActive())
 					{
 						idleTimer = 0;
 						break;
@@ -186,7 +196,7 @@ public class MapGenerator : MonoBehaviour
 		}
 	}
 
-	#endregion
+#endregion
 
 	#region Callbacks
 

@@ -20,6 +20,8 @@ namespace SR.UI
 		[SerializeField] private TMP_Text timeText;
 		[SerializeField] private TMP_Text healthText;
 		[SerializeField] private TMP_Text killsText;
+		[SerializeField] private GameObject rotateButtonMarker;
+		[SerializeField] private GameObject moveButtonMarker;
 
 		[Header("Properties")]
 		[SerializeField] private HoldableButton ForwardButton;
@@ -45,6 +47,10 @@ namespace SR.UI
 
 		private void Start()
 		{
+#if UNITY_ANDROID
+			rotateButtonMarker.SetActive(false);
+			moveButtonMarker.SetActive(false);
+#endif
 			LocalizedString distance = new LocalizedString();
 			distance.TableReference = "UI";
 			distance.TableEntryReference = "DIstanceMarker";

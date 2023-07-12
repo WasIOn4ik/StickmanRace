@@ -5539,7 +5539,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802674509}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.1454835, y: 3.8610005, z: -10.014078}
+  m_LocalPosition: {x: 6.743482, y: 3.8610005, z: -10.014078}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5862,7 +5862,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 823325269}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.1454835, y: 3.8610005, z: -10.014078}
+  m_LocalPosition: {x: 6.743482, y: 3.8610005, z: -10.014078}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12326,6 +12326,8 @@ MonoBehaviour:
   timeText: {fileID: 600165625}
   healthText: {fileID: 137328201}
   killsText: {fileID: 1846777630}
+  rotateButtonMarker: {fileID: 2089438414}
+  moveButtonMarker: {fileID: 843201463}
   ForwardButton: {fileID: 1429689423}
   BackwardButton: {fileID: 1202304440}
   RotateButton: {fileID: 109257680}

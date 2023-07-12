@@ -62,8 +62,8 @@ namespace SR.Core
 					yield break;
 				}
 			}
-		}
 #endif
+		}
 
 		private void OnDestroy()
 		{

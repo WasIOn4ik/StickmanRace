@@ -114,6 +114,14 @@ MonoBehaviour:
     m_Localized: m
     m_Metadata:
       m_Items: []
+  - m_Id: 11095016459948032
+    m_Localized: 'Please
+
+      sign in
+
+'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
