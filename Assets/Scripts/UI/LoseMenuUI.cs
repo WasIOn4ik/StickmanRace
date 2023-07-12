@@ -26,6 +26,7 @@ namespace SR.UI
 		[Inject] private YandexGame YG;
 
 		public static bool bPlus3HPUsed = false;
+		private static int racesCount = 0;
 
 		private int gems;
 		private float time;
@@ -41,61 +42,17 @@ namespace SR.UI
 
 			buttonX2.onClick.AddListener(() =>
 			{
-#if UNITY_WEBGL
-				gameInstance.Sounds.Mute();
-				YandexGame.ErrorVideoEvent = () =>
-				{
-					gameInstance.Sounds.Unmute();
-					YandexGame.ErrorVideoEvent = null;
-					YandexGame.CloseFullAdEvent = null;
-					YandexGame.OpenVideoEvent = null;
-				};
-				YandexGame.OpenVideoEvent = null;
-				YandexGame.CloseVideoEvent = () =>
-				{
-					gameInstance.Sounds.Unmute();
-					gameInstance.AddBoughtGems(gems);
-					YandexGame.ErrorVideoEvent = null;
-					YandexGame.CloseFullAdEvent = null;
-					YandexGame.OpenVideoEvent = null;
-					HandleEndgame();
-				};
-				YG._RewardedShow(0);
-#elif UNITY_ANDROID
 				gameInstance.ShowRewarded(HandleX2);
-#endif
 			});
 
 			buttonPlus3HP.onClick.AddListener(() =>
 			{
-#if UNITY_WEBGL
-				gameInstance.Sounds.Mute();
-				bPlus3HPUsed = true;
-				YandexGame.ErrorVideoEvent = () =>
-				{
-					gameInstance.Sounds.Unmute();
-					YandexGame.ErrorVideoEvent = null;
-					YandexGame.CloseFullAdEvent = null;
-					YandexGame.OpenVideoEvent = null;
-				};
-				YandexGame.OpenVideoEvent = null;
-				YandexGame.CloseVideoEvent = () =>
-				{
-					gameInstance.Sounds.Unmute();
-					YandexGame.ErrorVideoEvent = null;
-					YandexGame.CloseFullAdEvent = null;
-					YandexGame.OpenVideoEvent = null;
-					gameplayBase.ResetPlayer(3);
-					BackToPrevious();
-				};
-				YG._RewardedShow(0);
-#elif UNITY_ANDROID
 				gameInstance.ShowRewarded(HandleRespawn3HP);
-#endif
 			});
 
 			buttonRestart.onClick.AddListener(() =>
 			{
+				racesCount++;
 				HandleEndgame();
 			});
 		}
@@ -124,27 +81,45 @@ namespace SR.UI
 
 			if (time > YandexGame.savesData.records.maxTime && YandexGame.auth && YandexGame.playerName != "anonymous")
 			{
-				Debug.Log("Updating KingExpresses");
-				YandexGame.NewLeaderboardScores("KingExpresses", (int)YandexGame.savesData.records.maxTime);
+				Debug.Log("Updating Expresses");
+				YandexGame.NewLeaderboardScores("Expresses", (int)time);
 			}
 			else
 			{
-				Debug.Log("Rejected update KingExpresses without login");
+				Debug.Log("Rejected update Expresses without login");
 			}
 
 			gameInstance.TryUpdateRecords(distance, time, Enemy.killsInRound);
 
+
 			if (YandexGame.auth && YandexGame.playerName != "anonymous")
 			{
-				Debug.Log("Updating RoadKing");
-				YandexGame.NewLeaderboardScores("RoadKing", (int)YandexGame.savesData.records.totalDistance);
+				Debug.Log("Updating Road");
+				YandexGame.NewLeaderboardScores("Road", (int)YandexGame.savesData.records.totalDistance);
 			}
 			else
 			{
-				Debug.Log("Rejected update RoadKing without login");
+				Debug.Log("Rejected update Road without login");
 			}
+#elif UNITY_ANDROID
+			if (gameInstance.GetRecords().maxTime < time)
+			{
+				AndroidLeaderboard.PostLEaderboardResult(GPGSIds.leaderboard_expresses, (int)time);
+			}
+
+			gameInstance.TryUpdateRecords(distance, time, Enemy.killsInRound);
+
+			AndroidLeaderboard.PostLEaderboardResult(GPGSIds.leaderboard_roads, (int)gameInstance.GetRecords().totalDistance);
 #endif
-			gameplayBase.RestartGame();
+			//Каждую третью гонку, в которой игрок не смотрел рекламу
+			if(racesCount % 3 == 2)
+			{
+				gameInstance.ShowInterstitial(gameplayBase.RestartGame);
+			}
+			else
+			{
+				gameplayBase.RestartGame();
+			}
 		}
 
 		public void UpdateDisplay(float distance, float time)
@@ -166,11 +141,14 @@ namespace SR.UI
 			timeText.text = time.ToString("0.0");
 			gemsText.text = gems.ToString();
 			gameInstance.Sounds.PlayCarMovement(false);
+#if UNITY_ANDROID
+			gameInstance.SetBannerActivity(false);
+#endif
 		}
 
 		#endregion
 
-#region Coroutines
+		#region Coroutines
 
 #if UNITY_WEBGL
 		private IEnumerator UpdateSecondLeaderBoard(string techTitle, int value)
@@ -181,6 +159,6 @@ namespace SR.UI
 		}
 #endif
 
-#endregion
+		#endregion
 	}
 }

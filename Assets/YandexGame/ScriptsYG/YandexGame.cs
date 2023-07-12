@@ -6,6 +6,8 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.UI;
+using Unity.VisualScripting;
+using CAS.AdObject;
 #if JSON_NET_ENABLED
 using Newtonsoft.Json;
 #endif
@@ -602,7 +604,7 @@ namespace YG
                 SetLeaderboardScores(nameLB, score);
 #endif
 			if (_leaderboardEnable)
-				Message("New Scores Leaderboard " + nameLB + ": " + score);
+				Message("EDITOR: New Scores Leaderboard " + nameLB + ": " + score);
 		}
 
 		public static void NewLBScoreTimeConvert(string nameLB, float secondsScore)

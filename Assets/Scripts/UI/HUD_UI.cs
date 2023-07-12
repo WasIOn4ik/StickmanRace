@@ -5,6 +5,7 @@ using System.Text;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 using Zenject;
 
@@ -35,12 +36,26 @@ namespace SR.UI
 		private float startTime;
 		private float maxDistance;
 
+		private string localizedDistance;
+		private string localizedTime;
+
 		#endregion
 
 		#region UnityMessages
 
 		private void Start()
 		{
+			LocalizedString distance = new LocalizedString();
+			distance.TableReference = "UI";
+			distance.TableEntryReference = "DIstanceMarker";
+			localizedDistance = distance.GetLocalizedString();
+
+			LocalizedString time = new LocalizedString();
+			time.TableReference = "UI";
+			time.TableEntryReference = "TimeMarker";
+			localizedTime = time.GetLocalizedString();
+
+			SettingsMenuUI.onLanguageChanged += SettingsMenuUI_onLanguageChanged;
 			playerVehicle.onHealthChanged += PlayerVehicle_onHealthChanged;
 			playerVehicle.onDeath += PlayerVehicle_onDeath;
 			gameplayBase.onGameStarted += GameplayBase_onGameStarted;
@@ -62,6 +77,15 @@ namespace SR.UI
 
 			UpdateInputs();
 			UpdateDisplay();
+		}
+
+		private void OnDestroy()
+		{
+			SettingsMenuUI.onLanguageChanged -= SettingsMenuUI_onLanguageChanged;
+			playerVehicle.onHealthChanged -= PlayerVehicle_onHealthChanged;
+			playerVehicle.onDeath -= PlayerVehicle_onDeath;
+			gameplayBase.onGameStarted -= GameplayBase_onGameStarted;
+			Enemy.onEnemyDeath -= Enemy_onEnemyDeath;
 		}
 
 		#endregion
@@ -125,8 +149,8 @@ namespace SR.UI
 			if (distance > maxDistance)
 				maxDistance = distance;
 
-			distanceText.text = $"{maxDistance:N1} m";
-			timeText.text = $"{GetTime():N1} s";
+			distanceText.text = $"{maxDistance:N1} {localizedDistance}";
+			timeText.text = $"{GetTime():N1} {localizedTime}";
 		}
 
 		private float GetDistance()
@@ -142,6 +166,20 @@ namespace SR.UI
 		#endregion
 
 		#region Callbacks
+
+		private void SettingsMenuUI_onLanguageChanged(object sender, System.EventArgs e)
+		{
+			LocalizedString distance = new LocalizedString();
+			distance.TableReference = "UI";
+			distance.TableEntryReference = "DIstanceMarker";
+			localizedDistance = distance.GetLocalizedString();
+
+			LocalizedString time = new LocalizedString();
+			time.TableReference = "UI";
+			time.TableEntryReference = "TimeMarker";
+			localizedTime = time.GetLocalizedString();
+			UpdateDisplay();
+		}
 
 		private void GameplayBase_onGameStarted(object sender, System.EventArgs e)
 		{

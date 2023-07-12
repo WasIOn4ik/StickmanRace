@@ -201,6 +201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 432189184}
   - component: {fileID: 432189185}
+  - component: {fileID: 432189186}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -242,6 +243,18 @@ MonoBehaviour:
   bannerAdManager: {fileID: 1408855993}
   interstitialAdManager: {fileID: 1059648667}
   rewardedAdManager: {fileID: 700605456}
+--- !u!114 &432189186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432189183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54643736699b6974582a9a1db72fb811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &491047567
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,7 +357,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -363,7 +376,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -635,7 +648,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1408855993
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using YG;
 using Zenject;
 
 public class MapGenerator : MonoBehaviour
@@ -59,6 +60,7 @@ public class MapGenerator : MonoBehaviour
 
 	private void Start()
 	{
+		gameplayBase.onGameStarted += GameplayBase_onGameStarted;
 		//Creating start segment
 		startTerrain.Regenerate(gameplayBase.GetDifficulty(), bRandom, GetRandomLocation());
 
@@ -138,6 +140,61 @@ public class MapGenerator : MonoBehaviour
 
 		var location = locations[index];
 		return location;
+	}
+
+	#endregion
+
+	#region Coroutines
+
+	private IEnumerator HandleIdle()
+	{
+		float velocityThreshold = 5f;
+		float idleTimerThreshold = 20f;
+		float idleTimer = 0f;
+
+		while (true)
+		{
+			if (YandexGame.nowFullAd || YandexGame.nowVideoAd)
+			{
+				idleTimer = 0;
+				yield return null;
+			}
+			if (playerVehicle.GetVelocity() < velocityThreshold)
+			{
+				idleTimer += Time.deltaTime;
+			}
+			else
+			{
+				idleTimer = 0;
+			}
+			if (idleTimer > idleTimerThreshold)
+			{
+				while (playerVehicle.GetVelocity() < velocityThreshold)
+				{
+					if (YandexGame.nowFullAd || YandexGame.nowVideoAd || !playerVehicle.IsAlive())
+					{
+						idleTimer = 0;
+						break;
+					}
+					yield return new WaitForSeconds(0.9f);
+					Instantiate(locations[currentLocationId].availableEnemies.GetRandomEnemy(), playerVehicle.transform.position
+						+ new Vector3(3f, 2f, 0f), Quaternion.identity, ActiveTerrain.transform);
+				}
+				idleTimer = 0;
+			}
+			yield return null;
+		}
+	}
+
+	#endregion
+
+	#region Callbacks
+
+	private Coroutine handleIdleCoroutine;
+
+	private void GameplayBase_onGameStarted(object sender, EventArgs e)
+	{
+		handleIdleCoroutine = StartCoroutine(HandleIdle());
 	}
 
 	#endregion

@@ -1,12 +1,13 @@
 using SR.UI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+#if UNITY_ANDROID
 using CAS.AdObject;
 using CAS;
 using Zenject;
 using SR.Core;
+using GooglePlayGames;
+#endif
 
 namespace SR.Extras
 {
@@ -20,7 +21,7 @@ namespace SR.Extras
 
 		[Inject] GameInstance gameInstance;
 #endif
-		#region UnityMessages
+#region UnityMessages
 
 		private void Start()
 		{

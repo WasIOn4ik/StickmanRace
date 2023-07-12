@@ -54,7 +54,7 @@ MonoBehaviour:
   musicCoef: 0.4
   volumeChange: 0.05
   enemyShootVolume: 1
-  weaponShootVolume: 0.9
+  weaponShootVolume: 0.7
   buttonsVolume: 0.8
   carSoundMultiplier: 1
   deathVolume: 1

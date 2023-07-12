@@ -23,6 +23,9 @@ public class GarageUI : MonoBehaviour
 	[SerializeField] private TMP_Text distanceText;
 	[SerializeField] private TMP_Text timeText;
 	[SerializeField] private TMP_Text gemsText;
+	[SerializeField] private LeaderboardYG roadsLeaderboard;
+	[SerializeField] private LeaderboardYG expressesLeaderboard;
+	[SerializeField] private Button androidLeaderboard;
 
 	[Inject] private YandexGame YG;
 	[Inject] private GameplayBase gameplayBase;
@@ -40,82 +43,31 @@ public class GarageUI : MonoBehaviour
 		Enemy.killsInRound = 0;
 		LoseMenuUI.bPlus3HPUsed = false;
 		gameInstance.onGemsCountChanged += GameInstance_onGemsCountChanged;
+		SettingsMenuUI.onLanguageChanged += SettingsMenuUI_onLanguageChanged;
 #if UNITY_WEBGL
 		YandexGame.StickyAdActivity(false);
+		androidLeaderboard.gameObject.SetActive(false);
 #elif UNITY_ANDROID
+		roadsLeaderboard.gameObject.SetActive(false);
+		expressesLeaderboard.gameObject.SetActive(false);
 		gameInstance.SetBannerActivity(false);
+		androidLeaderboard.onClick.AddListener(() =>
+		{
+			AndroidLeaderboard.ShowLeadeboardUI();
+		});
 #endif
 		plus50Button.onClick.AddListener(() =>
 		{
-#if UNITY_WEBGL
-			gameInstance.Sounds.Mute();
-			YandexGame.OpenVideoEvent = null;
-			YandexGame.ErrorFullAdEvent = () =>
-			{
-				YandexGame.CloseFullAdEvent = null;
-				YandexGame.ErrorFullAdEvent = null;
-				gameInstance.Sounds.Unmute();
-			};
-			YandexGame.CloseVideoEvent = () =>
-			{
-				gameInstance.AddBoughtGems(50);
-				YandexGame.CloseFullAdEvent = null;
-				YandexGame.ErrorFullAdEvent = null;
-				gameInstance.Sounds.Unmute();
-			};
-			YG._RewardedShow(1);
-#elif UNITY_ANDROID
 			gameInstance.ShowRewarded(OnPlus50Reward);
-#endif
 		});
+
 		playButton.onClick.AddListener(() =>
 		{
 			startsCount++;
 			gameInstance.Sounds.PlayButton1();
 			if (startsCount % 2 == 0)
 			{
-#if UNITY_WEBGL
-				if (YandexGame.savesData.noAdsBought)
-				{
-					gameInstance.Sounds.StartBackgroundMusic();
-					gameplayBase.StartGame();
-				}
-				else
-				{
-					gameInstance.Sounds.Mute();
-					YG.ResetTimerFullAd();
-					YG.ErrorFullscreenAd.AddListener(() =>
-					{
-						gameInstance.Sounds.StartBackgroundMusic();
-						gameplayBase.StartGame();
-					});
-					YandexGame.OpenFullAdEvent = () =>
-					{
-						YandexGame.ErrorFullAdEvent = () =>
-						{
-							gameInstance.Sounds.Unmute();
-							YandexGame.StickyAdActivity(!YandexGame.savesData.noAdsBought);
-							gameInstance.Sounds.StartBackgroundMusic();
-							gameplayBase.StartGame();
-							YandexGame.CloseFullAdEvent = null;
-							YandexGame.ErrorFullAdEvent = null;
-						};
-						YandexGame.CloseFullAdEvent = () =>
-						{
-							gameInstance.Sounds.Unmute();
-							YandexGame.StickyAdActivity(!YandexGame.savesData.noAdsBought);
-							gameInstance.Sounds.StartBackgroundMusic();
-							gameplayBase.StartGame();
-							YandexGame.CloseFullAdEvent = null;
-							YandexGame.ErrorFullAdEvent = null;
-						};
-						YandexGame.OpenFullAdEvent = null;
-					};
-					YandexGame.FullscreenShow();
-				}
-#elif UNITY_ANDROID
 				gameInstance.ShowInterstitial(OnGameStart);
-#endif
 			}
 			else
 			{
@@ -140,13 +92,20 @@ public class GarageUI : MonoBehaviour
 		gameInstance.Sounds.PlayGarageMusic();
 	}
 
+	private void OnDestroy()
+	{
+		SettingsMenuUI.onLanguageChanged -= SettingsMenuUI_onLanguageChanged;
+	}
 	#endregion
 
 	#region Functions
 
 	private void OnGameStart()
 	{
+#if UNITY_ANDORID
 		gameInstance.SetBannerActivity(true);
+#endif
+		gameInstance.Sounds.StartBackgroundMusic();
 		gameplayBase.StartGame();
 	}
 
@@ -164,14 +123,18 @@ public class GarageUI : MonoBehaviour
 	private void UpdateDisplay()
 	{
 		var records = gameInstance.GetRecords();
-		distanceText.text = gameInstance.GetDistanceString();
-		timeText.text = records.maxTime.ToString("0.0") + " s";
-		gemsText.text = gameInstance.GetRecords().gems.ToString();
+		distanceText.text = gameInstance.GetShortStringDistance(records.totalDistance);
+		timeText.text = gameInstance.GetShortStringTime(records.maxTime);
+		gemsText.text = gameInstance.GetShortString(records.gems);
 	}
 
 	#endregion
 
 	#region Callbacks
+	private void SettingsMenuUI_onLanguageChanged(object sender, System.EventArgs e)
+	{
+		UpdateDisplay();
+	}
 
 	private void GameInstance_onGemsCountChanged(object sender, System.EventArgs e)
 	{

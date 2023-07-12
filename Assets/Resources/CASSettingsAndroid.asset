@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testAdMode: 1
   managerIds:
-  - demo
+  - stickman.racer.survival.road
   allowedAdFlags: 7
   audienceTagged: 0
   bannerSize: 0

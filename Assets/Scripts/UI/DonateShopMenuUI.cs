@@ -25,6 +25,10 @@ namespace SR.UI
 		[SerializeField] private Button backButton;
 		[SerializeField] private PaymentsYG payments;
 
+
+#if UNITY_WEBGL
+		private Action onPurchaseCompleted;
+#endif
 		[Inject] GameInstance gameInstance;
 
 #if UNITY_WEBGL

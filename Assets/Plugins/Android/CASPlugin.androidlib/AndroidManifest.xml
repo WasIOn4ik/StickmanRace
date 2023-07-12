@@ -3,7 +3,7 @@
 <!--Do not modify this file. YOUR CHANGES WILL BE ERASED!-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.cleversolutions.ads.unitycas" android:versionName="3.1.9" android:versionCode="1">
   <application>
-    <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-3940256099942544~3347511713" />
+    <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-9041187040625593~6261436535" />
     <meta-data android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT" android:value="true" />
     <uses-library android:required="false" android:name="org.apache.http.legacy" />
   </application>

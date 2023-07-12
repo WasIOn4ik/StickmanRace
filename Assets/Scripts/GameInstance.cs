@@ -1,18 +1,12 @@
-using CAS.AdObject;
 using SR.Customization;
 using SR.Library;
 using SR.UI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Unity.Services.Core;
 using UnityEngine;
-using UnityEngine.Purchasing;
-using UnityEngine.Purchasing.Extension;
-using UnityEngine.Scripting;
+using UnityEngine.Localization;
 using YG;
+using YG.Example;
 using Zenject;
 
 namespace SR.Core
@@ -73,10 +67,24 @@ namespace SR.Core
 
 #if UNITY_ANDROID
 
+		#region Variables
+
 		public const string NO_ADS_ID = "com.no_ads";
 		public const string NO_ADS_SUBTYPE = "no_ads";
 
 		public Action onPurchaseCompleted;
+
+		public BannerAdObject banner;
+		public InterstitialAdObject interstitial;
+		public RewardedAdObject rewarded;
+
+		public static IStoreController storeController;
+		public static IExtensionProvider extensionProvider;
+
+		public bool bNoAdsBought;
+		private bool isSaving;
+
+		#endregion
 
 		#region IStoreListener
 
@@ -84,7 +92,7 @@ namespace SR.Core
 		{
 			Debug.Log("Android IAP initialized");
 			storeController = controller;
-			List<Product> sortedProducts = storeController.products.all.OrderBy(item => item.definition.id).ToList();
+			List<Product> sortedProducts = storeController.products.all.OrderBy(item => item.metadata.localizedPrice).ToList();
 			foreach (var p in sortedProducts)
 			{
 				if (p.definition.id == NO_ADS_ID)
@@ -92,7 +100,7 @@ namespace SR.Core
 					Debug.Log($"Handling NO-AD {p.hasReceipt}");
 					bNoAdsBought = p.hasReceipt;
 					if (banner)
-						SetBannerActivity(false);
+						SetBannerActivity(true);
 				}
 			}
 
@@ -150,8 +158,9 @@ namespace SR.Core
 		}
 
 		#endregion
-		public static IStoreController storeController;
-		public static IExtensionProvider extensionProvider;
+
+		#region Purchases
+
 		private void HandleIAPPCatalog(AsyncOperation operation)
 		{
 			Debug.Log("Handling IAP catalog");
@@ -181,8 +190,10 @@ namespace SR.Core
 			UnityPurchasing.Initialize(this, builder);
 		}
 
-		public bool bNoAdsBought;
-		public BannerAdObject banner;
+		#endregion
+
+		#region AD
+
 		public void ClearBannerCallbacks()
 		{
 			banner.OnAdFailedToLoad.RemoveAllListeners();
@@ -192,11 +203,12 @@ namespace SR.Core
 			banner.OnAdLoaded.RemoveAllListeners();
 			banner.OnAdShown.RemoveAllListeners();
 		}
+
 		public void SetBannerActivity(bool active)
 		{
 			banner.gameObject.SetActive(active && !bNoAdsBought);
 		}
-		public InterstitialAdObject interstitial;
+
 		public void ClearInterstitialCallbacks()
 		{
 			interstitial.OnAdFailedToLoad.RemoveAllListeners();
@@ -207,8 +219,202 @@ namespace SR.Core
 			interstitial.OnAdLoaded.RemoveAllListeners();
 			interstitial.OnAdShown.RemoveAllListeners();
 		}
+
+		public void ClearRewardedCallbacks()
+		{
+			rewarded.OnAdClicked.RemoveAllListeners();
+			rewarded.OnAdClosed.RemoveAllListeners();
+			rewarded.OnAdFailedToLoad.RemoveAllListeners();
+			rewarded.OnAdFailedToShow.RemoveAllListeners();
+			rewarded.OnAdImpression.RemoveAllListeners();
+			rewarded.OnAdLoaded.RemoveAllListeners();
+			rewarded.OnAdShown.RemoveAllListeners();
+			rewarded.OnReward.RemoveAllListeners();
+		}
+
+		#endregion
+
+		#region SaveGames
+
+		[Serializable]
+		private struct AndroidSaveGame
+		{
+			public GameRecords records;
+			public CarConfig carConfig;
+			public UnlockedDetails unlockedDetails;
+			public GameSettings settings;
+		}
+
+		public void OpenSave(bool save)
+		{
+			if (Social.localUser.authenticated)
+			{
+				isSaving = save;
+				((PlayGamesPlatform)Social.Active).SavedGame.OpenWithAutomaticConflictResolution("PlayerSave", DataSource.ReadCacheOrNetwork,
+					GooglePlayGames.BasicApi.SavedGame.ConflictResolutionStrategy.UseLongestPlaytime, SaveGameOpen);
+			}
+		}
+
+		private string GetSaveString()
+		{
+			AndroidSaveGame saveGameRaw = new AndroidSaveGame() { records = records, carConfig = carConfig, settings = GameSettings, unlockedDetails = unlockedDetails };
+			return JsonUtility.ToJson(saveGameRaw);
+		}
+
+		private void SaveGameOpen(SavedGameRequestStatus status, ISavedGameMetadata metadata)
+		{
+			if (status == SavedGameRequestStatus.Success)
+			{
+				if (isSaving)
+				{
+					byte[] playerData = System.Text.ASCIIEncoding.ASCII.GetBytes(GetSaveString());
+					SavedGameMetadataUpdate updateForMetadata = new SavedGameMetadataUpdate.Builder().Build();
+					((PlayGamesPlatform)Social.Active).SavedGame.CommitUpdate(metadata, updateForMetadata, playerData, SaveCallback);
+				}
+				else
+				{
+					((PlayGamesPlatform)Social.Active).SavedGame.ReadBinaryData(metadata, LoadCallback);
+				}
+			}
+			else
+			{
+				Debug.Log($"Error while open save: {status.ToString()}");
+			}
+		}
+
+		private void LoadCallback(SavedGameRequestStatus status, byte[] data)
+		{
+			if (status == SavedGameRequestStatus.Success)
+			{
+				string playerData = System.Text.Encoding.ASCII.GetString(data);
+				if (!String.IsNullOrEmpty(playerData))
+				{
+					AndroidSaveGame saveGameRaw = JsonUtility.FromJson<AndroidSaveGame>(playerData);
+
+					records = saveGameRaw.records;
+					GameSettings = saveGameRaw.settings;
+					unlockedDetails = saveGameRaw.unlockedDetails;
+					carConfig = saveGameRaw.carConfig;
+
+					Debug.Log("Loaded successfully");
+				}
+				else
+				{
+					Debug.Log("Loaded empty data slot");
+				}
+			}
+			else
+			{
+				Debug.Log($"Error while loading: {status.ToString()}");/*
+				try
+				{
+					if(TryLoadLocalData()) // Гугл недоступен, но есть локальные данные
+					{
+
+					}
+					else // Первый вход, но гугл недоступен
+					{
+						CreateInitialData();
+					}
+				}
+				catch (Exception e) // Гугл недоступен, а локальные данные повреждены
+				{
+					CreateInitialData();
+					Debug.LogException(e);
+				}*/
+			}
+			UpdateUnlockedDetails();
+			if (GameSettings.bSoundsOn)
+			{
+				soundSystem.EnableSound();
+				soundSystem.PlayMenuMusic();
+			}
+			else
+				soundSystem.DisableSound();
+		}
+
+		private void SaveCallback(SavedGameRequestStatus status, ISavedGameMetadata metadata)
+		{
+			isSaving = false;
+			if (status == SavedGameRequestStatus.Success)
+			{
+				Debug.Log("Player data successfully saved to cloud");
+			}
+			else
+			{
+				Debug.LogError($"Error while saving: {status.ToString()}");
+			}
+		}
+
+		#endregion
+#endif
+
+		[Header("Components")]
+		[SerializeField] private MenusListSO menusLibrary;
+		[SerializeField] private ShopLibrarySO shopLibrary;
+
+		[Header("Properties")]
+		[SerializeField] private string recordSaveSlot;
+		[SerializeField] private string carConfigSaveSlot;
+		[SerializeField] private string unlockedDetailsSaveSlot;
+		[SerializeField] private string gameSettingsSaveSlot;
+
+		[Header("Gems")]
+		[SerializeField] private float distanceToGemsPow = 1.5f;
+		[SerializeField] private float distanceDemultiplier = 50f;
+
+		public SoundSystem Sounds { get { return soundSystem; } }
+
+		[Inject] private SoundSystem soundSystem;
+
+		private GameRecords records = new GameRecords() { totalDistance = 0f, maxTime = 0f };
+		private CarConfig carConfig = new CarConfig();
+		private UnlockedDetails unlockedDetails;
+		private GameSettings GameSettings = new GameSettings() { bSoundsOn = true };
+
+		#endregion
+
+		#region UnityMessages
+
+#if UNITY_ANDROID
+
+		private async void Awake()
+		{
+			CreateInitialData();
+			UpdateUnlockedDetails();
+			if (!Social.localUser.authenticated)
+			{
+				PlayGamesPlatform.Activate();
+				PlayGamesPlatform.Instance.ManuallyAuthenticate(code =>
+				{
+					if (code == SignInStatus.Success)
+					{
+						Debug.Log("Auth success");
+						OpenSave(false);
+					}
+					else
+					{
+						Debug.LogError($"Error while auth {code}");
+					}
+				});
+			}
+			await UnityServices.InitializeAsync();
+			ResourceRequest request = Resources.LoadAsync<TextAsset>("IAPProductCatalog");
+			request.completed += HandleIAPPCatalog;
+#elif UNITY_WEBGL
+		private void Awake()
+		{
+			Application.focusChanged += Application_focusChanged;
+#endif
+			InitializeShop();
+			RangeEnemy.onAnyEnemyShoot += RangeEnemy_onAnyEnemyShoot;
+			MenuBase.menusLibrary = menusLibrary;
+			Obstacle.onObstacleDestroyed += Obstacle_onObstacleDestroyed;
+		}
+
 		public void ShowInterstitial(Action onSuccess)
 		{
+#if UNITY_ANDROID
 			if (bNoAdsBought)
 			{
 				onSuccess?.Invoke();
@@ -237,21 +443,43 @@ namespace SR.Core
 			});
 			soundSystem.Mute();
 			interstitial.Present();
+#elif UNITY_WEBGL
+
+			if (YandexGame.savesData.noAdsBought)
+			{
+				onSuccess?.Invoke();
+				return;
+			}
+			else
+			{
+				YandexGame.Instance.ResetTimerFullAd();
+				YandexGame.OpenFullAdEvent = () =>
+				{
+					Debug.Log("Interstitial opened");
+					Sounds.Mute();
+				};
+				YandexGame.ErrorFullAdEvent = () =>
+				{
+					Debug.Log("Error full ad event");
+					Sounds.Unmute();
+					YandexGame.StickyAdActivity(!YandexGame.savesData.noAdsBought);
+					onSuccess?.Invoke();
+				};
+				YandexGame.CloseFullAdEvent = () =>
+				{
+					Debug.Log("Interstitial AD closed");
+					Sounds.Unmute();
+					YandexGame.StickyAdActivity(!YandexGame.savesData.noAdsBought);
+					onSuccess?.Invoke();
+				};
+				YandexGame.FullscreenShow();
+			}
+#endif
 		}
-		public RewardedAdObject rewarded;
-		public void ClearRewardedCallbacks()
-		{
-			rewarded.OnAdClicked.RemoveAllListeners();
-			rewarded.OnAdClosed.RemoveAllListeners();
-			rewarded.OnAdFailedToLoad.RemoveAllListeners();
-			rewarded.OnAdFailedToShow.RemoveAllListeners();
-			rewarded.OnAdImpression.RemoveAllListeners();
-			rewarded.OnAdLoaded.RemoveAllListeners();
-			rewarded.OnAdShown.RemoveAllListeners();
-			rewarded.OnReward.RemoveAllListeners();
-		}
+
 		public void ShowRewarded(Action onSuccess)
 		{
+#if UNITY_ANDROID
 			rewarded.OnReward.AddListener(() =>
 			{
 				ClearRewardedCallbacks();
@@ -278,59 +506,34 @@ namespace SR.Core
 			});
 			soundSystem.Mute();
 			rewarded.Present();
-		}
-#endif
-
-		[Header("Components")]
-		[SerializeField] private MenusListSO menusLibrary;
-		[SerializeField] private ShopLibrarySO shopLibrary;
-
-		[Header("Properties")]
-		[SerializeField] private string recordSaveSlot;
-		[SerializeField] private string carConfigSaveSlot;
-		[SerializeField] private string unlockedDetailsSaveSlot;
-		[SerializeField] private string gameSettingsSaveSlot;
-		[SerializeField] private List<string> distanceMarkers;
-
-		[Header("Gems")]
-		[SerializeField] private float distanceToGemsPow = 1.5f;
-		[SerializeField] private float distanceDemultiplier = 50f;
-
-		public SoundSystem Sounds { get { return soundSystem; } }
-
-		[Inject] private SoundSystem soundSystem;
-
-		private GameRecords records = new GameRecords() { totalDistance = 0f, maxTime = 0f };
-		private CarConfig carConfig = new CarConfig();
-		private UnlockedDetails unlockedDetails;
-		private GameSettings GameSettings = new GameSettings() { bSoundsOn = true };
-
-		#endregion
-
-		#region UnityMessages
-
-#if UNITY_ANDROID
-		private async void Awake()
-		{
-			LoadRecords();
-			LoadCarConfig();
-			LoadUnlockedDetails();
-			LoadGameSettings();
-			await UnityServices.InitializeAsync();
-			ResourceRequest request = Resources.LoadAsync<TextAsset>("IAPProductCatalog");
-			request.completed += HandleIAPPCatalog;
 #elif UNITY_WEBGL
-		private void Awake()
-		{
-			Application.focusChanged += Application_focusChanged;
+			YandexGame.OpenVideoEvent = () =>
+			{
+				Debug.Log("VideoEvent active");
+				Sounds.Mute();
+			};
+			YandexGame.ErrorVideoEvent = () =>
+			{
+				Debug.Log("Error with video event");
+				Sounds.Unmute();
+			};
+			YandexGame.CloseFullAdEvent = () =>
+			{
+				Debug.Log("FullAddClosed");
+				Sounds.Unmute();
+			};
+			YandexGame.RewardVideoEvent = (x) =>
+			{
+				Debug.Log($"Reward video event {x}");
+				Sounds.Unmute();
+				onSuccess?.Invoke();
+			};
+			YandexGame.Instance._RewardedShow(0);
 #endif
-			RangeEnemy.onAnyEnemyShoot += RangeEnemy_onAnyEnemyShoot;
-			InitializeShop();
-			MenuBase.menusLibrary = menusLibrary;
-			Obstacle.onObstacleDestroyed += Obstacle_onObstacleDestroyed;
 		}
 
 #if UNITY_WEBGL
+
 		private void Start()
 		{
 			YandexGame.GetDataEvent = OnLoad;
@@ -361,8 +564,8 @@ namespace SR.Core
 
 			if (YandexGame.auth && YandexGame.playerName != "anonymous")
 			{
-				Debug.Log("Updating RoadKing");
-				YandexGame.NewLeaderboardScores("RoadKing", (int)YandexGame.savesData.records.totalDistance);
+				Debug.Log("Updating Road");
+				YandexGame.NewLeaderboardScores("Road", (int)YandexGame.savesData.records.totalDistance);
 			}
 			UpdateUnlockedDetails();
 			if (GameSettings.bSoundsOn)
@@ -392,7 +595,6 @@ namespace SR.Core
 			}
 			YandexGame.StickyAdActivity(!YandexGame.savesData.noAdsBought);
 		}
-
 		private void Application_focusChanged(bool obj)
 		{
 			if (!obj)
@@ -400,11 +602,39 @@ namespace SR.Core
 			else if (!YandexGame.nowVideoAd && !YandexGame.nowFullAd)
 				soundSystem.Unmute();
 		}
+
 #endif
 
 		#endregion
 
 		#region Functions
+
+#if UNITY_ANDROID
+
+		private void SaveLocalData()
+		{
+			SaveGameSettings();
+			SaveCarConfig();
+			SaveUnlockedDetails();
+			SaveRecords();
+		}
+
+		private bool TryLoadLocalData()
+		{
+			if (PlayerPrefs.HasKey(carConfigSaveSlot) && PlayerPrefs.HasKey(unlockedDetailsSaveSlot))
+			{
+				LoadRecords();
+				LoadCarConfig();
+				LoadUnlockedDetails();
+				LoadGameSettings();
+
+				return true;
+			}
+
+			return false;
+		}
+
+#endif
 
 		public void SetSounds(bool sounds)
 		{
@@ -477,39 +707,41 @@ namespace SR.Core
 			return false;
 		}
 
-		public string GetDistanceString()
-		{
-			float tempDistance = records.totalDistance;
-
-			StringBuilder sb = new StringBuilder();
-
-			return GetShortStringDistance(tempDistance);
-		}
-
 		public string GetShortStringDistance(float value)
 		{
-			int val = 0;
+			var str = GetShortString((int)value);
 
-			while (value >= 1000f)
-			{
-				value /= 1000f;
-				val++;
-			}
+			LocalizedString localString = new LocalizedString();
+			localString.TableReference = "UI";
+			localString.TableEntryReference = "DIstanceMarker";
 
-			return $"{value: 0.0}{distanceMarkers[val]} m";
+			return $"{str} {localString.GetLocalizedString()}";
+		}
+		public string GetShortStringTime(float value)
+		{
+			var str = GetShortString((int)value);
+
+			LocalizedString localString = new LocalizedString();
+			localString.TableReference = "UI";
+			localString.TableEntryReference = "TimeMarker";
+
+			return $"{str} {localString.GetLocalizedString()}";
 		}
 
-		public string GetShortString(int value)
+		public string GetShortString(int valueToShort)
 		{
-			int val = 0;
+			int markerNum = 0;
 
-			while (value >= 1000)
+			while (valueToShort >= 1000)
 			{
-				value /= 1000;
-				val++;
+				valueToShort /= 1000;
+				markerNum++;
 			}
 
-			return $"{value}{distanceMarkers[val]}";
+			LocalizedString str = new LocalizedString();
+			str.TableReference = "UI";
+			str.TableEntryReference = $"MarkerReduction_{markerNum}";
+			return $"{valueToShort}{str.GetLocalizedString()}";
 		}
 
 		public ShopLibrarySO GetShopLibrary()
@@ -566,9 +798,9 @@ namespace SR.Core
 			SaveCarConfig();
 		}
 
-		public void SaveRecords()
+		private void SaveRecords()
 		{
-#if !UNITY_WEBGL
+#if UNITY_ANDROID
 			string str = JsonUtility.ToJson(records);
 			PlayerPrefs.SetString(recordSaveSlot, str);
 #else
@@ -576,7 +808,7 @@ namespace SR.Core
 #endif
 		}
 
-		public void SaveCarConfig()
+		private void SaveCarConfig()
 		{
 #if !UNITY_WEBGL
 			string str = JsonUtility.ToJson(carConfig);
@@ -596,7 +828,7 @@ namespace SR.Core
 #endif
 		}
 
-		public void SaveUnlockedDetails()
+		private void SaveUnlockedDetails()
 		{
 #if !UNITY_WEBGL
 			string str = JsonUtility.ToJson(unlockedDetails);
@@ -613,6 +845,8 @@ namespace SR.Core
 		{
 #if UNITY_WEBGL
 			YandexGame.SaveProgress();
+#elif UNITY_ANDROID
+			OpenSave(true);
 #endif
 		}
 
@@ -632,6 +866,14 @@ namespace SR.Core
 				soundSystem.EnableSound();
 			else
 				soundSystem.DisableSound();
+		}
+
+		private void CreateInitialData()
+		{
+			carConfig = shopLibrary.GetStandartCar();
+			unlockedDetails = CreateUnlockedDetails();
+			GameSettings = new GameSettings() { bSoundsOn = true };
+			records = new GameRecords() { gems = 0, maxTime = 0, totalDistance = 0 };
 		}
 
 		private void LoadRecords()
@@ -670,16 +912,26 @@ namespace SR.Core
 			}
 			else
 			{
-				var defaultCar = shopLibrary.GetStandartCar();
-				unlockedDetails = new UnlockedDetails();
-				unlockedDetails.unlockedWeapons.Add(defaultCar.weapon);
-				unlockedDetails.unlockedWheels.Add(defaultCar.wheels);
-				unlockedDetails.unlockedBumpers.Add(defaultCar.bumper);
-				unlockedDetails.unlockedStickmans.Add(defaultCar.stickman);
-				unlockedDetails.unlockedBackdoors.Add(defaultCar.backdoor);
+				unlockedDetails = CreateUnlockedDetails();
 				SaveUnlockedDetails();
 			}
 			UpdateUnlockedDetails();
+		}
+
+		private UnlockedDetails CreateUnlockedDetails()
+		{
+			var defaultCar = shopLibrary.GetStandartCar();
+			var result = new UnlockedDetails();
+			result.unlockedWeapons.Add(defaultCar.weapon);
+			result.unlockedWheels.Add(defaultCar.wheels);
+			result.unlockedBumpers.Add(defaultCar.bumper);
+			result.unlockedStickmans.Add(defaultCar.stickman);
+			result.unlockedBackdoors.Add(defaultCar.backdoor);
+			return result;
+		}
+		public void CallUpdateCallbacks()
+		{
+			onGemsCountChanged?.Invoke(this, EventArgs.Empty);
 		}
 
 		private void UpdateUnlockedDetails()

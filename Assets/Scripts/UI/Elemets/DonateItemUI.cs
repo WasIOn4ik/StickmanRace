@@ -49,6 +49,7 @@ namespace SR.UI
 
 		#region Functions
 
+#if UNITY_ANDROID
 		public void Activate()
 		{
 			if (product.definition.id == GameInstance.NO_ADS_ID)
@@ -62,7 +63,6 @@ namespace SR.UI
 			}
 		}
 
-#if UNITY_ANDROID
 		public void Initialize(Product product)
 		{
 			this.product = product;

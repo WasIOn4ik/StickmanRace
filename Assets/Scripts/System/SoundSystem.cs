@@ -50,8 +50,11 @@ namespace SR.Core
 		{
 			Debug.Log("Unmuted");
 			muted = false;
-			musicAudio.volume = volumeMultiplier * musicCoef;
-			musicAudio.Play();
+			if (isSoundEnabled)
+			{
+				musicAudio.volume = volumeMultiplier * musicCoef;
+				musicAudio.Play();
+			}
 		}
 
 		public void SetMaxCarSound(float sound)
@@ -68,6 +71,9 @@ namespace SR.Core
 		{
 			isSoundEnabled = true;
 			musicAudio.enabled = true;
+			musicAudio.Play();
+			if (!muted)
+				musicAudio.volume = volumeMultiplier * musicCoef;
 			carAudio.enabled = true;
 		}
 
@@ -139,7 +145,7 @@ namespace SR.Core
 
 		private IEnumerator HandleMusic(AudioClip clip)
 		{
-			if (!isSoundEnabled || muted)
+			if (muted)
 			{
 				musicAudio.volume = 0;
 				yield break;
@@ -151,7 +157,7 @@ namespace SR.Core
 				yield return null;
 			}
 
-			if (!isSoundEnabled || muted)
+			if (muted)
 			{
 				musicAudio.volume = 0;
 				yield break;

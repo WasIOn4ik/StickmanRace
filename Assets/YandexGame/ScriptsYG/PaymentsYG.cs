@@ -7,6 +7,13 @@ namespace YG
 {
 	public class PaymentsYG : MonoBehaviour
 	{
+#if !UNITY_WEBGL
+		[SerializeField] GameObject purchasePrototypeToHIde;
+		private void Awake()
+		{
+			purchasePrototypeToHIde.SetActive(false);
+		}
+#endif
 #if UNITY_WEBGL
 		[Tooltip("¬озможность купить один товар много раз.")]
 		public bool multiplePurchase;

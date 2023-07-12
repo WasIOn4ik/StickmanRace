@@ -1,4 +1,5 @@
 using SR.Core;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace SR.UI
 	public class SettingsMenuUI : MenuBase
 	{
 		#region Variables
+
+		public static event EventHandler onLanguageChanged;
 
 		[SerializeField] private TMP_Dropdown languageDD;
 		[SerializeField] private Button soundToggle;
@@ -39,6 +42,7 @@ namespace SR.UI
 			languageDD.onValueChanged.AddListener(x =>
 			{
 				LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.GetLocale(langCodes[x]);
+				onLanguageChanged?.Invoke(this, EventArgs.Empty);
 			});
 
 			backButton.onClick.AddListener(() =>
