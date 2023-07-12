@@ -12,8 +12,8 @@ namespace SR.Core
 
 		public static event EventHandler onObstacleDestroyed;
 
+		[Header("Obstacle")]
 		[SerializeField] protected float destroyVelocity;
-		[SerializeField] protected LayerMask destroyLayerMask;
 		[SerializeField] private float aimVerticalOffset = 1f;
 		[SerializeField] private ParticleSystem destroyParticles;
 		[SerializeField] private float highSpeedDestruction = 5f;
@@ -25,20 +25,16 @@ namespace SR.Core
 
 		#region UnityMessages
 
-		private void OnCollisionEnter2D(Collision2D collision)
+		protected virtual void OnCollisionEnter2D(Collision2D collision)
 		{
-			if (SRUtils.IsInLayerMask(collision.collider.gameObject.layer, destroyLayerMask))
+			var player = collision.gameObject.GetComponent<PlayerVehicle>();
+			if (player && player.GetDamage() > scaledDestroyVelocity)
 			{
-				var player = collision.gameObject.GetComponent<PlayerVehicle>();
-				if (player && player.GetDamage() > scaledDestroyVelocity)
+				if (player.GetVelocity() > highSpeedDestruction)
 				{
-					if (player.GetVelocity() > highSpeedDestruction)
-					{
-						player.BackVelocity();
-						HandleHighSpeedDestruction();
-					}
-					OnPlayerCollisionConfirmed();
+					HandleHighSpeedDestruction();
 				}
+				OnPlayerCollisionConfirmed();
 			}
 		}
 
@@ -63,8 +59,14 @@ namespace SR.Core
 			return transform.position + Vector3.up * aimVerticalOffset;
 		}
 
+		protected void CallDestroySound()
+		{
+			onObstacleDestroyed?.Invoke(this, EventArgs.Empty);
+		}
+
 		protected virtual void OnPlayerCollisionConfirmed()
 		{
+			CallDestroySound();
 			HandleDestroy();
 		}
 
@@ -76,7 +78,6 @@ namespace SR.Core
 		public void HandleDestroy()
 		{
 			bDestroyed = true;
-			onObstacleDestroyed?.Invoke(this, EventArgs.Empty);
 			Destroy(gameObject);
 		}
 

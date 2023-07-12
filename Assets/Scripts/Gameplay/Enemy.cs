@@ -14,13 +14,15 @@ namespace SR.Core
 
 		[Header("Components")]
 		[SerializeField] private Rigidbody2D rigidBody2D;
+		[SerializeField] private ParticleSystem particles;
 
 		[Header("Peoperties")]
 		[SerializeField] private float attackDelay = 3f;
 		[SerializeField] private float firstAttackDelay = 0.3f;
 		[SerializeField] protected int damage = 1;
 		[SerializeField] private float minimalShootDistance = 1f;
-		[SerializeField] protected LayerMask stickmanLayerMask;
+		//[SerializeField] protected LayerMask stickmanLayerMask;
+		[SerializeField] private float dissapearTimer = 1.25f;
 
 		[Header("MaxDIfficultySettings")]
 		[SerializeField] private float minFirstAttackDelay = 0.05f;
@@ -33,6 +35,8 @@ namespace SR.Core
 
 		#region StaticVariables
 
+		public static int killsInRound = 0;
+
 		public static event EventHandler onEnemyDeath;
 
 		#endregion
@@ -41,24 +45,29 @@ namespace SR.Core
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
-			if (SRUtils.IsInLayerMask(collision.gameObject.layer, stickmanLayerMask))
+			if (target == null)
 			{
-				target = collision.gameObject.GetComponentInParent<PlayerVehicle>();
-				StartCoroutine(HandleAttack());
+				target = collision.gameObject.GetComponent<PlayerVehicle>();
+
+				if (target)
+					StartCoroutine(HandleAttack());
 			}
 		}
 
 		private void OnTriggerExit2D(Collider2D collision)
 		{
-			if (SRUtils.IsInLayerMask(collision.gameObject.layer, destroyLayerMask))
-			{
+			if (target && target.gameObject == collision.gameObject)
 				target = null;
-			}
 		}
 
 		#endregion
 
 		#region Functions
+
+		public void UnFreeze()
+		{
+			rigidBody2D.WakeUp();
+		}
 
 		public virtual void Attack()
 		{
@@ -76,7 +85,7 @@ namespace SR.Core
 
 		private IEnumerator HandleAttack()
 		{
-			yield return new WaitForSeconds(Mathf.Max(minFirstAttackDelay,firstAttackDelay/ difficultyCoef));
+			yield return new WaitForSeconds(Mathf.Max(minFirstAttackDelay, firstAttackDelay / difficultyCoef));
 
 			while (IsAlive() && target != null && target.IsAlive() && (target.transform.position - transform.position).magnitude
 				> minimalShootDistance && target.transform.position.x < transform.position.x)
@@ -87,7 +96,7 @@ namespace SR.Core
 					StartAttack();
 				}
 
-				yield return new WaitForSeconds(Mathf.Max(minAttackDelay,attackDelay/difficultyCoef));
+				yield return new WaitForSeconds(Mathf.Max(minAttackDelay, attackDelay / difficultyCoef));
 			}
 		}
 
@@ -97,10 +106,21 @@ namespace SR.Core
 
 		protected override void OnPlayerCollisionConfirmed()
 		{
-			onEnemyDeath?.Invoke(this, EventArgs.Empty);
+			if (IsAlive())
+			{
+				CallDestroySound();
+				rigidBody2D.freezeRotation = false;
+				onEnemyDeath?.Invoke(this, EventArgs.Empty);
+				bDestroyed = true;
+				Invoke("FinishDestroy", dissapearTimer);
+			}
+			particles.Play();
+		}
+
+		private void FinishDestroy()
+		{
 			onDeathStarted?.Invoke(this, EventArgs.Empty);
 			rigidBody2D.simulated = false;
-			bDestroyed = true;
 		}
 
 		public override void SetDifficulty(float difficulty)

@@ -16,7 +16,7 @@ MonoBehaviour:
   sprite: {fileID: -2166880278557552720, guid: dc6b54123a064654d873ebb26b723ff7, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   stats:
-    health: 0
+    health: 4
     velocity: 0
     acceleration: 0
     meleeDamage: 0
@@ -29,3 +29,6 @@ MonoBehaviour:
   thighSprite: {fileID: 4290776318974545568, guid: dc6b54123a064654d873ebb26b723ff7, type: 3}
   calfSprite: {fileID: 2783740101670777644, guid: dc6b54123a064654d873ebb26b723ff7, type: 3}
   footSprite: {fileID: -529299201910271891, guid: dc6b54123a064654d873ebb26b723ff7, type: 3}
+  bodyDecorSprite: {fileID: 0}
+  legsDecorSprite: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: 08f8682df806489459006dbba7530468, type: 3}

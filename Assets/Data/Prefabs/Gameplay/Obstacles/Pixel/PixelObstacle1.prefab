@@ -53,7 +53,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5822500540028244286, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
       propertyPath: m_Name
-      value: BaseObstacle
+      value: PixelObstacle1
       objectReference: {fileID: 0}
+    - target: {fileID: 7282907619604972470, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+      propertyPath: rigidbody2DRef
+      value: 
+      objectReference: {fileID: 5141560827903732597}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+--- !u!50 &5141560827903732597 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 3662192282757394879, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+  m_PrefabInstance: {fileID: 8469237002601863882}
+  m_PrefabAsset: {fileID: 0}

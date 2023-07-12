@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 using Zenject;
 
@@ -22,6 +24,7 @@ namespace SR.UI
 		[Header("Properties")]
 		[SerializeField] private HoldableButton ForwardButton;
 		[SerializeField] private HoldableButton BackwardButton;
+		[SerializeField] private HoldableButton RotateButton;
 		[SerializeField] private Transform startPosition;
 
 		[Inject] GameInputs gameInputs;
@@ -32,7 +35,9 @@ namespace SR.UI
 
 		private float startTime;
 		private float maxDistance;
-		private int kills;
+
+		private string localizedDistance;
+		private string localizedTime;
 
 		#endregion
 
@@ -40,6 +45,17 @@ namespace SR.UI
 
 		private void Start()
 		{
+			LocalizedString distance = new LocalizedString();
+			distance.TableReference = "UI";
+			distance.TableEntryReference = "DIstanceMarker";
+			localizedDistance = distance.GetLocalizedString();
+
+			LocalizedString time = new LocalizedString();
+			time.TableReference = "UI";
+			time.TableEntryReference = "TimeMarker";
+			localizedTime = time.GetLocalizedString();
+
+			SettingsMenuUI.onLanguageChanged += SettingsMenuUI_onLanguageChanged;
 			playerVehicle.onHealthChanged += PlayerVehicle_onHealthChanged;
 			playerVehicle.onDeath += PlayerVehicle_onDeath;
 			gameplayBase.onGameStarted += GameplayBase_onGameStarted;
@@ -49,7 +65,6 @@ namespace SR.UI
 			distanceText.text = "";
 			timeText.text = "";
 			maxDistance = 0;
-			kills = 0;
 			killsText.text = "0 X";
 
 			gameObject.SetActive(false);
@@ -64,6 +79,15 @@ namespace SR.UI
 			UpdateDisplay();
 		}
 
+		private void OnDestroy()
+		{
+			SettingsMenuUI.onLanguageChanged -= SettingsMenuUI_onLanguageChanged;
+			playerVehicle.onHealthChanged -= PlayerVehicle_onHealthChanged;
+			playerVehicle.onDeath -= PlayerVehicle_onDeath;
+			gameplayBase.onGameStarted -= GameplayBase_onGameStarted;
+			Enemy.onEnemyDeath -= Enemy_onEnemyDeath;
+		}
+
 		#endregion
 
 		#region Functions
@@ -75,17 +99,43 @@ namespace SR.UI
 
 		private void UpdateInputs()
 		{
-			if (ForwardButton.isPressed)
+			bool move = Input.GetKey(KeyCode.D);
+			bool rot = Input.GetKey(KeyCode.A);
+
+			if (!move)
 			{
-				gameInputs.SetMovement(1f);
-			}
-			else if (BackwardButton.isPressed)
-			{
-				gameInputs.SetMovement(-1f);
+				if (ForwardButton.isPressed)
+				{
+					gameInputs.SetMovement(1f);
+				}
+				else if (BackwardButton.isPressed)
+				{
+					gameInputs.SetMovement(-1f);
+				}
+				else
+				{
+					gameInputs.SetMovement(0f);
+				}
 			}
 			else
 			{
-				gameInputs.SetMovement(0f);
+				gameInputs.SetMovement(move ? 1f : 0);
+			}
+
+			if (!rot)
+			{
+				if (RotateButton.isPressed)
+				{
+					gameInputs.SetRotation(true);
+				}
+				else
+				{
+					gameInputs.SetRotation(false);
+				}
+			}
+			else
+			{
+				gameInputs.SetRotation(rot);
 			}
 		}
 
@@ -99,8 +149,8 @@ namespace SR.UI
 			if (distance > maxDistance)
 				maxDistance = distance;
 
-			distanceText.text = $"{maxDistance:N1} m";
-			timeText.text = $"{GetTime():N1} s";
+			distanceText.text = $"{maxDistance:N1} {localizedDistance}";
+			timeText.text = $"{GetTime():N1} {localizedTime}";
 		}
 
 		private float GetDistance()
@@ -116,6 +166,20 @@ namespace SR.UI
 		#endregion
 
 		#region Callbacks
+
+		private void SettingsMenuUI_onLanguageChanged(object sender, System.EventArgs e)
+		{
+			LocalizedString distance = new LocalizedString();
+			distance.TableReference = "UI";
+			distance.TableEntryReference = "DIstanceMarker";
+			localizedDistance = distance.GetLocalizedString();
+
+			LocalizedString time = new LocalizedString();
+			time.TableReference = "UI";
+			time.TableEntryReference = "TimeMarker";
+			localizedTime = time.GetLocalizedString();
+			UpdateDisplay();
+		}
 
 		private void GameplayBase_onGameStarted(object sender, System.EventArgs e)
 		{
@@ -134,16 +198,15 @@ namespace SR.UI
 		private void PlayerVehicle_onDeath(object sender, System.EventArgs e)
 		{
 			gameObject.SetActive(false);
-			var menu = MenuBase.OpenMenu(MenuType.LoseMenu, true) as LoseMenuUI;
-			ProjectContext.Instance.Container.InjectGameObject(menu.gameObject);
+			var menu = MenuBase.OpenMenu(MenuType.LoseMenu, false) as LoseMenuUI;
 			menu.UpdateDisplay(GetDistance(), GetTime());
 		}
 
 		private void Enemy_onEnemyDeath(object sender, System.EventArgs e)
 		{
-			kills++;
+			Enemy.killsInRound++;
 
-			killsText.text = kills.ToString() + " X";
+			killsText.text = Enemy.killsInRound.ToString() + " X";
 		}
 
 		#endregion

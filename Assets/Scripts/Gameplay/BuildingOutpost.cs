@@ -48,10 +48,9 @@ namespace SR.Core
 
 		#region IDamageable
 
-		public void ApplyDamage(int value)
+		public override void ApplyDamage(int value)
 		{
 			currentHP -= value;
-			Debug.Log($"BUilding reached {value} when hp is {currentHP}");
 			if (currentHP > 0)
 			{
 				soundSystem.PlayBuildingDamage();
@@ -81,7 +80,7 @@ namespace SR.Core
 			SpawnEnemies();
 		}
 
-		private void OnCollisionEnter2D(Collision2D collision)
+		protected override void OnCollisionEnter2D(Collision2D collision)
 		{
 			var player = collision.gameObject.GetComponent<PlayerVehicle>();
 			if (player)
@@ -92,7 +91,10 @@ namespace SR.Core
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
-			var player = collision.gameObject.GetComponentInParent<PlayerVehicle>();
+			if (bSpawning)
+				return;
+
+			var player = collision.gameObject.GetComponent<PlayerVehicle>();
 			if (player)
 			{
 				bSpawning = true;
@@ -150,7 +152,6 @@ namespace SR.Core
 				foreach (var e in sp.spawnedEnemies)
 				{
 					e.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-					transform.parent.GetComponent<TerrainGenerator>().AddToEnemies(e);
 					e.transform.parent = transform.parent;
 				}
 			}

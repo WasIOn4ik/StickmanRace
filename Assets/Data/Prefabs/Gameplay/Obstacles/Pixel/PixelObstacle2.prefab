@@ -7,10 +7,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 854988116636228733, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.3333
+      objectReference: {fileID: 0}
+    - target: {fileID: 854988116636228733, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.3333
+      objectReference: {fileID: 0}
+    - target: {fileID: 854988116636228733, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.3333
+      objectReference: {fileID: 0}
+    - target: {fileID: 854988116636228733, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272921857649163384, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+      propertyPath: m_Size.x
+      value: 0.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272921857649163384, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+      propertyPath: m_Size.y
+      value: 0.35
+      objectReference: {fileID: 0}
     - target: {fileID: 2272921857649163384, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 078bb4e467b224fb98c30fb8faf940a7, type: 3}
+      objectReference: {fileID: -764998957, guid: 078bb4e467b224fb98c30fb8faf940a7, type: 3}
+    - target: {fileID: 2272921857649163384, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2834738023328481898, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -59,6 +87,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PixelObstacle2
       objectReference: {fileID: 0}
+    - target: {fileID: 7282907619604972470, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+      propertyPath: rigidbody2DRef
+      value: 
+      objectReference: {fileID: 5141560827903732597}
     - target: {fileID: 9169188272350861176, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
       propertyPath: m_Size.x
       value: 1.2
@@ -69,3 +101,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+--- !u!50 &5141560827903732597 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 3662192282757394879, guid: 87fcb959168be264c96f3009ae869e86, type: 3}
+  m_PrefabInstance: {fileID: 8469237002601863882}
+  m_PrefabAsset: {fileID: 0}

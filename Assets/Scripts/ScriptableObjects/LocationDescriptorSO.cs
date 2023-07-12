@@ -16,6 +16,7 @@ namespace SR.Extras
 
 		public OutpostsListSO availableOutposts;
 		public EnemiesListSO availableEnemies;
+		public ObstaclesListSO availableObstacles;
 
 		public List<Sprite> backgrounds;
 

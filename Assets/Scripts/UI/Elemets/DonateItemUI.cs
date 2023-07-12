@@ -19,10 +19,16 @@ namespace SR.UI
 		[SerializeField] private TMP_Text titleText;
 		[SerializeField] private Button purchaseButton;
 
+#if UNITY_ANDROID
 		public delegate void PurchaseDelegate(Product product, Action onComplete);
-		public event PurchaseDelegate onPurchase;
 
 		private Product product;
+#elif UNITY_WEBGL
+		public delegate void PurchaseDelegate(string id, Action onComplete);
+
+		private string product;
+#endif
+		public event PurchaseDelegate onPurchase;
 
 		[Inject] private SoundSystem soundsSystem;
 
@@ -43,9 +49,18 @@ namespace SR.UI
 
 		#region Functions
 
+#if UNITY_ANDROID
 		public void Activate()
 		{
-			purchaseButton.interactable = true;
+			if (product.definition.id == GameInstance.NO_ADS_ID)
+			{
+				Debug.Log($"Handling NO-ADs item {product.hasReceipt}");
+				purchaseButton.interactable = !product.hasReceipt;
+			}
+			else
+			{
+				purchaseButton.interactable = true;
+			}
 		}
 
 		public void Initialize(Product product)
@@ -55,7 +70,19 @@ namespace SR.UI
 			priceText.text = $"{product.metadata.localizedPriceString} {product.metadata.isoCurrencyCode}";
 			var tex = StoreItemProvider.GetIcon(product.definition.id);
 			icon.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one / 2f);
+			Activate();
 		}
+#elif UNITY_WEBGL
+		public void Initialize(string id, string title, string price)
+		{
+			product = id;
+			titleText.text = title;
+			priceText.text = price;
+			var tex = StoreItemProvider.GetIcon(id);
+			icon.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one / 2f);
+		}
+
+#endif
 
 		public void Purchase()
 		{

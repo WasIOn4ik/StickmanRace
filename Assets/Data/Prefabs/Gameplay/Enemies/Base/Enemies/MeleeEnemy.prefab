@@ -55,6 +55,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3122016769181736080, guid: 1718f8ce96585c1408e49b471ed5340c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3614629100736193653, guid: 1718f8ce96585c1408e49b471ed5340c, type: 3}
       propertyPath: enemy
       value: 
@@ -83,25 +87,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyVelocity: 1.75
-  destroyLayerMask:
-    serializedVersion: 2
-    m_Bits: 16384
   aimVerticalOffset: 1
   destroyParticles: {fileID: 0}
   highSpeedDestruction: 5
   rigidBody2D: {fileID: 3152496524883276227}
+  particles: {fileID: 4169625702023596925}
   attackDelay: 2
-  firstAttackDelay: 0.05
+  firstAttackDelay: 0.025
   damage: 1
   minimalShootDistance: 1
-  stickmanLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  minFirstAttackDelay: 0.025
+  dissapearTimer: 0.75
+  minFirstAttackDelay: 0.01
   minAttackDelay: 0.4
-  attackDistance: {x: 5, y: 1}
+  attackDistance: {x: 7, y: 3}
+  vehicleLayerMask:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!50 &3152496524883276227 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 3720446491217204962, guid: 1718f8ce96585c1408e49b471ed5340c, type: 3}
+  m_PrefabInstance: {fileID: 1737902081455138593}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4169625702023596925 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2432850654364904540, guid: 1718f8ce96585c1408e49b471ed5340c, type: 3}
   m_PrefabInstance: {fileID: 1737902081455138593}
   m_PrefabAsset: {fileID: 0}

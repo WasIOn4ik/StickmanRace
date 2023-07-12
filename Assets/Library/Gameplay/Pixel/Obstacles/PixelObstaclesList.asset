@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df755c501043cad40a20ddc70ca78dc0, type: 3}
+  m_Name: PixelObstaclesList
+  m_EditorClassIdentifier: 
+  obstacles:
+  - {fileID: 1196501516297951612, guid: 44c2971ea83e70f4190bf82e8a727c88, type: 3}
+  - {fileID: 1196501516297951612, guid: 215debe696b27894db2dc76fcc9e6f05, type: 3}

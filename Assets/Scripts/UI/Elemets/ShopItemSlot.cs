@@ -41,6 +41,7 @@ namespace SR.UI
 				if (carDetailSO.bUnlocked)
 				{
 					gameInstance.TryUpdateCarConfig(carDetailSO);
+					gameInstance.ConfirmSave();
 					shopUI.SetCategory(carDetailSO.type);
 				}
 				else if (canBuy)

@@ -5,11 +5,12 @@ using UnityEngine;
 
 namespace SR.Core
 {
-	public class Outpost : MonoBehaviour
+	public class Outpost : Obstacle
 	{
 		#region Variables
 
-		[SerializeField] private List<Obstacle> obstacles = new List<Obstacle>();
+		[Header("Outpost")]
+		[SerializeField] protected List<Obstacle> obstacles = new List<Obstacle>();
 
 		protected float currentDifficulty;
 
@@ -17,7 +18,7 @@ namespace SR.Core
 
 		#region Functions
 
-		public virtual void SetDifficulty(float difficulty)
+		public override void SetDifficulty(float difficulty)
 		{
 			currentDifficulty = difficulty;
 			foreach(var obstacle in obstacles)

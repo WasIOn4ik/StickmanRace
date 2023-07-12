@@ -19,9 +19,9 @@ namespace SR.UI
 		[Header("Components")]
 		[SerializeField] private Image faderImage;
 		[SerializeField] private GarageUI garageUI;
+		[SerializeField] private HUD_UI hud;
 
 		[Header("Properties")]
-		[SerializeField] private float afterDeathTimeout = 5f;
 		[SerializeField] private float startDifficulty = 1f;
 		[SerializeField] private float difficultiMultiplierPerSecond = 1.02f;
 		[SerializeField] private float fadeTime = 1f;
@@ -51,7 +51,6 @@ namespace SR.UI
 
 		public void StartSlowMotion()
 		{
-			Debug.Log("Slowmotion");
 			Time.timeScale = slowMotionMultiplier;
 			StartCoroutine(HandleSlowMotion());
 		}
@@ -59,6 +58,17 @@ namespace SR.UI
 		public float GetDifficulty()
 		{
 			return totalDifficulty;
+		}
+
+		public void RestartGame()
+		{
+			SceneLoader.LoadScene(SRScene.GameScene);
+		}
+
+		public void ResetPlayer(int hp)
+		{
+			playerVehicle.Respawn(hp);
+			hud.gameObject.SetActive(true);
 		}
 
 		public void StartGame()
@@ -78,18 +88,13 @@ namespace SR.UI
 			playerVehicle.GetComponent<Rigidbody2D>().AddForce(Vector2.right * gameStartCarForce);
 		}
 
-		private void RestartGame()
-		{
-			SceneLoader.LoadScene(SRScene.GameScene);
-		}
-
 		#endregion
 
 		#region Callbacks
 
 		private void PlayerVehicle_onDeath(object sender, EventArgs e)
 		{
-			Invoke("RestartGame", afterDeathTimeout);
+			//Invoke("RestartGame", afterDeathTimeout);
 		}
 
 		#endregion

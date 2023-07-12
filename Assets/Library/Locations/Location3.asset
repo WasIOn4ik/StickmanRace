@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bPixel: 0
   bUseDefault: 1
-  verticalOffset: 3
+  verticalOffset: 1
   availableOutposts: {fileID: 11400000, guid: fb61c908113bb5d41b6cc35af8937e29, type: 2}
-  availableEnemies: {fileID: 11400000, guid: ade45bb77358f594cafb97796e19b2f0, type: 2}
+  availableEnemies: {fileID: 11400000, guid: 4e0a165f501affd4aa63215b1fd0ea2f, type: 2}
+  availableObstacles: {fileID: 11400000, guid: f5a7b2f4fc1628046b167cef7bcba72e, type: 2}
   backgrounds:
   - {fileID: 21300000, guid: 711fa56e01bfde243a7708a951b39087, type: 3}
   - {fileID: 21300000, guid: e96babd812c03584eb712727b62d889e, type: 3}

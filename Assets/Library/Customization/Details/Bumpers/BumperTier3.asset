@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: BumperTier3
   m_EditorClassIdentifier: 
   identifier: BumperTier3
-  sprite: {fileID: 21300000, guid: cdea6a032b3c4f84b906ad9d167ecbff, type: 3}
+  sprite: {fileID: 21300000, guid: 66c1ad2cad06fb04fa49ef019736be3b, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   stats:
-    health: 1
+    health: 0
     velocity: 0
     acceleration: 0
     meleeDamage: 2

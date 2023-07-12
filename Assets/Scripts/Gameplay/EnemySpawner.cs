@@ -1,4 +1,5 @@
 using SR.Core;
+using SR.Extras;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace SR.Core
 		#region Variables
 
 		public Transform spawnTransform;
-		public List<Enemy> enemiesToSpawn;
+		public EnemiesListSO enemiesToSpawn;
 		public float spawnDelay;
 		public int maxSpawnedAtOnce = 1;
 		[HideInInspector] public float currentTimer = 0;
@@ -31,7 +32,7 @@ namespace SR.Core
 
 		public Enemy SpawnEnemy()
 		{
-			var enemy = GameObject.Instantiate(enemiesToSpawn[UnityEngine.Random.Range(0, enemiesToSpawn.Count)], spawnTransform);
+			var enemy = GameObject.Instantiate(enemiesToSpawn.GetRandomEnemy(), spawnTransform);
 			spawnedEnemies.Add(enemy);
 			enemy.onDeathStarted += Enemy_onDeathStarted;
 			return enemy;

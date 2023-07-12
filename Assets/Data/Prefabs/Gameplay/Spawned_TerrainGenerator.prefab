@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1271138085927956370}
   - component: {fileID: 1271138085927956373}
-  - component: {fileID: 1271138085927956372}
   - component: {fileID: 1271138085927956375}
+  - component: {fileID: 1271138085927956372}
   - component: {fileID: 1271138085927956371}
   m_Layer: 7
   m_Name: Spawned_TerrainGenerator
@@ -43,8 +43,8 @@ SpriteShapeRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271138085927956374}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -91,8 +91,37 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   m_LocalAABB:
-    m_Center: {x: 76.50001, y: -4.438423, z: 0}
-    m_Extent: {x: 76.50001, y: 5.5615788, z: 0}
+    m_Center: {x: 76.50001, y: -4.4384227, z: 0}
+    m_Extent: {x: 76.50001, y: 5.5615783, z: 0}
+--- !u!114 &1271138085927956375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271138085927956374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7518010b96a713e4ca9adede08ccaf7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteShapeController: {fileID: 1271138085927956372}
+  spriteRenderer: {fileID: 1271138085927956373}
+  rampPrefab: {fileID: 8831126399792259591, guid: 901268ceda51a8c43a72184c9d819044, type: 3}
+  platformOnStartRightLength: 0
+  platformExitSmoothness: 0
+  platformLeftSideOffset: 0
+  outpostDelayPoints: 10
+  outpostLength: 4
+  outpostStartPoint: 6
+  destructibleOutpostPrefab: {fileID: 6837919861518483404, guid: 7eaa31100759e664fae61e5a903648dc, type: 3}
+  creationType: 0
+  terainControlPointsCount: 50
+  terrainLengthMultiplier: 6
+  terrainHeightMultiplier: 1.4
+  terrainSmoothness: 0.5
+  terrainNoiseStep: 0.5
+  terrainBottomHeight: 10
 --- !u!114 &1271138085927956372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,7 +680,7 @@ MonoBehaviour:
   m_SpriteShape: {fileID: 11400000, guid: 9aeb6959903735047bddd2cb81e7e91f, type: 2}
   m_FillPixelPerUnit: 256
   m_StretchTiling: 1
-  m_SplineDetail: 8
+  m_SplineDetail: 16
   m_AdaptiveUV: 1
   m_StretchUV: 0
   m_WorldSpaceUV: 0
@@ -664,38 +693,6 @@ MonoBehaviour:
   m_EnableTangents: 0
   m_GeometryCached: 0
   m_UTess2D: 0
---- !u!114 &1271138085927956375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1271138085927956374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7518010b96a713e4ca9adede08ccaf7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteShapeController: {fileID: 1271138085927956372}
-  spriteRenderer: {fileID: 1271138085927956373}
-  platformOnStartRightLength: 0
-  platformExitSmoothness: 0
-  platformLeftSideOffset: 0
-  outpostDelayPoints: 15
-  outpostLength: 4
-  outpostStartPoint: 6
-  terainControlPointsCount: 40
-  terrainLengthMultiplier: 2
-  terrainHeightMultiplier: 1.07
-  terrainSmoothness: 0.5
-  terrainNoiseStep: 0.5
-  terrainBottomHeight: 10
-  pixelObstacles:
-  - {fileID: 1196501516297951612, guid: 44c2971ea83e70f4190bf82e8a727c88, type: 3}
-  - {fileID: 1196501516297951612, guid: 215debe696b27894db2dc76fcc9e6f05, type: 3}
-  casualObstacles:
-  - {fileID: 2384063184458935421, guid: 19b3d107f910ee940a6f6d062075c69d, type: 3}
-  - {fileID: 2384063184458935421, guid: 5460ef955388aa94d9264191c6347d3b, type: 3}
 --- !u!68 &1271138085927956371
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -713,48 +710,46 @@ EdgeCollider2D:
   m_EdgeRadius: 0
   m_Points:
   - {x: 0, y: 0.08}
-  - {x: 3.0801268, y: 0.08493921}
-  - {x: 4.0208416, y: 0.21532851}
-  - {x: 5.1047716, y: 0.5853247}
-  - {x: 6.740707, y: 0.66759294}
-  - {x: 8.989002, y: 0.46494508}
-  - {x: 11.412912, y: 0.67370725}
-  - {x: 18.042725, y: 0.6839472}
-  - {x: 20.456146, y: 0.47751778}
-  - {x: 22.868103, y: 0.55792}
-  - {x: 27, y: 0.9040053}
-  - {x: 39.00087, y: 0.9040006}
-  - {x: 41.557518, y: 0.6944699}
-  - {x: 42.999268, y: 0.7302352}
-  - {x: 44.45243, y: 0.8921492}
-  - {x: 46.883465, y: 0.8110504}
-  - {x: 51, y: 0.46570462}
-  - {x: 62.99913, y: 0.4656999}
-  - {x: 65.55405, y: 0.67520255}
-  - {x: 67.32762, y: 0.770409}
-  - {x: 69.1021, y: 0.90207875}
-  - {x: 71.689606, y: 0.7261449}
-  - {x: 75, y: 0.9040053}
-  - {x: 87.00087, y: 0.90400064}
-  - {x: 89.50177, y: 0.6956789}
-  - {x: 90.611244, y: 0.71750426}
-  - {x: 92.43271, y: 1.098522}
-  - {x: 94.28171, y: 1.032454}
-  - {x: 96, y: 0.684855}
-  - {x: 114.00174, y: 0.6848362}
-  - {x: 115.12004, y: 0.5680932}
-  - {x: 116.51358, y: 0.26772693}
-  - {x: 118.258804, y: 0.3356126}
-  - {x: 120, y: 0.684855}
-  - {x: 138.04674, y: 0.68386036}
-  - {x: 140.45854, y: 0.47746617}
-  - {x: 142.86885, y: 0.5579936}
-  - {x: 147, y: 0.9040053}
+  - {x: 3.2762809, y: 0.08757346}
+  - {x: 5.2661195, y: 0.6244632}
+  - {x: 6.902974, y: 0.6613588}
+  - {x: 9.008611, y: 0.46774456}
+  - {x: 11.412313, y: 0.6744658}
+  - {x: 18.36689, y: 0.6793592}
+  - {x: 20.77834, y: 0.467912}
+  - {x: 23.189217, y: 0.5884366}
+  - {x: 27.038221, y: 0.9040053}
+  - {x: 39.30658, y: 0.90043426}
+  - {x: 41.558388, y: 0.6928165}
+  - {x: 44.776497, y: 0.90178764}
+  - {x: 47.205956, y: 0.78039515}
+  - {x: 51.038223, y: 0.46570462}
+  - {x: 63.301476, y: 0.46919435}
+  - {x: 65.55329, y: 0.67681205}
+  - {x: 68.7765, y: 0.90178764}
+  - {x: 71.20595, y: 0.7803956}
+  - {x: 72.160835, y: 0.69681704}
+  - {x: 75.03822, y: 0.9040053}
+  - {x: 87.28256, y: 0.90119576}
+  - {x: 89.503075, y: 0.6945815}
+  - {x: 90.76996, y: 0.73569506}
+  - {x: 92.33885, y: 1.0873499}
+  - {x: 93.95932, y: 1.0701867}
+  - {x: 96.03822, y: 0.684855}
+  - {x: 114.00079, y: 0.68485105}
+  - {x: 115.129166, y: 0.56915647}
+  - {x: 116.51524, y: 0.26531267}
+  - {x: 118.26015, y: 0.33608872}
+  - {x: 120.03823, y: 0.684855}
+  - {x: 138.04596, y: 0.6844021}
+  - {x: 140.78052, y: 0.46789038}
+  - {x: 143.18973, y: 0.58849406}
+  - {x: 147.03822, y: 0.9040053}
   - {x: 153, y: 0.9040053}
   - {x: 153, y: -10}
   - {x: 0, y: -10}
-  - {x: 0, y: -1.982507}
-  - {x: 0, y: -0.5539358}
+  - {x: 0, y: -0.48592585}
+  - {x: 0, y: -0.12740739}
   - {x: 0, y: 0.08}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}

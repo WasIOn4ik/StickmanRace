@@ -50,7 +50,16 @@ MonoBehaviour:
   musicAudio: {fileID: -4656258789026184519}
   carAudio: {fileID: 6678781496609420903}
   carSoundChangeCoef: 0.05
-  volumeMultiplier: 0.5
+  volumeMultiplier: 0.25
+  musicCoef: 0.4
+  volumeChange: 0.05
+  enemyShootVolume: 1
+  weaponShootVolume: 0.7
+  buttonsVolume: 0.8
+  carSoundMultiplier: 1
+  deathVolume: 1
+  obstacleDamage: 0.6
+  buildingDamage: 0.35
 --- !u!82 &-4656258789026184519
 AudioSource:
   m_ObjectHideFlags: 0
@@ -61,15 +70,15 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_audioClip: {fileID: 8300000, guid: 3a9816ae0c00e4e4bb9ef8a395e60460, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -165,7 +174,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 255
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

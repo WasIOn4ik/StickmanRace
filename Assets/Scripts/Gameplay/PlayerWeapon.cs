@@ -1,7 +1,9 @@
+using ModestTree;
 using SR.Customization;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace SR.Core
 {
@@ -14,6 +16,10 @@ namespace SR.Core
 		[SerializeField] private float aimVelocity = 3f;
 		[SerializeField] private string buildingDestroyBulletLayerName = "BuildingDestroyBullet";
 		[SerializeField] private float aimChangeTargetDelay = 0.25f;
+		[SerializeField] public Transform visualWeapon;
+		[SerializeField] public SpriteRenderer weaponSpriteRenderer;
+		[SerializeField] public Animator burstAnimator;
+		[Inject] GameInstance gameInstance;
 
 		private WeaponSO weaponBase;
 
@@ -22,6 +28,9 @@ namespace SR.Core
 		private Obstacle currentTarget = null;
 
 		private bool bAim = false;
+		private int weaponLayer;
+
+		private Coroutine weaponDropCoroutine;
 
 		#endregion
 
@@ -30,31 +39,6 @@ namespace SR.Core
 		private void Update()
 		{
 			HandleAim();
-			/*
-						targetIsBuilding = true;
-						while (targets.Count > 0 && targets[0] == null)
-							targets.RemoveAt(0);
-
-						if (targets.Count > 0)
-						{
-							if (targets[0].transform.position.x > transform.position.x)
-							{
-								float currentZ = transform.eulerAngles.z;
-								currentZ = Mathf.MoveTowardsAngle(currentZ, SRUtils.GetRotationTo(transform.position, targets[0].GetAimPosition()), aimVelocity);
-								transform.rotation = Quaternion.Euler(0, 0, currentZ);
-								targetIsBuilding = false;
-							}
-							else
-							{
-								targets.RemoveAt(0);
-							}
-						}
-						else
-						{
-							float currentZ = transform.eulerAngles.z;
-							currentZ = Mathf.MoveTowardsAngle(currentZ, 0, aimVelocity);
-							transform.rotation = Quaternion.Euler(0, 0, currentZ);
-						}*/
 		}
 
 		#endregion
@@ -79,13 +63,14 @@ namespace SR.Core
 		{
 			float currentZ = transform.eulerAngles.z;
 
-			if (currentTarget != null)
+			if (currentTarget != null && transform.position.x < currentTarget.transform.position.x)
 			{
 				currentZ = Mathf.MoveTowardsAngle(currentZ, SRUtils.GetRotationTo(transform.position, currentTarget.GetAimPosition()), aimVelocity);
 			}
 			else
 			{
 				currentZ = Mathf.MoveTowardsAngle(currentZ, 0, aimVelocity);
+				currentTarget = null;
 			}
 
 			transform.rotation = Quaternion.Euler(0, 0, currentZ);
@@ -94,6 +79,7 @@ namespace SR.Core
 		public void SetWeapon(WeaponSO weapon)
 		{
 			weaponBase = weapon;
+			bulletSpawnPoint.localPosition = bulletSpawnPoint.localPosition + new Vector3(weapon.barrelOffset.x, weapon.barrelOffset.y, 0);
 		}
 
 		public void StartShooting()
@@ -103,19 +89,47 @@ namespace SR.Core
 
 		private void Shoot()
 		{
+			burstAnimator.Play("Burst");
+			float coef = 1.5f;
 			var bullet = Instantiate(weaponBase.bulletPrefab);
-			if (currentTarget == null)
+			if (currentTarget is Outpost)
 				bullet.gameObject.layer = LayerMask.NameToLayer(buildingDestroyBulletLayerName);
 			bullet.SetDamage(weaponBase.weaponStats.damage);
-			bullet.SetVelocity(playerVehicle.GetVelocity() + weaponBase.weaponStats.velocity);
+			bullet.SetVelocity(playerVehicle.GetVelocity() * coef + weaponBase.weaponStats.velocity);
 			bullet.transform.rotation = transform.rotation;
-			bullet.transform.position = bulletSpawnPoint.position;
-			bullet.InitBullet(1f, weaponBase.weaponStats.shootDistance);
+			bullet.transform.position = new Vector3(bulletSpawnPoint.position.x,
+				bulletSpawnPoint.position.y, bulletSpawnPoint.position.z);
+			bullet.SetSprite(weaponBase.bulletSprite);
+			bullet.InitBullet(weaponBase.bulletType, weaponBase.bulletValue, 1f, weaponBase.weaponStats.shootDistance, gameInstance);
 		}
 
 		#endregion
 
 		#region Coroutines
+
+		private IEnumerator WeaponAnim()
+		{
+			Vector3 dir = new Vector3(Random.Range(-0.25f, 0.25f), -1f, 0);
+			while (true)
+			{
+				visualWeapon.transform.Rotate(new Vector3(0, 0, 50 * Time.deltaTime));
+				visualWeapon.transform.position += (dir * Time.deltaTime * 5f);
+				yield return null;
+			}
+		}
+
+		public void DropWeapon()
+		{
+			weaponLayer = weaponSpriteRenderer.sortingOrder;
+			weaponSpriteRenderer.sortingOrder = 200;
+			weaponDropCoroutine = StartCoroutine(WeaponAnim());
+		}
+
+		public void ResetWeapon()
+		{
+			StopCoroutine(weaponDropCoroutine);
+			weaponSpriteRenderer.sortingOrder = weaponLayer;
+		}
 
 		private IEnumerator HandleAimCoroutine()
 		{
@@ -131,10 +145,11 @@ namespace SR.Core
 						targets.RemoveAt(i);
 						continue;
 					}
-					if (targets[i].IsAlive())
+					var targetPos = targets[i].transform.position;
+					if (targets[i].IsAlive() && transform.position.x < targetPos.x)
 					{
 
-						float currentDist = (transform.position - targets[i].transform.position).magnitude;
+						float currentDist = (transform.position - targetPos).magnitude;
 						if (currentDist < minDist)
 						{
 							minDist = currentDist;
@@ -158,9 +173,26 @@ namespace SR.Core
 			while (playerVehicle.IsAlive())
 			{
 				yield return new WaitForSeconds(60f / weaponBase.weaponStats.fireRate);
-				if (currentTarget && !currentTarget.IsAlive())
+				if (currentTarget != null && !currentTarget.IsAlive())
+				{
 					currentTarget = null;
-				Shoot();
+				}
+				if (weaponBase.bulletType == BulletType.Rifle)
+				{
+					float delay = 0.1f;
+					int spawned = 0;
+					while (currentTarget != null && spawned < weaponBase.bulletValue)
+					{
+						spawned++;
+						yield return new WaitForSeconds(delay);
+						Shoot();
+					}
+				}
+				else
+				{
+					if (currentTarget != null)
+						Shoot();
+				}
 			}
 		}
 

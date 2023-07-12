@@ -11,6 +11,10 @@ namespace SR.Customization
 	{
 		public WeaponStats weaponStats;
 		public Bullet bulletPrefab;
+		public BulletType bulletType;
+		public int bulletValue;
+		public Vector2 barrelOffset;
+		public Sprite bulletSprite;
 
 		public WeaponSO() : base()
 		{

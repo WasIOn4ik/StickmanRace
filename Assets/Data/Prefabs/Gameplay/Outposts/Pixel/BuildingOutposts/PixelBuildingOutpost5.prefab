@@ -17,7 +17,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2331826825356455567, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.76
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 2331826825356455567, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
       propertyPath: m_LocalPosition.y
@@ -76,9 +76,17 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
+      propertyPath: spawners.Array.data[0].enemiesToSpawn
+      value: 
+      objectReference: {fileID: 11400000, guid: ba10ad2ded94f634ba47b35dd19e9821, type: 2}
+    - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
       propertyPath: spawners.Array.data[0].spawnTransform
       value: 
       objectReference: {fileID: 654739461293525203}
+    - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
+      propertyPath: spawners.Array.data[1].enemiesToSpawn
+      value: 
+      objectReference: {fileID: 11400000, guid: 7a2564d2fd959ee49aa164d315afffee, type: 2}
     - target: {fileID: 3456387381838050763, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
       propertyPath: spawners.Array.data[1].spawnTransform
       value: 
@@ -250,6 +258,14 @@ PrefabInstance:
     - target: {fileID: 7872105241968065261, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
       propertyPath: m_Size.x
       value: 4.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872105241968065261, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
+      propertyPath: m_Size.y
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872105241968065261, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}
+      propertyPath: m_Offset.y
+      value: 2.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fdc88f9050192c42917319debe9e9ab, type: 3}

@@ -21,3 +21,4 @@ MonoBehaviour:
     acceleration: 0
     meleeDamage: 0
   type: 2
+  effects: 0

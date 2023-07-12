@@ -11,6 +11,8 @@ namespace SR.Core
 		[Header("Advanced Bullet")]
 		[SerializeField] private int collisionsCount = 1;
 
+		private bool bFirstCollided = false;
+
 		#endregion
 
 		#region Overrides
@@ -19,6 +21,11 @@ namespace SR.Core
 		{
 			if (SRUtils.IsInLayerMask(collision.gameObject.layer, targetLayerMask))
 			{
+				if (!bFirstCollided)
+				{
+					gameObject.layer = LayerMask.NameToLayer("PlayerBullet");
+				}
+				bFirstCollided = true;
 				var target = collision.gameObject.GetComponent<IDamageable>();
 				if (target == null)
 				{
@@ -31,7 +38,7 @@ namespace SR.Core
 				if (collisionsCount <= 0)
 					Destroy(gameObject);
 			}
-			else if(SRUtils.IsInLayerMask(collision.gameObject.layer, destroyLayerMask))
+			else if (SRUtils.IsInLayerMask(collision.gameObject.layer, destroyLayerMask))
 			{
 				Destroy(gameObject);
 			}

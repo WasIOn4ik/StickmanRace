@@ -16,7 +16,7 @@ MonoBehaviour:
   sprite: {fileID: 6908742511789428110, guid: 7081161e50fc9424cb136a8822885bb4, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   stats:
-    health: 0
+    health: 8
     velocity: 0
     acceleration: 0
     meleeDamage: 0
@@ -24,12 +24,11 @@ MonoBehaviour:
   headSprite: {fileID: 6908742511789428110, guid: 7081161e50fc9424cb136a8822885bb4, type: 3}
   bodySprite: {fileID: 3933064528195748571, guid: 7081161e50fc9424cb136a8822885bb4, type: 3}
   armSprite: {fileID: 4993474482118950172, guid: 7081161e50fc9424cb136a8822885bb4, type: 3}
-  armOffset: {x: 0, y: 0, z: 0}
   wristSprite: {fileID: 7770515744472824517, guid: 7081161e50fc9424cb136a8822885bb4, type: 3}
   handSprite: {fileID: 2953650765264749478, guid: 7081161e50fc9424cb136a8822885bb4, type: 3}
   thighSprite: {fileID: -1572080193865100649, guid: 7081161e50fc9424cb136a8822885bb4, type: 3}
   calfSprite: {fileID: 4645080906783387889, guid: 7081161e50fc9424cb136a8822885bb4, type: 3}
   footSprite: {fileID: 6115582979434068391, guid: 7081161e50fc9424cb136a8822885bb4, type: 3}
   bodyDecorSprite: {fileID: -920704504151362506, guid: 7081161e50fc9424cb136a8822885bb4, type: 3}
-  bodyDecorOffset: {x: 0, y: 0, z: 0}
   legsDecorSprite: {fileID: 7066070911439528091, guid: 7081161e50fc9424cb136a8822885bb4, type: 3}
+  deathSound: {fileID: 8300000, guid: 1914f7af8e088704db6a0ec50137c834, type: 3}

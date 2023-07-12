@@ -42,7 +42,7 @@ namespace SR.Core
 		public void ApplyDamage(int value);
 	}
 
-	public class PlayerVehicle : MonoBehaviour, IDamageable
+	public class PlayerVehicle : MonoBehaviour
 	{
 		#region HelperClasses
 
@@ -69,7 +69,6 @@ namespace SR.Core
 		[SerializeField] private CarDescriptor baseCarDescriptor;
 		[SerializeField] private float cameraUpperOffset = 3f;
 		[SerializeField] private float cameraRightOffset = 3f;
-		[SerializeField] private float cameraBlendDelta = 0.25f;
 		[SerializeField] private Vector3 headPositionOffset = new Vector3(0, 0.4f, 0);
 		[SerializeField] private float meleeDamageCheckDelay = 0.25f;
 		[SerializeField] private float meleeDamageDistance = 1f;
@@ -87,7 +86,9 @@ namespace SR.Core
 
 		private bool bFrozen;
 		private bool bAlive;
-		private float cachedVelocity;
+		private Vector2 cachedVelocity;
+		private float cachedAngularVelocity;
+		private StickmanSO stickman;
 
 		#endregion
 
@@ -106,12 +107,16 @@ namespace SR.Core
 			if (bFrozen || !bAlive)
 				return;
 
-			cachedVelocity = carRB.velocity.magnitude;
+			cachedAngularVelocity = carRB.angularVelocity;
+			cachedVelocity = carRB.velocity;
 
 			float input = gameInputs.GetMovement();
 			frontTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
 			backTireRB.AddTorque(-input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
-			carRB.AddTorque(input * fullCarDescriptor.acceleration * Time.fixedDeltaTime);
+			if (gameInputs.GetRotation())
+			{
+				carRB.AddTorque(1600f * Time.fixedDeltaTime);
+			}
 			carRB.velocity = Vector2.ClampMagnitude(carRB.velocity, fullCarDescriptor.velocity);
 			soundSystem.SetMaxCarSound(GetVelocity() / 10f);
 		}
@@ -126,19 +131,41 @@ namespace SR.Core
 
 		#region Functions
 
+		public void Respawn(int hp)
+		{
+			transform.rotation = Quaternion.identity;
+			transform.position = transform.position + Vector3.up * 2f;
+			fullCarDescriptor.health = hp;
+			onHealthChanged?.Invoke(this, new HealthEventArgs() { hp = hp });
+			bAlive = true;
+			weaponController.ResetWeapon();
+			weaponController.visualWeapon.transform.localPosition = Vector3.zero;
+			weaponController.visualWeapon.transform.localRotation = Quaternion.identity;
+			weaponController.StartShooting();
+			weaponController.StartAim();
+			UnFreeze();
+		}
+
 		public float GetVelocity()
 		{
-			return cachedVelocity;
+			return cachedVelocity.magnitude;
+		}
+
+		public void ResetTorque()
+		{
+			Debug.Log($"Reset angular from {carRB.angularVelocity} to: {cachedAngularVelocity}");
+			carRB.angularVelocity = cachedAngularVelocity + 10;
 		}
 
 		public void BackVelocity()
 		{
-			carRB.velocity = Vector2.right * cachedVelocity;
+			Debug.Log($"Reset velocity from {carRB.velocity.magnitude} to: {cachedVelocity.magnitude}");
+			carRB.velocity = cachedVelocity * 1.2f;
 		}
 
 		public float GetDamage()
 		{
-			return cachedVelocity / 2f + cachedVelocity / 4 * fullCarDescriptor.meleeDamage;
+			return GetVelocity() / 2f + GetVelocity() / 4 * fullCarDescriptor.meleeDamage;
 		}
 
 		public Vector3 GetHeadPosition()
@@ -153,7 +180,10 @@ namespace SR.Core
 
 		public void ApplyDamage(int damage)
 		{
-			Debug.Log($"Received {damage} damage");
+			if (bAlive)
+			{
+				soundSystem.PlayDeath(stickman.deathSound);
+			}
 			fullCarDescriptor.health -= damage;
 			if (fullCarDescriptor.health <= 0)
 			{
@@ -170,11 +200,11 @@ namespace SR.Core
 			if (!bAlive)
 				return;
 
-			soundSystem.PlayDeath();
-
+			soundSystem.PlayDeath(stickman.deathSound);
 			Freeze();
 			bAlive = false;
 			weaponController.StopAim();
+			weaponController.DropWeapon();
 			onDeath?.Invoke(this, EventArgs.Empty);
 			Debug.Log("Dead");
 		}
@@ -186,18 +216,26 @@ namespace SR.Core
 
 		public void Freeze()
 		{
+			carRB.bodyType = RigidbodyType2D.Kinematic;
+			carRB.velocity = Vector2.zero;
+			carRB.angularVelocity = 0f;
+			gameInputs.SetMovement(0);
+			gameInstance.Sounds.PlayCarMovement(false);
+			frontTireRB.angularVelocity = 0f;
+			backTireRB.angularVelocity = 0f;
 			bFrozen = true;
 		}
 
 		public void UnFreeze()
 		{
+			carRB.bodyType = RigidbodyType2D.Dynamic;
 			bFrozen = false;
 		}
 
 		public void UpdateCameraFollow(Vector3 upperLimit)
 		{
 			var tempPos = cameraFollow.position;
-			tempPos.y = Mathf.MoveTowards(tempPos.y, upperLimit.y + cameraUpperOffset, cameraBlendDelta);
+			tempPos.y = upperLimit.y + cameraUpperOffset;// Mathf.MoveTowards(tempPos.y, upperLimit.y + cameraUpperOffset, cameraBlendDelta);
 			tempPos.x = transform.position.x + cameraRightOffset;
 			cameraFollow.position = tempPos;
 		}
@@ -232,6 +270,7 @@ namespace SR.Core
 			var stickman = gameInstance.GetShopLibrary().GetStickman(car.stickman);
 			fullCarDescriptor += stickman.stats;
 			carCustomizer.SetDetail(stickman);
+			this.stickman = stickman;
 
 			onHealthChanged?.Invoke(this, new HealthEventArgs() { hp = fullCarDescriptor.health });
 			bAlive = true;
@@ -265,13 +304,12 @@ namespace SR.Core
 		{
 			while (IsAlive())
 			{
-				//var targets = Physics2D.BoxCastAll(transform.position, Vector2.one, 0, Vector2.zero, 0, meleeLayerMask);
-				Debug.DrawRay(meleeDamageStart.position, Vector2.right * meleeDamageDistance, Color.red, meleeDamageCheckDelay);
 				var targets = Physics2D.RaycastAll(meleeDamageStart.position, meleeDamageStart.TransformDirection(Vector2.right), meleeDamageDistance, meleeLayerMask);
 				foreach (var target in targets)
 				{
 					if (target.collider.isTrigger)
 						continue;
+					Debug.Log(target.collider.name);
 
 					var dmgt = target.rigidbody.gameObject.GetComponent<IDamageable>();
 					if (dmgt != null)

@@ -45,6 +45,23 @@ public class StoreItemProvider
 		}
 	}
 
+	public static void Initialize(string[] items)
+	{
+		if (Icons.Count == 0)
+		{
+			iconsCount = items.Length;
+			foreach (var product in items)
+			{
+				ResourceRequest request = Resources.LoadAsync<Texture2D>($"StoreIcons/{product}");
+				request.completed += HandleLoadedIcon;
+			}
+		}
+		else
+		{
+			Debug.LogError("StoreItemProvider already initialized");
+		}
+	}
+
 	public static bool IsInitialized()
 	{
 		return Icons.Count != 0;
@@ -63,5 +80,6 @@ public class StoreItemProvider
 				onLoadComplete?.Invoke();
 			}
 		}
+		Debug.Log("Shop icons loaded");
 	}
 }

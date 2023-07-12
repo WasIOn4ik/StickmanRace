@@ -4,6 +4,7 @@ using SR.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using YG;
 using Zenject;
 
 namespace SR.Core
@@ -29,8 +30,40 @@ namespace SR.Core
 
 		private void Start()
 		{
-			Init();
+#if UNITY_ANDROID
+				Init();
+#elif UNITY_WEBGL
+#if UNITY_EDITOR
+			if (YandexGame.auth)
+			{
+#endif
+				Init();
+#if UNITY_EDITOR
+			}
+			else
+			{
+				StartCoroutine(DelayedInit());
+			}
+#endif
 		}
+		private IEnumerator DelayedInit()
+		{
+			float time = 3f;
+			while (time > 0)
+			{
+				time -= Time.deltaTime;
+				yield return null;
+
+				if (YandexGame.auth)
+				{
+					gameInstance.GetShopLibrary().Initialize();
+					Init();
+					gameInstance.CallUpdateCallbacks();
+					yield break;
+				}
+			}
+		}
+#endif
 
 		private void OnDestroy()
 		{

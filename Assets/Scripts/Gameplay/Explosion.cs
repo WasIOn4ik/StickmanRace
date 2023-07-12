@@ -33,7 +33,9 @@ namespace SR.Core
 		private void HandleExplode()
 		{
 			RaycastHit2D[] collisions = new RaycastHit2D[10];
-			if (explosionCollider.Cast(Vector2.zero, collisions) > 0)
+			int cols = explosionCollider.Cast(Vector2.zero, collisions);
+			Debug.Log($"Explosion: {cols}");
+			if (cols > 0)
 			{
 				foreach (var collision in collisions)
 				{
